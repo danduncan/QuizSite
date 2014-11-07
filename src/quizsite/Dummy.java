@@ -8,7 +8,7 @@ public class Dummy {
 		// TODO Auto-generated method stub
 		ArrayList<String> test = new ArrayList<String>();
 		
-		String rightMessage = "Right message 4. Matt was here.";
+		String rightMessage = "Right message 4. Matt was here. So was Gino";
 		
 		test.add("Wrong message 1");
 		test.add("Wrong message 2");
