@@ -32,4 +32,20 @@ public class Question {
 		return type;
 	}
 	
+	public void printToJSP(PrintWriter out, int i){
+		if(type == Question.QUESTION_RESPONSE){
+			QuestionResponse qr = (QuestionResponse)this;
+			qr.printToJSP(out, i);
+		}else if(type == Question.FILL_IN_BLANK){
+			FillBlankQuestion qfb = (FillBlankQuestion)this;
+			qfb.printToJSP(out, i);
+		}else if(type == Question.PICTURE_RESPONSE){
+			PictureResponseQuestion qpr = (PictureResponseQuestion)this;
+			qpr.printToJSP(out, i);
+		}else if(type == Question.MULTIPLE_CHOICE){
+			MultipleChoiceQuestion qmc = (MultipleChoiceQuestion)this;
+			qmc.printToJSP(out, i);
+		}
+	}
+	
 }

@@ -42,36 +42,11 @@ public class BasicQuizServlet extends HttpServlet {
 		out.println("<body>");
 		out.println("<h1>Basic Quiz</h1>");
 		out.println("<form action=\"BasicQuizServlet\" method=\"post\">");
-		out.println("<ol>");
-		List<Question> questions = quiz.getQuestions();
-		for(int i = 0; i<questions.size(); i++){
-			Question q = questions.get(i);
-			out.println("<li>");
-			showQuestion(q, out, i);
-			out.println("</li>");
-		}
-		out.println("</ol>");
+		quiz.printToJSP(out);
 		out.println("<input type=\"submit\" value=\"Submit Quiz\">");
 		out.println("</form>");
 		out.println("</body>");
 		out.println("</html>");
-	}
-	
-	private void showQuestion(Question q, PrintWriter out, int i){
-		int type = q.getType();
-		if(type == Question.QUESTION_RESPONSE){
-			QuestionResponse qr = (QuestionResponse)q;
-			qr.printToJSP(out, i);
-		}else if(type == Question.FILL_IN_BLANK){
-			FillBlankQuestion qfb = (FillBlankQuestion)q;
-			qfb.printToJSP(out, i);
-		}else if(type == Question.PICTURE_RESPONSE){
-			PictureResponseQuestion qpr = (PictureResponseQuestion)q;
-			qpr.printToJSP(out, i);
-		}else if(type == Question.MULTIPLE_CHOICE){
-			MultipleChoiceQuestion qmc = (MultipleChoiceQuestion)q;
-			qmc.printToJSP(out, i);
-		}
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
