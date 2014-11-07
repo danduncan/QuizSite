@@ -8,7 +8,7 @@ public class MyDBInfo {
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_duncand";
 
 	// Names of primary tables
-	public static final String SYSTEMTABLE = "system";
+	public static final String GLOBALTABLE = "globals";
 	public static final String USERTABLE = "users";
 	public static final String QUIZZESTABLE = "quizzes";
 	public static final String QUESTIONSTABLE = "questions";
