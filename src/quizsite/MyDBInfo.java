@@ -6,6 +6,10 @@ public class MyDBInfo {
 	public static final String MYSQL_PASSWORD = "danpw"; // Original password was aepheiyu
 	public static final String MYSQL_DATABASE_SERVER = "mysql-user-master.stanford.edu";
 	public static final String MYSQL_DATABASE_NAME = "c_cs108_duncand";
+	
+	// Login configuration
+	public static final String MYDB_LOGINSALT = "mattginodan";
+	public static final boolean MYDB_LOGINSKIPHASH = true; // Skip hashing passwords if set to true (for testing)
 
 	// Names of primary tables
 	public static final String GLOBALTABLE = "globals";
@@ -25,6 +29,7 @@ public class MyDBInfo {
 	public static final String QUIZCATEGORIESTABLE = "quizcategories";
 	public static final String QUESTIONCATEGORIESTABLE = "questioncategories";
 	public static final String IPADDRESSTABLE = "ipaddresses";
+	
 	
 	
 }
