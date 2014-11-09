@@ -1,10 +1,10 @@
 package users;
 
 public class IPAddress {
-	public String ip;
+	public Object ip;
 	public Integer id;
 	
-	public void QuizTaken(Integer ID, String IP){
+	public IPAddress(Integer ID, Object IP){
 		id = ID;
 		ip = IP;	
 	}

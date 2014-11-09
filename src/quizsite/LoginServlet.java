@@ -101,7 +101,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		// Construct query for users database
-		String query = "select id from " + MyDBInfo.USERTABLE + " where username = \"" + username + "\" and password = " + hashpw + "\";";
+		String query = "select id from " + MyDBInfo.USERTABLE + " where username = \"" + username + "\" and password = \"" + hashpw + "\";";
 		System.out.println("LoginServlet.getUserID() query: " + query);
 		
 		// Get DatabaseConnection and execute query
