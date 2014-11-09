@@ -56,11 +56,15 @@ public class BasicQuizServlet extends HttpServlet {
 				request.getSession().setAttribute(QUIZ_PAGE, quizPage+1);
 			}
 			
+			//the quiz page may or may not have just been incremented
+			quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 			if(quiz.getQuizSize()>quizPage){
 				showQuiz(request, response);
 			}else{
 				showResults(request, response);
 			}
+			
+			
 		}else{
 			for(int i = 0; i< quiz.getQuizSize(); i++){
 				checkAnswer(request, i);
@@ -84,9 +88,11 @@ public class BasicQuizServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		if(q.isCorrect(answer)){
-			out.println("<h1>Correct!</h1>");
+			out.println("<h1>That is correct!</h1>");
+			out.println("<img src=\"http://media0.giphy.com/media/PS7d4tm1Hq6Sk/giphy.gif\">");
 		}else{
-			out.println("<h1>Inorrect!</h1>");
+			out.println("<h1>That is wrong.</h1>");
+			out.println("<img src=\"http://www.reactiongifs.com/r/wrong-gif.gif\" width=\"300\" height=\"250\">");
 			out.println("<p> The correct answers are: "+ q.getAnswerStr()+"</p>");
 		}
 		out.println("<form action=\"BasicQuizServlet\" method=\"post\">");
