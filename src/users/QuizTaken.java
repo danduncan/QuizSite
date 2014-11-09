@@ -8,7 +8,7 @@ public class QuizTaken {
 	public Integer score;
 	public Integer time;
 	
-	public void QuizTaken(Integer ID, Integer QuizID, Integer UserID, Integer Score, String DateTaken, Integer Time){
+	public QuizTaken(Integer ID, Integer QuizID, Integer UserID, String DateTaken,Integer Score,  Integer Time){
 		id = ID;
 		quizid = QuizID;
 		userid = UserID;

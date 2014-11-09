@@ -5,7 +5,7 @@ public class Achievements {
 	public Integer userid;
 	public String dateachieved;
 	
-	public void QuizTaken(Integer Type, Integer UserID, String DateAchieved){
+	public Achievements(Integer Type, Integer UserID, String DateAchieved){
 		type = Type;
 		userid = UserID;
 		dateachieved = DateAchieved;	

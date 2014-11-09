@@ -6,7 +6,7 @@ public class Friends {
 	public String datefriended;
 	public String groupname;
 	
-	public void QuizTaken(Integer Friend1, Integer Friend2, String DateFriended, String GroupName){
+	public Friends(Integer Friend1, Integer Friend2, String DateFriended, String GroupName){
 		friend1 = Friend1;
 		friend2 = Friend2;
 		datefriended = DateFriended;

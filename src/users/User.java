@@ -34,6 +34,7 @@ public class User {
 	//user login
 	public User(Integer ID, UserConnection userconnection){
 		//get information about user
+		quizzestaken = (ArrayList<QuizTaken>) userconnection.getAttribute("quizzestaken", id);
 		id = ID;
 		username = (String) userconnection.getAttribute("username", id);
 		password = (String) userconnection.getAttribute("password", id);
