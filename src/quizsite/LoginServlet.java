@@ -9,11 +9,16 @@ import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import users.*;
+
+import connection.UserConnection;
 
 /**
  * Servlet implementation class LoginServlet
@@ -74,10 +79,18 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("userid",userid);
 			session.setAttribute("username",request.getParameter("username"));
 			
+			//construct userConnection and User object
+			ServletContext sc = request.getServletContext();
+			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
+			System.out.println(dc);
+			User user = new User(userid, new UserConnection(dc));
+			session.setAttribute("user", user);
+			
 			// TODO Need address for welcome page/servlet
-			String welcomePage = "";
+			String welcomePage = "welcomepage.jsp";
 			RequestDispatcher dispatch = request.getRequestDispatcher(welcomePage);
 			dispatch.forward(request, response);
+			
 		}
 	}
 	

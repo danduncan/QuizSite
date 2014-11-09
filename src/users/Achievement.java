@@ -1,11 +1,11 @@
 package users;
 
-public class Achievements {
+public class Achievement {
 	public Integer type;
 	public Integer userid;
 	public String dateachieved;
 	
-	public Achievements(Integer Type, Integer UserID, String DateAchieved){
+	public Achievement(Integer Type, Integer UserID, String DateAchieved){
 		type = Type;
 		userid = UserID;
 		dateachieved = DateAchieved;	
