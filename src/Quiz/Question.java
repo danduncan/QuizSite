@@ -9,7 +9,6 @@ public class Question {
 	public static int PICTURE_RESPONSE = 3;
 	public static String DELIM = "&&&";
 	
-	private int questionID;
 	private int type;
 	private String questionStr;
 	private String answerStr;
@@ -21,11 +20,16 @@ public class Question {
 	}
 	
 	public boolean isCorrect(String responseStr){
+		if(responseStr == null) return false;
 		return responseStr.equals(answerStr);
 	}
 	
 	public String getQuestionStr(){
 		return questionStr;
+	}
+	
+	public String getAnswer(){
+		return answerStr;
 	}
 	
 	public int getType(){
