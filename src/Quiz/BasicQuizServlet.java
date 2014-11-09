@@ -12,63 +12,66 @@ import javax.servlet.http.HttpServletResponse;
 public class BasicQuizServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
+	private static final String START_TIME = "Start Time";
+	private static final String QUIZ = "Quiz";
+	private static final String QUIZ_PAGE = "Quiz Page";
+	private static final String NUM_CORRECT = "Number Correct";
+	private static final String NUM_ATTEMPTED = "Number Attempted";
+	private static final String SHOW_ANSWER = "Show Answer Boolean";
 	
-	// these should end up not as private instance vars
-	private Quiz quiz;
-	private int quizPage;
-	private int numCorrect;
-	private int numAttempted;
-	private boolean showAnswer;
-	private long quizStartTime;
-	private long quizEndTime;
-	
-    public BasicQuizServlet() {
-		quiz = new Quiz(true, false, false);
+    public BasicQuizServlet() {}
+    
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		Quiz quiz = new Quiz(true, true, true);
 		quiz.addQuestion(new FillBlankQuestion("What", "the", "fuck"));
 		quiz.addQuestion(new PictureResponseQuestion("http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
 		quiz.addQuestion(new QuestionResponse("What are you doing?", "IDK"));
 		String answers[] = {"a", "b", "shit"};
 		quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", answers, answers[2]));
-        
-    }
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-        quizPage = 0;
-        numCorrect = 0;
-        numAttempted = 0;
-        showAnswer = false;
-    	quizStartTime = System.currentTimeMillis();
+		
+		request.getSession().setAttribute(QUIZ, quiz);
+		request.getSession().setAttribute(QUIZ_PAGE, 0);
+		request.getSession().setAttribute(NUM_ATTEMPTED, 0);
+		request.getSession().setAttribute(SHOW_ANSWER, false);
+		request.getSession().setAttribute(NUM_CORRECT, 0);
+    	request.getSession().setAttribute(START_TIME, System.currentTimeMillis());
 		showQuiz(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
+		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
+		boolean showAnswer = (Boolean) request.getSession().getAttribute(SHOW_ANSWER);
+		
 		if(quiz.isManyPages()){
 			if(quiz.wantsImmediateCorrection()){
 				if(showAnswer){
 					checkAnswer(request, quizPage);
 					showAnswer(response, request);
-					quizPage++;
+					request.getSession().setAttribute(QUIZ_PAGE, quizPage+1);
 					return;
 				}
 			}else{
 				checkAnswer(request, quizPage);
-				quizPage++;
+				request.getSession().setAttribute(QUIZ_PAGE, quizPage+1);
 			}
 			
 			if(quiz.getQuizSize()>quizPage){
 				showQuiz(request, response);
 			}else{
-				showResults(response);
+				showResults(request, response);
 			}
 		}else{
 			for(int i = 0; i< quiz.getQuizSize(); i++){
 				checkAnswer(request, i);
 			}
-			showResults(response);
+			showResults(request,response);
 		}
 	}
 	
 	private void showAnswer(HttpServletResponse response, HttpServletRequest request) throws IOException{
+		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
+		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
 		String answer = request.getParameter("Answer"+quizPage);
 		Question q = quiz.getQuestion(quizPage);
 		
@@ -84,16 +87,18 @@ public class BasicQuizServlet extends HttpServlet {
 			out.println("<h1>Correct!</h1>");
 		}else{
 			out.println("<h1>Inorrect!</h1>");
-			out.println("<p> The correct answer is: "+q.getAnswer()+"</p>");
+			out.println("<p> The correct answers are: "+ q.getAnswerStr()+"</p>");
 		}
 		out.println("<form action=\"BasicQuizServlet\" method=\"post\">");
 		out.println("<input type=\"submit\" value=\"Continue\"></form>");
 		out.println("</body>");
 		out.println("</html>");
-		showAnswer = false;
+		request.getSession().setAttribute(SHOW_ANSWER, false);
 	}
 
 	private void showQuiz(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
+		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
@@ -105,7 +110,7 @@ public class BasicQuizServlet extends HttpServlet {
 		out.println("<form action=\"BasicQuizServlet\" method=\"post\">");
 		if(quiz.isManyPages()){
 			if(quiz.wantsImmediateCorrection()){
-				showAnswer = true;	
+				request.getSession().setAttribute(SHOW_ANSWER, true);
 			}
 			quiz.printQuizPageToJSP(out, quizPage);
 			out.println("<input type=\"submit\" value=\"Submit Answer\">");
@@ -118,9 +123,11 @@ public class BasicQuizServlet extends HttpServlet {
 		out.println("</html>");
 	}
 	
-	private void showResults(HttpServletResponse response) throws IOException{
-		quizEndTime = System.currentTimeMillis();
-		double secondsElapsed = (double)(quizEndTime-quizStartTime)/1000;
+	private void showResults(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		int numAttempted = (Integer) request.getSession().getAttribute(NUM_ATTEMPTED);
+		int numCorrect = (Integer) request.getSession().getAttribute(NUM_CORRECT);
+		long startTime = (Long) request.getSession().getAttribute(START_TIME);
+		double secondsElapsed = (double)(System.currentTimeMillis()-startTime)/1000;
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
@@ -135,9 +142,14 @@ public class BasicQuizServlet extends HttpServlet {
 	}
 	
 	private void checkAnswer(HttpServletRequest request, int i){
+		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
+		int numAttempted = (Integer) request.getSession().getAttribute(NUM_ATTEMPTED);
+		int numCorrect = (Integer) request.getSession().getAttribute(NUM_CORRECT);
 		String answer = request.getParameter("Answer"+i);
 		Question q = quiz.getQuestion(i);
-		if(answer!= null && q.isCorrect(answer)) numCorrect++;
-		numAttempted++;
+		if(answer!= null && q.isCorrect(answer)){
+			request.getSession().setAttribute(NUM_CORRECT, numCorrect+1);
+		}
+		request.getSession().setAttribute(NUM_ATTEMPTED, numAttempted+1);
 	}
 }

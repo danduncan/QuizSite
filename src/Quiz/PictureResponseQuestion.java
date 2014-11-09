@@ -4,12 +4,14 @@ import java.io.PrintWriter;
 
 public class PictureResponseQuestion extends Question {
 	private String picURL;
-	private String answer;
 	
 	public PictureResponseQuestion(String picURL, String answer){
-		super(Question.PICTURE_RESPONSE, picURL, answer);
+		this(picURL, new String[]{answer});
+	}
+	
+	public PictureResponseQuestion(String picURL, String[] answers){
+		super(Question.PICTURE_RESPONSE, picURL, answers);
 		this.picURL = picURL;
-		this.answer = answer;
 	}
 	
 	public void printToJSP(PrintWriter out, int i){

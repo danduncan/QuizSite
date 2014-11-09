@@ -11,24 +11,37 @@ public class Question {
 	
 	private int type;
 	private String questionStr;
-	private String answerStr;
+	private String[] answerStrs;
 	
 	public Question(int type, String questionStr, String answerStr){
+		this(type, questionStr, new String[]{answerStr});
+	}
+	
+	public Question(int type, String questionStr, String[] answerStrs){
 		this.type = type;
 		this.questionStr = questionStr;
-		this.answerStr = answerStr;
+		this.answerStrs = answerStrs;
 	}
+	
 	
 	public boolean isCorrect(String responseStr){
 		if(responseStr == null) return false;
-		return responseStr.equals(answerStr);
+		for(int i = 0 ; i<answerStrs.length; i++){
+			if(responseStr.equals(answerStrs[i])) return true;
+		}
+		return false;
 	}
 	
 	public String getQuestionStr(){
 		return questionStr;
 	}
 	
-	public String getAnswer(){
+	public String getAnswerStr(){
+		String answerStr = "";
+		for(int i = 0; i<answerStrs.length; i++){
+			answerStr += answerStrs[i];
+			if(i < answerStrs.length-1) answerStr += ", ";
+		}
 		return answerStr;
 	}
 	
