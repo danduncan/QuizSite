@@ -1,11 +1,13 @@
 package users;
 
 public class QuizMade {
-	public Integer QuizID;
-	public String Date;
+	public Integer userid;
+	public Integer quizid;
+	public String date;
 	
-	public QuizMade(Integer id, String date){
-		QuizID = id;
-		Date = date;	
+	public QuizMade(Integer UserID, Integer QuizID, String Date){
+		userid = UserID;
+		quizid = QuizID;
+		date = Date;	
 	}
 }

@@ -1,6 +1,6 @@
 package users;
 
-public class Messages {
+public class Message {
 	public Integer id;
 	public Integer type;
 	public String datesent;
@@ -12,7 +12,7 @@ public class Messages {
 	public String subject;
 	public String body;
 	
-	public Messages(Integer ID, Integer Type, String DateSent, String TimeSent, Integer SenderID, Integer ReceiverID, Boolean Opened, Integer Replied, String Body, String Subject){
+	public Message(Integer ID, Integer Type, String DateSent, String TimeSent, Integer SenderID, Integer ReceiverID, Boolean Opened, Integer Replied, String Subject, String Body){
 		id = ID;
 		type = Type;
 		datesent = DateSent;
