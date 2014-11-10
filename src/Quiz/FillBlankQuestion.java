@@ -17,6 +17,6 @@ public class FillBlankQuestion extends Question{
 	}
 	
 	public void printToJSP(PrintWriter out, int i){
-		out.println(qStr1 + " <input type=\"text\" name=\"Answer"+i+"\"> " + qStr2);
+		out.println(qStr1 + " <input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\"> " + qStr2);
 	}
 }

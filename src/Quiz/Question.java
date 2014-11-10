@@ -2,67 +2,100 @@ package Quiz;
 
 import java.io.PrintWriter;
 
-public class Question {
-	public static int QUESTION_RESPONSE = 0;
-	public static int FILL_IN_BLANK = 1;
-	public static int MULTIPLE_CHOICE = 2;
-	public static int PICTURE_RESPONSE = 3;
-	public static String DELIM = "&&&";
+import javax.servlet.http.HttpServletRequest;
+
+public abstract class Question {
+	public static final int QUESTION_RESPONSE = 0;
+	public static final int FILL_IN_BLANK = 1;
+	public static final int MULTIPLE_CHOICE = 2;
+	public static final int PICTURE_RESPONSE = 3;
+	public static final int MULTI_ANSWER = 4;
 	
-	private int type;
-	private String questionStr;
-	private String[] answerStrs;
+	public static final String ANSWER = "Answer";
+	public static final String DELIM = "&&&";
+	
+	protected int type;
+	protected String questionStr;
+	protected String[][] answerStrs;
+	protected int possiblePoints;
+	
 	
 	public Question(int type, String questionStr, String answerStr){
 		this(type, questionStr, new String[]{answerStr});
 	}
 	
 	public Question(int type, String questionStr, String[] answerStrs){
+		this(type, questionStr, new String[][]{answerStrs});
+	}
+	
+	public Question(int type, String questionStr, String[][] answerStrs){
 		this.type = type;
 		this.questionStr = questionStr;
 		this.answerStrs = answerStrs;
+		this.possiblePoints = answerStrs.length;
 	}
 	
 	
-	public boolean isCorrect(String responseStr){
-		if(responseStr == null) return false;
-		for(int i = 0 ; i<answerStrs.length; i++){
-			if(responseStr.equals(answerStrs[i])) return true;
+	
+	public int numCorrect(String[] responseStrs){
+		if(responseStrs == null) return 0;
+		int numCorrect = 0;
+		for(int i = 0 ; i<responseStrs.length; i++){
+			boolean correct = false;
+			if(responseStrs[i] == null) continue;
+			for(int j = 0; j<answerStrs[i].length; j++){
+				if(responseStrs[i].equals(answerStrs[i][j])) correct = true;
+			}
+			if(correct) numCorrect++;
 		}
-		return false;
+		return numCorrect;
+	}
+	
+	public int numCorrect(String responseStr){
+		return numCorrect(new String[]{responseStr});
+	}
+	
+	public boolean isCorrect(String[] responseStrs){
+		return (numCorrect(responseStrs) == numAttempted());
+	}
+	
+	public boolean isCorrect(String responseStr){
+		return isCorrect(new String[]{responseStr});
+	}
+	
+	
+	public int numAttempted(){
+		return possiblePoints;
 	}
 	
 	public String getQuestionStr(){
 		return questionStr;
 	}
 	
-	public String getAnswerStr(){
-		String answerStr = "";
-		for(int i = 0; i<answerStrs.length; i++){
-			answerStr += answerStrs[i];
-			if(i < answerStrs.length-1) answerStr += ", ";
+	public String[] getAnswerStrs(){
+		String[] answers = new String[possiblePoints];
+		for(int j = 0; j<possiblePoints; j++){
+			String answerStr = "";
+			for(int i = 0; i<answerStrs[j].length; i++){
+				answerStr += answerStrs[j][i];
+				if(i < answerStrs[j].length-1) answerStr += ", ";
+			}
+			answers[j] = answerStr;
 		}
-		return answerStr;
+		return answers;
 	}
 	
 	public int getType(){
 		return type;
 	}
 	
-	public void printToJSP(PrintWriter out, int i){
-		if(type == Question.QUESTION_RESPONSE){
-			QuestionResponse qr = (QuestionResponse)this;
-			qr.printToJSP(out, i);
-		}else if(type == Question.FILL_IN_BLANK){
-			FillBlankQuestion qfb = (FillBlankQuestion)this;
-			qfb.printToJSP(out, i);
-		}else if(type == Question.PICTURE_RESPONSE){
-			PictureResponseQuestion qpr = (PictureResponseQuestion)this;
-			qpr.printToJSP(out, i);
-		}else if(type == Question.MULTIPLE_CHOICE){
-			MultipleChoiceQuestion qmc = (MultipleChoiceQuestion)this;
-			qmc.printToJSP(out, i);
+	public String[] getResponses(HttpServletRequest request, int i){
+		String[] answer = new String[possiblePoints];
+		for(int j = 0; j<possiblePoints; j++){
+			answer[j] = request.getParameter(ANSWER+i+""+j);
 		}
+		return answer;
 	}
 	
+	public abstract void printToJSP(PrintWriter out, int i);
 }

@@ -16,7 +16,7 @@ public class PictureResponseQuestion extends Question {
 	
 	public void printToJSP(PrintWriter out, int i){
 		out.println("<img src="+picURL+" alt="+picURL+"><br>");
-		out.println("<input type=\"text\" name=\"Answer"+i+"\">");
+		out.println("<input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\">");
 	}
 	
 
