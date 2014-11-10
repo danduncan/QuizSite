@@ -9,25 +9,29 @@
 <% 
 	User user = (User) session.getAttribute("user");
 	//welcome back info
-	out.println("<title>Welcome Back "+user.firstname+"!</title>");
+	out.println("<title>Welcome "+user.firstname+"!</title>");
 	out.println(" </head>");
 	out.println("<body>");
-	out.println("<h1>Welcome Back "+user.firstname+"!</h1>");
+	out.println("<h1>Welcome "+user.firstname+"!</h1>");
 	
 	out.println("<h2> Quiz Info </h2>");
 	//quizzes taken info
 	out.println("<p> Quizzes Taken: "+user.numtaken+ "</p>");
 	out.println("<ul type = \"circle\">");
-	for(int i = 0; i < user.quizzestaken.size(); i++){
-		out.println("<li>"+user.quizzestaken.get(i).toString()+"</li>");
+	if (user.numtaken > 0){
+		for(int i = 0; i < user.quizzestaken.size(); i++){
+			out.println("<li>"+user.quizzestaken.get(i).toString()+"</li>");
+		}
 	}
 	out.println("</ul>");
 	
 	//quizzes made info
 	out.println("<p> Quizzes Made: " + user.numcreated + "</p>");
 	out.println("<ul type = \"circle\">");
-	for(int i = 0; i < user.quizzesmade.size(); i++){
-		out.println("<li>"+user.quizzesmade.get(i).toString()+"</li>");
+	if (user.numcreated > 0){
+		for(int i = 0; i < user.quizzesmade.size(); i++){
+			out.println("<li>"+user.quizzesmade.get(i).toString()+"</li>");
+		}
 	}
 	out.println("</ul>");
 	

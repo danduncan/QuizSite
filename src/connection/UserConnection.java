@@ -135,4 +135,7 @@ public class UserConnection {
 	public void setAttribute(String field, Object value, Integer userID){
 		
 	}
+	public void updateUserDatabase(String query){
+		db.executeUpdate(query);
+	}
 }

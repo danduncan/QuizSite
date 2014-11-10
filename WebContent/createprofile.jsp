@@ -1,16 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+     <%@ page import="java.util.*, users.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create Account</title>
+<title> Create Profile </title>
 </head>
 <body>
-<% 
-String name = request.getParameter("username");
-
-out.println("<h1>The User Name " + name + " is Already in Use</h1>");
-%>
-
 <h1> Create your profile </h1>
 <form action="CreateServlet" method="post">
 <p>Please fill out some information to help get you started. </p>
