@@ -21,15 +21,22 @@ public class BasicQuizServlet extends HttpServlet {
 	
     public BasicQuizServlet() {}
     
+    private void makeTestQuiz(HttpServletRequest request){
+    	Quiz quiz = new Quiz(false, true, true);
+    	String[] ans1 = new String[]{"Packers", "packers"};
+    	String[] ans2 = new String[]{"Badgers", "badgers"};
+    	quiz.addQuestion(new MultiAnswerQuestion("Best sports teams?", new String[][]{ans1, ans2}, false));
+    	quiz.addQuestion(new FillBlankQuestion("What", "the", "fuck"));
+    	quiz.addQuestion(new PictureResponseQuestion("http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
+    	quiz.addQuestion(new QuestionResponse("What are you doing?", new String[]{"IDK", "big things"}));
+    	quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", new String[] {"a", "b", "shit"}, "shit"));
+    	request.getSession().setAttribute(QUIZ, quiz);
+    }
+    
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		Quiz quiz = new Quiz(true, true, true);
-		quiz.addQuestion(new FillBlankQuestion("What", "the", "fuck"));
-		quiz.addQuestion(new PictureResponseQuestion("http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
-		quiz.addQuestion(new QuestionResponse("What are you doing?", "IDK"));
-		String answers[] = {"a", "b", "shit"};
-		quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", answers, answers[2]));
+		makeTestQuiz(request);
 		
-		request.getSession().setAttribute(QUIZ, quiz);
 		request.getSession().setAttribute(QUIZ_PAGE, 0);
 		request.getSession().setAttribute(NUM_ATTEMPTED, 0);
 		request.getSession().setAttribute(SHOW_ANSWER, false);
@@ -55,7 +62,6 @@ public class BasicQuizServlet extends HttpServlet {
 				checkAnswer(request, quizPage);
 				request.getSession().setAttribute(QUIZ_PAGE, quizPage+1);
 			}
-			
 			//the quiz page may or may not have just been incremented
 			quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 			if(quiz.getQuizSize()>quizPage){
@@ -64,11 +70,8 @@ public class BasicQuizServlet extends HttpServlet {
 				showResults(request, response);
 			}
 			
-			
 		}else{
-			for(int i = 0; i< quiz.getQuizSize(); i++){
-				checkAnswer(request, i);
-			}
+			for(int i = 0; i< quiz.getQuizSize(); i++) checkAnswer(request, i);
 			showResults(request,response);
 		}
 	}
@@ -76,8 +79,9 @@ public class BasicQuizServlet extends HttpServlet {
 	private void showAnswer(HttpServletResponse response, HttpServletRequest request) throws IOException{
 		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		String answer = request.getParameter("Answer"+quizPage);
+		
 		Question q = quiz.getQuestion(quizPage);
+		String[] answer = q.getResponses(request, quizPage);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -93,7 +97,19 @@ public class BasicQuizServlet extends HttpServlet {
 		}else{
 			out.println("<h1>That is wrong.</h1>");
 			out.println("<img src=\"http://www.reactiongifs.com/r/wrong-gif.gif\" width=\"300\" height=\"250\">");
-			out.println("<p> The correct answers are: "+ q.getAnswerStr()+"</p>");
+			String[] answers = q.getAnswerStrs();
+			if(answers.length == 1){
+				out.println("<p> The answers are: "+ answers[0]+"</p>");
+			}else{
+				out.println("<ul>");
+				for(int i = 0; i<answers.length; i++){
+					out.println("<li>");
+					char c = (char) ('a'+i);
+					out.println("<p> The answers to "+c+".) are: "+ answers[i] +"</p>");
+					out.println("</li>");
+				}
+				out.println("</ul>");
+			}
 		}
 		out.println("<form action=\"BasicQuizServlet\" method=\"post\">");
 		out.println("<input type=\"submit\" value=\"Continue\"></form>");
@@ -134,6 +150,7 @@ public class BasicQuizServlet extends HttpServlet {
 		int numCorrect = (Integer) request.getSession().getAttribute(NUM_CORRECT);
 		long startTime = (Long) request.getSession().getAttribute(START_TIME);
 		double secondsElapsed = (double)(System.currentTimeMillis()-startTime)/1000;
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
@@ -151,11 +168,13 @@ public class BasicQuizServlet extends HttpServlet {
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
 		int numAttempted = (Integer) request.getSession().getAttribute(NUM_ATTEMPTED);
 		int numCorrect = (Integer) request.getSession().getAttribute(NUM_CORRECT);
-		String answer = request.getParameter("Answer"+i);
+		
 		Question q = quiz.getQuestion(i);
-		if(answer!= null && q.isCorrect(answer)){
-			request.getSession().setAttribute(NUM_CORRECT, numCorrect+1);
-		}
-		request.getSession().setAttribute(NUM_ATTEMPTED, numAttempted+1);
+		String[] answer = q.getResponses(request, i);
+		
+		int correct = q.numCorrect(answer);
+		request.getSession().setAttribute(NUM_CORRECT, numCorrect+correct);
+		int attempted = q.numAttempted();
+		request.getSession().setAttribute(NUM_ATTEMPTED, numAttempted+attempted);
 	}
 }
