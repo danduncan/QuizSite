@@ -1,4 +1,4 @@
-package users;
+package users; 
 
 public class QuizMade {
 	public Integer userid;
@@ -9,5 +9,9 @@ public class QuizMade {
 		userid = UserID;
 		quizid = QuizID;
 		date = Date;	
+	}
+	
+	public String toString(){
+		return "QuizID:   " + quizid + "    Date Created: " + date;
 	}
 }
