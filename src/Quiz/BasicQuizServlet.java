@@ -22,12 +22,13 @@ public class BasicQuizServlet extends HttpServlet {
     public BasicQuizServlet() {}
     
     private void makeTestQuiz(HttpServletRequest request){
-    	Quiz quiz = new Quiz(false, true, true);
+    	Quiz quiz = new Quiz(false, false, false);
     	String[] ans1 = new String[]{"Packers", "packers"};
     	String[] ans2 = new String[]{"Badgers", "badgers"};
-    	quiz.addQuestion(new MultiAnswerQuestion("Best sports teams?", new String[][]{ans1, ans2}, false));
+    	String[] ans3 = new String[]{"bears", "Bears"};
+    	quiz.addQuestion(new MultiAnswerQuestion("Best sports teams?", new String[][]{ans1, ans2, ans3}, false));
     	quiz.addQuestion(new FillBlankQuestion("What", "the", "fuck"));
-    	quiz.addQuestion(new PictureResponseQuestion("http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
+    	quiz.addQuestion(new PictureResponseQuestion("What is the name of this building?","http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
     	quiz.addQuestion(new QuestionResponse("What are you doing?", new String[]{"IDK", "big things"}));
     	quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", new String[] {"a", "b", "shit"}, "shit"));
     	request.getSession().setAttribute(QUIZ, quiz);
