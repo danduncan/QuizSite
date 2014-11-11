@@ -1,36 +1,64 @@
 package Quiz;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import connection.QuizConnection;
+
 public class Quiz {
-	private List<Question> questions;
-	private boolean randomOrder;
-	private boolean manyPages;
-	private boolean immediateCorrection;
+	public Integer id;
+	public Integer authorid;
+	public String datemade;
+	public String name;
+	public Integer practicemode;
+	public boolean multipage;
+	public boolean randomorder;
+	public boolean immediatecorrection;
+	public Integer numquestions;
+	public Integer numtaken;
+	public ArrayList<Question> questions = new ArrayList<Question>();
+	private QuizConnection quizconnection;
 	
 	public Quiz(boolean randomOrder, boolean manyPages, boolean immediateCorrection){
-		this.randomOrder = randomOrder;
-		this.manyPages = manyPages;
-		this.immediateCorrection = immediateCorrection;
-		questions = new LinkedList<Question>();
+		this.randomorder = randomOrder;
+		this.multipage = manyPages;
+		this.immediatecorrection = immediateCorrection;
+		questions = new ArrayList<Question>();
+	}
+	
+	public Quiz(Integer ID, QuizConnection qc){
+		id = ID;
+		quizconnection = qc;
+		
+		authorid = Integer.parseInt((String) quizconnection.getAttribute("authorid", id));
+		datemade = (String) quizconnection.getAttribute("datemade", id);
+		name = (String) quizconnection.getAttribute("name", id);
+		practicemode = Integer.parseInt((String) quizconnection.getAttribute("practicemode", id));
+		multipage = Boolean.parseBoolean((String) quizconnection.getAttribute("multipage", id)) ;
+		randomorder = Boolean.parseBoolean((String) quizconnection.getAttribute("randomorder", id));
+		immediatecorrection = Boolean.parseBoolean((String) quizconnection.getAttribute("immediatecorrection", id));
+		numquestions = Integer.parseInt((String) quizconnection.getAttribute("numquestions", id));
+		numtaken = Integer.parseInt((String) quizconnection.getAttribute("numtaken", id));
+		questions = (ArrayList<Question>) quizconnection.getAttribute("questions", id);
+		
 	}
 	
 	public void addQuestion(Question q){
 		questions.add(q);
-		if(randomOrder){
+		if(randomorder){
 			Collections.shuffle(questions);
 		}
 	}
 	
 	public boolean isManyPages(){
-		return manyPages;
+		return multipage;
 	}
 	
 	public boolean wantsImmediateCorrection(){
-		return immediateCorrection;
+		return immediatecorrection;
 	}
 	
 	public Question getQuestion(int i){
