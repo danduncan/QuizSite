@@ -10,6 +10,7 @@ public abstract class Question {
 	public static final int MULTIPLE_CHOICE = 2;
 	public static final int PICTURE_RESPONSE = 3;
 	public static final int MULTI_ANSWER = 4;
+	public static final int MULTI_CHOICE_MULTI_ANSWER = 5;
 	
 	public static final String ANSWER = "Answer";
 	public static final String STRING_DELIM = "&&&";
