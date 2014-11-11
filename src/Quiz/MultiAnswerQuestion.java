@@ -1,7 +1,9 @@
 package Quiz;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -15,33 +17,42 @@ public class MultiAnswerQuestion extends Question {
 	
 	public MultiAnswerQuestion(int type, String questionStr, String answerStr){
 		super(type, questionStr, answerStr);
-		orderedResponses = false;
+		orderedResponses = true;
 	}
 	
 	public MultiAnswerQuestion(int type, String questionStr, String[] answerStrs){
 		super(type, questionStr, answerStrs);
-		orderedResponses = false;
+		orderedResponses = true;
 	}
 	
 	@Override
 	public int numCorrect(String[] responseStrs){
 		if(orderedResponses == true){
 			return super.numCorrect(responseStrs);
-		}else{
-			Set<String> responseSet = new HashSet<String>();
-			for(int i = 0; i<responseStrs.length ; i++){
-				if(responseStrs[i] != null) responseSet.add(responseStrs[i]);
-			}
-			
-			Set<String> answerSet = new HashSet<String>();
+		}else{			
+			List<Set<String>> setList = new ArrayList<Set<String>>();
 			for(int i = 0; i<answerStrs.length; i++){
+				Set<String> answerSet = new HashSet<String>();
 				for(int j=0; j<answerStrs[i].length; j++){
 					if(answerStrs[i][j] != null) answerSet.add(answerStrs[i][j]);
 				}
+				setList.add(answerSet);
 			}
+			boolean[] booleanArr = new boolean[setList.size()];
 			
-			answerSet.retainAll(responseSet);			
-			return answerSet.size();
+			int correctAnswers = 0;
+			for(int i = 0; i<responseStrs.length; i++){
+				if(responseStrs[i]== null) continue;
+				String response = responseStrs[i];
+				for(int j = 0; j<setList.size(); j++){
+					if(setList.get(j).contains(response) && booleanArr[j] == false){
+						booleanArr[j] = true;
+						correctAnswers++;
+						break;
+					}
+				}
+			}
+			return correctAnswers;
 		}
 	}
 	
