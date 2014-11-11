@@ -92,32 +92,32 @@ public class SiteManager {
 	 * PEEKING an ID for X returns the current value for nextXID without changing anything
 	 * @return int nextID
 	 */
-	public int getNextUserID() {
+	public int popNextUserID() {
 		this.totalUsers++;
 		return this.nextUserID++;
 	}
-	public int getNextQuizID() {
+	public int popNextQuizID() {
 		this.totalQuizzes++;
 		return this.nextQuizID++;
 	}
-	public int getNextQuestionID() {
+	public int popNextQuestionID() {
 		this.totalQuestions++;
 		return this.nextQuestionID++;
 	}
-	public int getNextMessageID() {
+	public int popNextMessageID() {
 		this.totalMessages++;
 		return this.nextMessageID++;
 	}
-	public int peekNextUserID() {
+	public int getNextUserID() {
 		return this.nextUserID;
 	}
-	public int peekNextQuizID() {
+	public int getNextQuizID() {
 		return this.nextQuizID;
 	}
-	public int peekNextQuestionID() {
+	public int getNextQuestionID() {
 		return this.nextQuestionID;
 	}
-	public int peekNextMessageID() {
+	public int getNextMessageID() {
 		return this.nextMessageID;
 	}
 	
@@ -157,7 +157,22 @@ public class SiteManager {
 	}
 	
 	// Functions to increment or decrement ivars
-	// Note that totalUsers, totalQuizzes, totalQuestions, and totalMessages are incremented by their getters
+	public void addUser() {
+		nextUserID++;
+		totalUsers++;
+	}
+	public void addQuiz() {
+		nextQuizID++;
+		totalQuizzes++;
+	}
+	public void addQuestion() {
+		nextQuestionID++;
+		totalQuestions++;
+	}
+	public void addMessage() {
+		nextMessageID++;
+		totalMessages++;
+	}
 	public void deleteUser() {
 		totalUsers--;
 	}
@@ -190,7 +205,7 @@ public class SiteManager {
 	}
 	
 	// Write all data to server
-	public void saveData() {
+	public void updateDatabase() {
 		updateIVar(colNextUserID,nextUserID);
 		updateIVar(colNextQuizID,nextQuizID);
 		updateIVar(colNextQuestionID,nextQuestionID);

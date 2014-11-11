@@ -39,9 +39,14 @@ public class ServerStartupListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent arg0)  { 
          // TODO Auto-generated method stub
     	ServletContext sc = arg0.getServletContext();
-    	SiteManager sm = (SiteManager) sc.getAttribute("SiteManager");
-    	sm.saveData();
     	
+    	// Save all site metrics
+    	SiteManager sm = (SiteManager) sc.getAttribute("SiteManager");
+    	sm.updateDatabase();
+    	
+    	// Save other site data
+    	
+    	// Kill the database connection (do this last)
     	DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
     	dc.closeConnection();
     }
