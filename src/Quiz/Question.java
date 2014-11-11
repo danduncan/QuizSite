@@ -12,7 +12,8 @@ public abstract class Question {
 	public static final int MULTI_ANSWER = 4;
 	
 	public static final String ANSWER = "Answer";
-	public static final String DELIM = "&&&";
+	public static final String STRING_DELIM = "&&&";
+	public static final String ARRAY_DELIM = "%%%";
 	
 	protected int type;
 	protected String questionStr;
