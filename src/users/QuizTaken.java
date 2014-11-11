@@ -16,4 +16,8 @@ public class QuizTaken {
 		datetaken = DateTaken;
 		time = Time;		
 	}
+	public String toString(){
+		return "Quiz ID:     " + quizid + "      Date Taken:  " +datetaken
+			+ "      Score:     " +score + "      Time to Completion:     " + time + "s";
+	}
 }

@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 			
 			// Forward user to the try-again page
 			// TODO Need address for try-again page/servlet
-			String tryAgainPage = "";
+			String tryAgainPage = "tryagain.html";
 			RequestDispatcher dispatch = request.getRequestDispatcher(tryAgainPage);
 			dispatch.forward(request, response);
 		} else {
@@ -82,7 +82,6 @@ public class LoginServlet extends HttpServlet {
 			//construct userConnection and User object
 			ServletContext sc = request.getServletContext();
 			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
-			System.out.println(dc);
 			User user = new User(userid, new UserConnection(dc));
 			session.setAttribute("user", user);
 			

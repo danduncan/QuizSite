@@ -27,21 +27,8 @@ public class UserConnection {
 			
 			//construct object from query results
 			ArrayList<QuizTaken> quizzestaken = new ArrayList<QuizTaken>();
-			/*Integer id = 0;
-			Integer quizid = 0;
-			Integer userid = 0;
-			String datetaken = "";
-			Integer score = 0;
-			Integer time = 0;*/
-			
 			//create list of quizzes taken
 			while(rs.next()) {
-				/*id = rs.getInt("q.id");
-				quizid = rs.getInt("q.quizid");
-				userid = rs.getInt("u.id");
-				datetaken = rs.getString("q.datetaken");
-				score = rs.getInt("q.score");
-				time = rs.getInt("q.time");*/
 				quizzestaken.add(new QuizTaken(rs.getInt("q.id"),rs.getInt("q.quizid"),rs.getInt("u.id"),rs.getString("q.datetaken"),rs.getInt("q.score"),rs.getInt("q.time")));
 			}
 			
@@ -55,17 +42,6 @@ public class UserConnection {
 			
 			//construct object from query results
 			ArrayList<Message> messages = new ArrayList<Message>();
-			/*Integer id = 0;
-			Integer type = 0;
-			String datesent = "";
-			String timesent = "";
-			Integer senderid = 0;
-			Integer receiverid = 0;
-			Boolean opened = false;
-			Integer replied = 0;
-			String subject = "";
-			String body = "";*/
-			//create list of IPAddresses
 			while(rs.next()) {
 				messages.add(new Message(rs.getInt("id"),rs.getInt("type"),rs.getString("datesent"),rs.getString("timesent"), rs.getInt("senderid"), rs.getInt("receiverid"), rs.getBoolean("opened"), rs.getInt("replied"),rs.getString("subject"), rs.getString("body")));
 			}
@@ -158,5 +134,8 @@ public class UserConnection {
 	}
 	public void setAttribute(String field, Object value, Integer userID){
 		
+	}
+	public void updateUserDatabase(String query){
+		db.executeUpdate(query);
 	}
 }

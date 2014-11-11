@@ -10,4 +10,8 @@ public class Achievement {
 		userid = UserID;
 		dateachieved = DateAchieved;	
 	}
+	
+	public String toString(){
+		return "Achievement: " + type + "  Date Achieved: " + dateachieved;
+	}
 }

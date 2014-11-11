@@ -24,4 +24,8 @@ public class Message {
 		subject = Subject;
 		body = Body;
 	}
+	public String toString(){
+		return "From: " + senderid + "  Sent: " + datesent + "  Type: " + type + " Subject: " + subject;
+	}
+	
 }
