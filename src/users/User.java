@@ -14,7 +14,7 @@ public class User {
 	public String email;
 	public String datejoined;
 	public String profilepicture;
-	public int numfriends;
+	public Integer numfriends;
 	public ArrayList<IPAddress> ipaddresses;
 	public Integer numcreated;
 	public Integer numtaken;

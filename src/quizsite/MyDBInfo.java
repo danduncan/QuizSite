@@ -12,23 +12,30 @@ public class MyDBInfo {
 	public static final boolean MYDB_LOGINSKIPHASH = true; // Skip hashing passwords if set to true (for testing)
 
 	// Names of primary tables
-	public static final String GLOBALTABLE = "globals";
+	public static final String SITEMANAGERTABLE = "siteManager";
 	public static final String USERTABLE = "users";
 	public static final String QUIZZESTABLE = "quizzes";
-	public static final String QUESTIONSTABLE = "questions";
 	public static final String ACHIEVEMENTSTABLE = "achievements";
 	public static final String FRIENDSTABLE = "friends";
 	public static final String MESSAGESTABLE = "messages";
-	public static final String HIGHSCORESTABLE = "highscores";
-	public static final String QUIZZESTAKENTABLE = "quizzestaken";
+	public static final String HIGHSCORESTABLE = "highScores";
+	public static final String QUIZZESTAKENTABLE = "quizzesTaken";
+	
+	// Names of question tables (also should be contained in questionTypes object)
+	public static final String QUESTIONFILLBLANK = "qFillBlank";
+	public static final String QUESTIONMULTIPLECHOICE = "qMultipleChoice";
+	public static final String QUESTIONPICTURE = "qPicture";
+	public static final String QUESTIONMULTIPLEANSWER = "qMultipleAnswer";
+	public static final String QUESTIONMULTIPLECHOICEMULTIPLEANSWER = "qMultipleChoiceMultipleAnswer";
+	public static final String QUESTIONRESPONSE = "qResponse";
 	
 	// Names of helper tables
-	public static final String QUESTIONTYPESTABLE = "questiontypes";
-	public static final String MESSAGETYPESTABLE = "messagetypes";
-	public static final String ACHIEVEMENTTYPESTABLE = "achievementtypes";
-	public static final String QUIZCATEGORIESTABLE = "quizcategories";
-	public static final String QUESTIONCATEGORIESTABLE = "questioncategories";
-	public static final String IPADDRESSTABLE = "ipaddresses";
+	public static final String QUESTIONTYPESTABLE = "questionTypes";
+	public static final String MESSAGETYPESTABLE = "messageTypes";
+	public static final String ACHIEVEMENTTYPESTABLE = "achievementTypes";
+	public static final String QUIZCATEGORIESTABLE = "quizCategories";
+	public static final String QUESTIONCATEGORIESTABLE = "questionCategories";
+	public static final String IPADDRESSTABLE = "ipAddresses";
 	
 	
 	
