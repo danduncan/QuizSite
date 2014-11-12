@@ -22,6 +22,25 @@ public abstract class Question {
 	protected int possiblePoints;
 	
 	
+	public Integer id;
+	public Integer quizid;
+	public Integer qNumber;
+	public Integer pagenumber;
+	public Integer questiontime;
+	public Integer numattempted;
+	public Integer numcorrect;
+	
+	
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect){
+		id = ID;
+		quizid = QuizID;
+		qNumber = QNumber;
+		pagenumber = PageNumber;
+		questiontime = QuestionTime;
+		numattempted = NumAttempted;
+		numcorrect = NumCorrect;
+	}
+	
 	public Question(int type, String questionStr, String answerStr){
 		this(type, questionStr, new String[]{answerStr});
 	}

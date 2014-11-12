@@ -8,8 +8,19 @@ import java.util.Set;
 
 
 public class MultiAnswerQuestion extends Question {
+	private String question;
+	private String[][] answer;
+	private boolean ordered;
 	private boolean orderedResponses;
 	
+	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Question, String[][] Answer, boolean Ordered){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect);
+
+		question = Question;
+		answer = Answer;
+		ordered = Ordered;
+		
+	}
 	public MultiAnswerQuestion(String questionStr, String[][] answerStrs, boolean orderedResponses){
 		super(Question.MULTI_ANSWER, questionStr, answerStrs);
 		this.orderedResponses = orderedResponses;
