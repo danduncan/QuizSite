@@ -10,6 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MultiChoiceMultiAnswerQuestion extends Question {
 	private String[] answerChoices;
+	private String question;
+	private String[] answer;
+	private boolean randomizeAnswers;
+	
+	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect);
+		answerChoices = AnswerChoices;
+		question = Question;
+		answer = Answer;
+		randomizeAnswers = RandomizeAnswers;
+		
+	}
 	
 	public MultiChoiceMultiAnswerQuestion(String question, String[] answerChoices, String correctAnswer){
 		this(question, answerChoices, new String[]{correctAnswer});
