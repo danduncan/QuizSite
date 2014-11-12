@@ -1,21 +1,59 @@
 package Quiz;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class MultiChoiceMultiAnswerQuestion extends Question {
-
+	private String[] answerChoices;
 	
-	
-	public MultiChoiceMultiAnswerQuestion(int type, String questionStr,
-			String answerStr) {
-		super(type, questionStr, answerStr);
-		// TODO Auto-generated constructor stub
+	public MultiChoiceMultiAnswerQuestion(String question, String[] answerChoices, String correctAnswer){
+		this(question, answerChoices, new String[]{correctAnswer});
 	}
-
+	
+	public MultiChoiceMultiAnswerQuestion(String question, String[] answerChoices, String[] correctAnswers){
+			super(Question.MULTI_CHOICE_MULTI_ANSWER, question, correctAnswers);
+			this.answerChoices = answerChoices;
+	}
+	
 	@Override
-	public void printToJSP(PrintWriter out, int i) {
-		// TODO Auto-generated method stub
-
+	public String[] getResponses(HttpServletRequest request, int i){
+		List<String> answers = new ArrayList<String>();
+		for(int j = 0; j<answerChoices.length; j++){
+			String ans = request.getParameter(ANSWER+i+""+j);
+			if(ans != null) answers.add(ans);
+		}
+		return(String[]) answers.toArray(new String[]{});
 	}
-
+	
+	@Override
+	public int numCorrect(String[] responseStrs){
+		Set<String> answers = new HashSet<String>();
+		for(int k = 0; k<answerStrs.length; k++){
+			for(int j=0; j<answerStrs[k].length; j++){
+				answers.add(answerStrs[k][j]);
+			}
+		}
+		
+		Set<String> responses = new HashSet<String>();
+		for(int i = 0; i<responseStrs.length; i++){
+			responses.add(responseStrs[i]);
+		}
+		
+		int numCorrect = 0;
+		if(responses.equals(answers)) numCorrect = 1;
+		
+		return numCorrect;
+	}
+	
+	public void printToJSP(PrintWriter out, int i) {
+		out.println(getQuestionStr() + "<br>");
+		for(int j = 0 ; j < answerChoices.length; j++){
+			out.println("<input type=\"checkbox\" name=\""+Question.ANSWER+i+""+j+"\" value="+ answerChoices[j] +">" + answerChoices[j] + "<br>");
+		}
+	}
 }
