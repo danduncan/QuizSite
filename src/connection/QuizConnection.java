@@ -19,13 +19,16 @@ public class QuizConnection {
 		db = DB;
 		questiontypes = QuestionTypes;
 	}
-	
+	//this function will retrieve the specified object from the database based on the quiz id
 	public Object getAttribute(String field, Integer ID){
 		String query;
 		try{
+			//check what we are retrieving
 			if (field.equals("questions")){
 				for (int i = 0; i < questiontypes.size(); i++){
 					query = "SELECT * FROM "+questiontypes.get(i).tableName +" WHERE (id = "+ID+")";
+					System.out.print(query);
+					
 					
 				
 				}
