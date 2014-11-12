@@ -1,5 +1,7 @@
 package Quiz;
 
+import quizsite.DatabaseConnection;
+
 public class QuestionType {
 	public Integer id;
 	public String name;
@@ -11,4 +13,9 @@ public class QuestionType {
 		name = Name;
 		tableName = TableName;
 	}
+	//function to add questiontype to database
+	public void addNewType(){
+		
+	}
+
 }
