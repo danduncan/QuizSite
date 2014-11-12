@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CreateQuizServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private static final String ORDER_MATTERS = "Order Matters";
 	private static final String RANDOM_ORDER = "Random Order";
 	private static final String MULTI_PAGE = "Mutli Page";
 	private static final String CORRECTION = "Immediate Correction";
@@ -24,7 +25,10 @@ public class CreateQuizServlet extends HttpServlet {
 	private static final String ANSWER = "Answer";
 	private static final String IMAGE_URL = "Image URL";
 	private static final String MC_CHOICES = "Multiple Choice Choices";
+	private static final String NUM_ANSWERS = "Number of answers";
 	private static final String STR_DELIM = ";";
+	private static final String ARRAY_DELIM = "&&&";
+	
 	
 	private static final String QUESTION_RESPONSE = "Question Response";
 	private static final String PIC_RESPONSE = "Picture Response";
@@ -32,8 +36,6 @@ public class CreateQuizServlet extends HttpServlet {
 	private static final String MULTIPLE_CHOICE = "Multiple Choice";
 	private static final String MULTI_ANSWER = "Multiple Answer";
 	private static final String MULTI_ANSWER_MULTI_CHOICE = "Multiple Choice with Mulitple Answers";
-	
-	private static final String NUM_ANSWERS = "Number of answers";
 
     public CreateQuizServlet(){}
 
@@ -41,16 +43,21 @@ public class CreateQuizServlet extends HttpServlet {
 		createQuizPage(response);
 	}
 	
-	private void createQuizPage(HttpServletResponse response) throws IOException{
+	private PrintWriter writeHeader(HttpServletResponse response, String title, String headline) throws IOException{
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.println("<!DOCTYPE html>");
 		out.println("<head>");
 		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Create Quiz</title>");
+		out.println("<title>"+title+"</title>");
 		out.println("</head>");
 		out.println("<body>");
-		out.println("<h1>Select Quiz Options</h1>");
+		out.println("<h1>"+headline+"</h1>");
+		return out;
+	}
+	
+	private void createQuizPage(HttpServletResponse response) throws IOException{
+		PrintWriter out = writeHeader(response, "Create Quiz", "Select Quiz Options");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
 		out.println("Should the questions be displayed in random order?<br>");
 		out.println("<select name=\""+RANDOM_ORDER+"\">");
@@ -68,22 +75,13 @@ public class CreateQuizServlet extends HttpServlet {
 		out.println("<option value=\"true\">Yes</option>");
 		out.println("</select>");
 		out.println("<br><input type=\"submit\" value=\"Create Questions\"></form>");
-		out.println("</body>");
-		out.println("</html>");
+		out.println("</body></html>");
 	}
 	
 	private void createQuestionPage(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Create a Question</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<h1>Create a Question </h1>");
+		PrintWriter out = writeHeader(response, "Create a Question", "Create a Question");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
-		out.println("<br>What type of question would you like to add?<br>");
+		out.println("<br>What type of question would you like to add to your quiz?<br>");
 		out.println("<select name=\""+QUESTION_TYPE+"\">");
 		out.println("<option value=\""+QUESTION_RESPONSE+"\">"+QUESTION_RESPONSE+"</option>");
 		out.println("<option value=\""+FILL_BLANK+"\">"+FILL_BLANK+"</option>");
@@ -94,118 +92,110 @@ public class CreateQuizServlet extends HttpServlet {
 		out.println("</select>");
 		out.println("<br><input type=\"submit\" value=\"Add Question\"></form>");
 		out.println("<form action=\"BasicQuizServlet\" method=\"get\">");
-		out.println("If you are done adding questions please press the \"Complete Quiz\" button.<br>");
+		out.println("If you are done adding questions please press the \"Complete Quiz\" button below.<br>");
 		out.println("<input type=\"submit\" value=\"Complete Quiz\"></form>");
-		out.println("</body>");
-		out.println("</html>");	
+		out.println("</body></html>");
 	}
 	
 	private void ShowQuestionResponse(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Create a Question</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<h1>"+ QUESTION_RESPONSE+"</h1>");
+		PrintWriter out = writeHeader(response, "Create a Question", QUESTION_RESPONSE);
 		out.println("Please fill in the question and answer fields below.");
-		out.println("If the question has multiple answers please separate each one by a \";\".");
+		out.println("If the question has multiple answers then please separate each one by a \";\".");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
 		out.println("Question: <input type=\"text\" name=\""+QUESTION+"\"><br>");
 		out.println("Answers: <input type=\"text\" name=\""+ANSWER+"\"><br>");
 		out.println("<br><input type=\"submit\" value=\"Complete Question\"></form>");
-		out.println("</body>");
-		out.println("</html>");
+		out.println("</body></html>");
 	}
 	
 	private void ShowFillBlank(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Create a Question</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<h1>"+FILL_BLANK+"</h1>");
+		PrintWriter out = writeHeader(response, "Create a Question", FILL_BLANK);
 		out.println("Please fill in the question and answer fields below.");
-		out.println("If the question has multiple answers please separate each one by a \";\".");
+		out.println("If the question has multiple answers then please separate each one by a \";\".");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
-		out.println("Question part one: <input type=\"text\" name=\""+QUESTION+"\"><br>");
-		out.println("Answers: <input type=\"text\" name=\""+ANSWER+"\"><br>");
-		out.println("Question part two: <input type=\"text\" name=\""+QUESTION+2+"\"><br>");
+		out.println("Question before blank: <input type=\"text\" name=\""+QUESTION+"\"><br>");
+		out.println("Answers for blank: <input type=\"text\" name=\""+ANSWER+"\"><br>");
+		out.println("Question after blank: <input type=\"text\" name=\""+QUESTION+2+"\"><br>");
 		out.println("<br><input type=\"submit\" value=\"Complete Question\"></form>");
-		out.println("</body>");
-		out.println("</html>");
+		out.println("</body></html>");
 	}
 	
 	private void ShowPictureResponse(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Create a Question</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<h1>"+PIC_RESPONSE+"</h1>");
-		out.println("Please fill in the question and answer fields below.");
-		out.println("If the question has multiple answers please separate each one by a \";\".");
+		PrintWriter out = writeHeader(response, "Create a Question", PIC_RESPONSE);
+		out.println("Please fill in the question, image URL, and answer fields below.");
+		out.println("If the question has multiple answers then please separate each one by a \";\".");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
 		out.println("Question: <input type=\"text\" name=\""+QUESTION+"\"><br>");
 		out.println("Image URL: <input type=\"text\" name=\""+IMAGE_URL+"\"><br>");
 		out.println("Answers: <input type=\"text\" name=\""+ANSWER+"\"><br>");
 		out.println("<br><input type=\"submit\" value=\"Complete Question\"></form>");
-		out.println("</body>");
-		out.println("</html>");
+		out.println("</body></html>");
 	}
 	
 	private void ShowMultipleChoice(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Create a Question</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<h1>"+MULTIPLE_CHOICE+"</h1>");
-		out.println("Please fill in the question, choice, and answer fields below. Please separate choices by a \";\".");
-		out.println("The question should have one correct answer.");
+		PrintWriter out = writeHeader(response, "Create a Question", MULTIPLE_CHOICE);
+		out.println("Please fill in the question, choices, and answer fields below. Please separate choices by a \";\".");
+		out.println("This question type may only have one correct answer.");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
 		out.println("Question: <input type=\"text\" name=\""+QUESTION+"\"><br>");
 		out.println("Choices: <input type=\"text\" name=\""+MC_CHOICES+"\"><br>");
 		out.println("Answers: <input type=\"text\" name=\""+ANSWER+"\"><br>");
 		out.println("<br><input type=\"submit\" value=\"Complete Question\"></form>");
-		out.println("</body>");
-		out.println("</html>");
+		out.println("</body></html>");
 	}
 	
 	private void ShowMultiChoiceMultiAnswer(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>Create a Question</title>");
-		out.println("</head>");
-		out.println("<body>");
-		out.println("<h1>"+MULTI_ANSWER_MULTI_CHOICE+"</h1>");
-		out.println("Please fill in the question, choice, and answer fields below. Please separate choices by a \";\".");
-		out.println("If the question has multiple answers please separate each one by a \";\".");
+		PrintWriter out = writeHeader(response, "Create a Question", MULTI_ANSWER_MULTI_CHOICE);
+		out.println("Please fill in the question, choices, and answer fields below. Please separate choices by a \";\".");
+		out.println("If the question has multiple answers then please separate each one by a \";\".");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
 		out.println("Question: <input type=\"text\" name=\""+QUESTION+"\"><br>");
 		out.println("Choices: <input type=\"text\" name=\""+MC_CHOICES+"\"><br>");
 		out.println("Answers: <input type=\"text\" name=\""+ANSWER+"\"><br>");
 		out.println("<br><input type=\"submit\" value=\"Complete Question\"></form>");
-		out.println("</body>");
-		out.println("</html>");
+		out.println("</body></html>");
 	}
 	
-	private String[] stringToArray(String str){
-		String[] arr = str.split(STR_DELIM);
+	private void ShowMultiAnswer(HttpServletRequest request, HttpServletResponse response, int numAnswerFields) throws IOException{
+		request.getSession().setAttribute(NUM_ANSWERS, numAnswerFields);
+		PrintWriter out = writeHeader(response, "Create a Question", MULTI_ANSWER);
+		if(numAnswerFields == 0){
+			out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
+			out.println("Does the order of the answers matter? <br>");
+			out.println("<select name=\""+ORDER_MATTERS+"\">");
+			out.println("<option value=\"false\">No</option>");
+			out.println("<option value=\"true\">Yes</option>");
+			out.println("</select><br>");
+			out.println("How many answers does the question have?");
+			out.println("<select name=\""+NUM_ANSWERS+"\">");
+			out.println("<option value=\"1\">1</option>");
+			out.println("<option value=\"2\">2</option>");
+			out.println("<option value=\"3\">3</option>");
+			out.println("<option value=\"4\">4</option>");
+			out.println("<option value=\"5\">5</option>");
+			out.println("<option value=\"6\">6</option>");
+			out.println("<option value=\"7\">7</option>");
+			out.println("<option value=\"8\">8</option>");
+			out.println("</select><br>");
+			out.println("<input type=\"hidden\" name=\""+QUESTION_TYPE+"\" value=\""+MULTI_ANSWER+"\">");
+			out.println("<input type=\"submit\" value=\"Update Settings\"></form>");
+		}else{
+			String orderMatters = request.getParameter(ORDER_MATTERS);
+			out.println("Please fill in the question and answer fields below.");
+			out.println("If multiple answers are acceptable for an answer field then please separate each one by a \";\".");
+			out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
+			out.println("Question: <input type=\"text\" name=\""+QUESTION+"\"><br>");
+			for(int i=0; i<numAnswerFields; i++){
+				out.println("Answers: <input type=\"text\" name=\""+ANSWER+i+"\"><br>");	
+			}
+			out.println("<input type=\"hidden\" name=\""+ORDER_MATTERS+"\" value=\""+orderMatters+"\">");
+			out.println("<br><input type=\"submit\" value=\"Complete Question\"></form>");
+			out.println("</body></html>");
+		}
+	}
+	
+	private String[] stringToArray(String str, String delim){
+		String[] arr = str.split(delim);
 		for(int i = 0; i<arr.length; i++){
 			arr[i] = arr[i].trim();
 		}
@@ -217,10 +207,16 @@ public class CreateQuizServlet extends HttpServlet {
 		String[] answers = null;
 		
 		if(qType.equals(MULTI_ANSWER)){
-			
+			Integer numAnswerFields = (Integer)request.getSession().getAttribute(NUM_ANSWERS);
+			String ans = "";
+			for(int i=0; i<numAnswerFields; i++){
+				ans += request.getParameter(ANSWER+i);
+				ans += ARRAY_DELIM;
+			}
+			answers = stringToArray(ans, ARRAY_DELIM);
 		}else{
 			String ans = request.getParameter(ANSWER);
-			answers = stringToArray(ans);
+			answers = stringToArray(ans, STR_DELIM);
 		}
 		return answers;
 	}
@@ -251,12 +247,14 @@ public class CreateQuizServlet extends HttpServlet {
 			}else if(qType.equals(MULTI_ANSWER_MULTI_CHOICE)){
 				ShowMultiChoiceMultiAnswer(request, response);
 			}else if(qType.equals(MULTI_ANSWER)){
-				
+				String numAnswerFields = request.getParameter(NUM_ANSWERS);
+				int fields = 0;
+				if(numAnswerFields != null) fields = Integer.parseInt(numAnswerFields);
+				ShowMultiAnswer(request, response, fields);
 			}
 		}else{
 			qType = (String)request.getSession().getAttribute(QUESTION_TYPE);
 			Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ_CREATED);
-			
 			String question = request.getParameter(QUESTION);
 			String answers[] = getAnswers(request);
 			
@@ -271,14 +269,21 @@ public class CreateQuizServlet extends HttpServlet {
 				q = new PictureResponseQuestion(question, url, answers);
 			}else if(qType.equals(MULTIPLE_CHOICE)){
 				String choiceStr = request.getParameter(MC_CHOICES);
-				String[] choices = stringToArray(choiceStr);
+				String[] choices = stringToArray(choiceStr, STR_DELIM);
 				q = new MultipleChoiceQuestion(question, choices, answers[0]);
 			}else if(qType.equals(MULTI_ANSWER_MULTI_CHOICE)){
 				String choiceStr = request.getParameter(MC_CHOICES);
-				String[] choices = stringToArray(choiceStr);
+				String[] choices = stringToArray(choiceStr, STR_DELIM);
 				q = new MultiChoiceMultiAnswerQuestion(question, choices, answers);
 			}else if(qType.equals(MULTI_ANSWER)){
-				
+				String orderMatters = request.getParameter(ORDER_MATTERS);
+				List<String[]> answerList = new LinkedList<String[]>();
+				for(int i=0; i<answers.length; i++){
+					if(answers[i] == null) continue; 
+					answerList.add(stringToArray(answers[i], STR_DELIM));
+				}
+				String[][] answerArray = answerList.toArray(new String[][]{});
+				q = new MultiAnswerQuestion(question, answerArray, Boolean.parseBoolean(orderMatters));
 			}
 			quiz.addQuestion(q);
 			createQuestionPage(request, response);
