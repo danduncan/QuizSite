@@ -1,6 +1,7 @@
 package connection;
 
 import java.sql.*;
+import quizsite.MyDBInfo;
 import java.util.*;
 
 import users.*;
@@ -19,9 +20,9 @@ public class UserConnection {
 		String query;
 		try{		
 		//if statements for all unique objects we need to construct from database
-		if (field.equals("quizzestaken")){
+		if (field.equals(MyDBInfo.QUIZZESTAKENTABLE)){
 			//construct query
-			query = "SELECT * FROM users u JOIN quizzestaken q ON u.id = q.userid WHERE (u.id = "+ID+")";
+			query = "SELECT * FROM users u JOIN "+ MyDBInfo.QUIZZESTAKENTABLE +" q ON u.id = q.userid WHERE (u.id = "+ID+")";
 			System.out.println(query);
 			ResultSet rs = db.executeQuery(query);
 			
@@ -34,10 +35,10 @@ public class UserConnection {
 			
 			return quizzestaken;
 			
-		} else if (field.equals("messages")){
+		} else if (field.equals(MyDBInfo.MESSAGESTABLE)){
 			//construct query
 			//query = "SELECT * FROM users u JOIN messages m ON u.id = m.senderid WHERE (u.id = "+ID+")";
-			query = "SELECT * FROM messages WHERE (senderid = "+ID+") OR (receiverid = "+ID+")";
+			query = "SELECT * FROM " + MyDBInfo.MESSAGESTABLE + " WHERE (senderid = "+ID+") OR (receiverid = "+ID+")";
 			ResultSet rs = db.executeQuery(query);
 			
 			//construct object from query results
@@ -47,9 +48,9 @@ public class UserConnection {
 			}
 			
 			return messages;	
-		} else if (field.equals("friends")){
+		} else if (field.equals(MyDBInfo.FRIENDSTABLE)){
 			//construct query
-			query = "SELECT * FROM friends WHERE (friend1 = "+ID+")";
+			query = "SELECT * FROM " + MyDBInfo.FRIENDSTABLE + " WHERE (friend1 = "+ID+")";
 			ResultSet rs = db.executeQuery(query);
 			
 			//construct object from query results
@@ -60,9 +61,9 @@ public class UserConnection {
 			}
 			
 			return friends;	
-		} else if (field.equals("achievements")){
+		} else if (field.equals(MyDBInfo.ACHIEVEMENTSTABLE)){
 			//construct query
-			query = "SELECT * FROM achievements WHERE (userid = "+ID+")";
+			query = "SELECT * FROM " + MyDBInfo.ACHIEVEMENTSTABLE +" WHERE (userid = "+ID+")";
 			ResultSet rs = db.executeQuery(query);
 			
 			//construct object from query results
@@ -75,7 +76,7 @@ public class UserConnection {
 			return achievements;
 		} else if (field.equals("quizzesmade")){
 			//construct query
-			query = "SELECT * FROM quizzes WHERE (authorid = "+ID+")";
+			query = "SELECT * FROM " + MyDBInfo.QUIZZESTABLE + " WHERE (authorid = "+ID+")";
 			ResultSet rs = db.executeQuery(query);
 			
 			//construct object from query results
@@ -87,9 +88,9 @@ public class UserConnection {
 			
 			return quizzesmade;
 			
-		} else if (field.equals("highscores")){
+		} else if (field.equals(MyDBInfo.HIGHSCORESTABLE)){
 			//construct query
-			query = "SELECT * FROM highscores WHERE (quiztakenid1 = "+ID+")";
+			query = "SELECT * FROM " + MyDBInfo.HIGHSCORESTABLE + " WHERE (quiztakenid1 = "+ID+")";
 			ResultSet rs = db.executeQuery(query);
 			
 			//determine # high scores from query results
@@ -100,9 +101,9 @@ public class UserConnection {
 			
 			return highscores.toString();	
 			
-		} else if (field.equals("ipaddresses")){
+		} else if (field.equals(MyDBInfo.IPADDRESSTABLE)){
 			//construct query
-			query = "SELECT * FROM ipaddresses WHERE (userid = "+ID+")";
+			query = "SELECT * FROM " + MyDBInfo.IPADDRESSTABLE + " WHERE (userid = "+ID+")";
 			ResultSet rs = db.executeQuery(query);
 			
 			//construct object from query results

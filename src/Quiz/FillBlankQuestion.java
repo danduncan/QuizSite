@@ -3,12 +3,12 @@ package Quiz;
 import java.io.PrintWriter;
 
 public class FillBlankQuestion extends Question{
-	private String qStr1;
-	private String qStr2;
-	private String[] answer;
+	public String qStr1;
+	public String qStr2;
+	public String[] answer;
 	
-	public FillBlankQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String QStr1, String QStr2, String[] Answer){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect);
+	public FillBlankQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String QStr1, String QStr2, String[] Answer){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type);
 		qStr1 = QStr1;
 		qStr2 = QStr2;
 		answer = Answer;

@@ -13,6 +13,7 @@ public class Quiz {
 	public Integer authorid;
 	public String datemade;
 	public String name;
+	public String description;
 	public Integer practicemode;
 	public boolean multipage;
 	public boolean randomorder;
@@ -28,11 +29,29 @@ public class Quiz {
 		this.immediatecorrection = immediateCorrection;
 		questions = new ArrayList<Question>();
 	}
+	//creating new quiz
+	public Quiz(Integer ID, Integer AuthorID, String DateMade, String Name, String Description, Integer PracticeMode, boolean MultiPage,
+			boolean RandomOrder, boolean ImmediateCorrection, Integer NumQuestions, Integer NumTaken, ArrayList<Question> Questions, QuizConnection qc){
+		id = ID;
+		authorid = AuthorID;
+		datemade = DateMade;
+		name = Name;
+		description = Description;
+		practicemode = PracticeMode;
+		multipage = MultiPage;
+		randomorder = RandomOrder;
+		immediatecorrection = ImmediateCorrection;
+		numquestions = NumQuestions;
+		numtaken = NumTaken;
+		questions = Questions;
+		quizconnection = qc;
+	}
 	
+	//retrieving old quiz
 	public Quiz(Integer ID, QuizConnection qc){
 		id = ID;
 		quizconnection = qc;
-		
+		description = (String) quizconnection.getAttribute("description", id);
 		authorid = Integer.parseInt((String) quizconnection.getAttribute("authorid", id));
 		datemade = (String) quizconnection.getAttribute("datemade", id);
 		name = (String) quizconnection.getAttribute("name", id);
@@ -44,6 +63,9 @@ public class Quiz {
 		numtaken = Integer.parseInt((String) quizconnection.getAttribute("numtaken", id));
 		questions = (ArrayList<Question>) quizconnection.getAttribute("questions", id);
 		
+	}
+	public void updateDatabase(boolean newQuiz, Integer ID){
+		quizconnection.storeQuiz(this, newQuiz);
 	}
 	
 	public void addQuestion(Question q){
