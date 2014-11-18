@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import quizsite.FormatDateTime;
+
 import connection.QuizConnection;
 
 public class Quiz {
@@ -18,7 +20,6 @@ public class Quiz {
 	public boolean multipage;
 	public boolean randomorder;
 	public boolean immediatecorrection;
-	public Integer numquestions;
 	public Integer numtaken;
 	public ArrayList<Question> questions = new ArrayList<Question>();
 	private QuizConnection quizconnection;
@@ -27,7 +28,6 @@ public class Quiz {
 		this.randomorder = randomOrder;
 		this.multipage = manyPages;
 		this.immediatecorrection = immediateCorrection;
-		numquestions = 0;
 		this.id = quizid;
 		questions = new ArrayList<Question>();
 	}
@@ -39,18 +39,17 @@ public class Quiz {
 		questions = new ArrayList<Question>();
 	}
 	//creating new quiz
-	public Quiz(Integer ID, Integer AuthorID, String DateMade, String Name, String Description, boolean MultiPage,
+	public Quiz(Integer ID, Integer AuthorID, String Name, String Description, boolean MultiPage,
 				boolean RandomOrder, boolean ImmediateCorrection, QuizConnection qc){
 		id = ID;
 		authorid = AuthorID;
-		datemade = DateMade;
+		datemade = FormatDateTime.getCurrentSystemDate();
 		name = Name;
 		description = Description;
 		practicemode = 0;
 		multipage = MultiPage;
 		randomorder = RandomOrder;
 		immediatecorrection = ImmediateCorrection;
-		numquestions = 0;
 		numtaken = 0;
 		questions = new ArrayList<Question>();
 		quizconnection = qc;
@@ -68,7 +67,6 @@ public class Quiz {
 		multipage = Boolean.parseBoolean((String) quizconnection.getAttribute("multipage", id)) ;
 		randomorder = Boolean.parseBoolean((String) quizconnection.getAttribute("randomorder", id));
 		immediatecorrection = Boolean.parseBoolean((String) quizconnection.getAttribute("immediatecorrection", id));
-		numquestions = Integer.parseInt((String) quizconnection.getAttribute("numquestions", id));
 		numtaken = Integer.parseInt((String) quizconnection.getAttribute("numtaken", id));
 		questions = (ArrayList<Question>) quizconnection.getAttribute("questions", id);
 		
@@ -82,7 +80,6 @@ public class Quiz {
 		if(randomorder){
 			Collections.shuffle(questions);
 		}
-		numquestions++;
 	}
 	
 	public boolean isManyPages(){

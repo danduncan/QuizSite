@@ -206,10 +206,8 @@ public class ShowQuizServlet extends HttpServlet {
 		List<String[]> quizAnswers = (List<String[]>) request.getSession().getAttribute(QUIZ_ANSWERS);
 		User user = (User) request.getSession().getAttribute("user");
 		ScoreManager scoreManager = (ScoreManager) request.getServletContext().getAttribute("ScoreManager");
-			
-		Date date = new Date();
-		DateFormat df = new SimpleDateFormat("yyyyMMdd");		
-		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, df.format(date));
+					
+		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
 		int rank = scoreManager.addScore(quizScore);
 			
 		PrintWriter out = writeHeader(response, PAGE_TITLE);
