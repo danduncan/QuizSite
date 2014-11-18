@@ -105,7 +105,7 @@ public class LoginServlet extends HttpServlet {
 		if (username == null || password == null) return null;
 		
 		// Hash the password with a salt
-		// Skips hashing if MYDB_LOGINHASH == true
+		// Skips hashing if MYDB_LOGINSKIPHASH == true
 		String hashpw = password;
 		if (!MyDBInfo.MYDB_LOGINSKIPHASH) {
 			String saltpw = password + MyDBInfo.MYDB_LOGINSALT;
@@ -113,7 +113,7 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		// Construct query for users database
-		String query = "select id from " + MyDBInfo.USERTABLE + " where username = \"" + username + "\" and password = \"" + hashpw + "\";";
+		String query = "select id from " + MyDBInfo.USERTABLE + " where username = \"" + username + "\" and password = \"" + hashpw + "\" LIMIT 1;";
 		System.out.println("LoginServlet.getUserID() query: " + query);
 		
 		// Get DatabaseConnection and execute query
@@ -149,14 +149,16 @@ public class LoginServlet extends HttpServlet {
 	 * @return
 	 */
 	private byte[] hashString(String pwd) {
+		byte[] hashBytes = null;
 		MessageDigest md = null;
 		try {
 			md = MessageDigest.getInstance("SHA");
-		} catch (NoSuchAlgorithmException ignored) {};
+
+			// Load the string into the MessageDigest and hash it
+			md.update(pwd.getBytes());
+			hashBytes = md.digest();
 		
-		// Load the string into the MessageDigest and hash it
-		md.update(pwd.getBytes());
-		byte[] hashBytes = md.digest();
+		} catch (NoSuchAlgorithmException ignored) {};
 		
 		return hashBytes;
 	}

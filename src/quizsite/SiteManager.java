@@ -108,6 +108,9 @@ public class SiteManager {
 		this.totalMessages++;
 		return this.nextMessageID++;
 	}
+	public int popNextQuizTakenID() {
+		return ++this.totalQuizzesTaken;
+	}
 	public int getNextUserID() {
 		return this.nextUserID;
 	}
@@ -120,6 +123,8 @@ public class SiteManager {
 	public int getNextMessageID() {
 		return this.nextMessageID;
 	}
+	
+	
 	
 	// Getters for other major ivars. These do not modify any stored values
 	public int gettotalUsers() {

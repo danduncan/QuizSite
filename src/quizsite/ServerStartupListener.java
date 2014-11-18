@@ -40,6 +40,9 @@ public class ServerStartupListener implements ServletContextListener {
     	SiteManager sm = new SiteManager(dc);
     	sc.setAttribute("SiteManager", sm);
     	
+    	ScoreManager scoreMan = new ScoreManager(dc,sm);
+    	sc.setAttribute("ScoreManager",scoreMan);
+    	
     	//construct arraylist of different questiontypes
     	ArrayList<QuestionType> questiontypes = new ArrayList<QuestionType>();
     	String query = "SELECT * FROM questionTypes";

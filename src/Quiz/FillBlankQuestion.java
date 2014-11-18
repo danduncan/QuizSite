@@ -14,9 +14,9 @@ public class FillBlankQuestion extends Question{
 		answer = Answer;
 	}
 	
-//	public FillBlankQuestion(String qStr1, String answerStr, String qStr2){
-//		this(qStr1, new String[]{answerStr}, qStr2);
-//	}
+	public FillBlankQuestion(String qStr1, String answerStr, String qStr2){
+		this(qStr1, new String[]{answerStr}, qStr2);
+	}
 	
 	public FillBlankQuestion(String qStr1, String[] answerStrs, String qStr2){
 		super(Question.FILL_IN_BLANK, qStr1 + Question.STRING_DELIM + qStr2, answerStrs);
