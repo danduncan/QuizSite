@@ -2,6 +2,7 @@ package users;
 
 
 import java.util.*;
+import quizsite.MyDBInfo;
 
 import connection.UserConnection;
 
@@ -41,7 +42,7 @@ public class User {
 		
 		//get information about user		
 		id = ID;
-		quizzestaken = (ArrayList<QuizTaken>) userconnection.getAttribute("quizzestaken", id);
+		//quizzestaken = (ArrayList<QuizTaken>) userconnection.getAttribute("quizzestaken", id);
 		username = (String) userconnection.getAttribute("username", id);
 		password = (String) userconnection.getAttribute("password", id);
 		firstname = (String) userconnection.getAttribute("firstname", id);
@@ -49,17 +50,17 @@ public class User {
 		email = (String) userconnection.getAttribute("email", id);
 		datejoined = (String) userconnection.getAttribute("datejoined", id);
 		profilepicture = (String) userconnection.getAttribute("profilepicture", id);
-		ipaddresses = (ArrayList<IPAddress>) userconnection.getAttribute("ipaddresses", id);
+		ipaddresses = (ArrayList<IPAddress>) userconnection.getAttribute(MyDBInfo.IPADDRESSTABLE, id);
 		numcreated = Integer.parseInt((String) userconnection.getAttribute("numcreated", id));
 		numtaken = Integer.parseInt((String)userconnection.getAttribute("numtaken", id));
 		numtakenpractice = Integer.parseInt( (String) userconnection.getAttribute("numtakenpractice", id));
-		highscores = Integer.parseInt((String) userconnection.getAttribute("highscores", id));
-		//usertype = (String) userconnection.getAttribute("usertype", id);
-		quizzestaken = (ArrayList<QuizTaken>) userconnection.getAttribute("quizzestaken", id);
+		highscores = Integer.parseInt((String) userconnection.getAttribute(MyDBInfo.HIGHSCORESTABLE, id));
+		usertype = (String) userconnection.getAttribute("usertype", id);
+		quizzestaken = (ArrayList<QuizTaken>) userconnection.getAttribute(MyDBInfo.QUIZZESTAKENTABLE, id);
 		quizzesmade = (ArrayList<QuizMade>) userconnection.getAttribute("quizzesmade", id);
-		friends = (ArrayList<Friend>) userconnection.getAttribute("friends", id);
-		achievements = (ArrayList<Achievement>) userconnection.getAttribute("achievements", id);
-		messages = (ArrayList<Message>) userconnection.getAttribute("messages", id);
+		friends = (ArrayList<Friend>) userconnection.getAttribute(MyDBInfo.FRIENDSTABLE, id);
+		achievements = (ArrayList<Achievement>) userconnection.getAttribute(MyDBInfo.ACHIEVEMENTSTABLE, id);
+		messages = (ArrayList<Message>) userconnection.getAttribute(MyDBInfo.MESSAGESTABLE, id);
 		System.out.println("user successfully retrieved");
 		
 	}

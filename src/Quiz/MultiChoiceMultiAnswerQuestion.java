@@ -14,8 +14,8 @@ public class MultiChoiceMultiAnswerQuestion extends Question {
 	private String[] answer;
 	private boolean randomizeAnswers;
 	
-	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect);
+	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String Question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type);
 		answerChoices = AnswerChoices;
 		question = Question;
 		answer = Answer;

@@ -5,12 +5,12 @@ import java.io.PrintWriter;
 public class MultipleChoiceQuestion extends Question {
 	private String answer;
 	private String question;
-	private String[] answerChoices;
-	private boolean randomizeAnswers;
+	public String[] answerChoices;
+	public boolean randomizeAnswers;
 	private String[] answers;
 	
-	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Question, String Answer, String[] AnswerChoices, boolean random){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect);
+	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String Question, String Answer, String[] AnswerChoices, boolean random){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type);
 		answer = Answer;
 		question = Question;
 		answerChoices = AnswerChoices;

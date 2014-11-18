@@ -24,21 +24,23 @@ public abstract class Question {
 	
 	public Integer id;
 	public Integer quizid;
-	public Integer qNumber;
+	public Integer qnumber;
 	public Integer pagenumber;
 	public Integer questiontime;
 	public Integer numattempted;
 	public Integer numcorrect;
+	public String typeQ;
 	
 	
-	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect){
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type){
 		id = ID;
 		quizid = QuizID;
-		qNumber = QNumber;
+		qnumber = QNumber;
 		pagenumber = PageNumber;
 		questiontime = QuestionTime;
 		numattempted = NumAttempted;
 		numcorrect = NumCorrect;
+		typeQ = Type;
 	}
 	
 	public Question(int type, String questionStr, String answerStr){
