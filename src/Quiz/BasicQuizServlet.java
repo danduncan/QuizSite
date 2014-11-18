@@ -2,15 +2,22 @@ package Quiz;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import users.*;
+import quizsite.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import connection.UserConnection;
 
 @WebServlet("/BasicQuizServlet")
 public class BasicQuizServlet extends HttpServlet {
@@ -29,6 +36,14 @@ public class BasicQuizServlet extends HttpServlet {
     
     private void makeTestQuiz(HttpServletRequest request){
     	Quiz quiz = (Quiz)request.getSession().getAttribute(CreateQuizServlet.QUIZ_CREATED);
+    	User user = (User)request.getSession().getAttribute("user");
+    	
+    	if(user == null){
+			ServletContext sc = request.getServletContext();
+			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
+			user = new User(0, new UserConnection(dc));
+    	}
+    	request.getSession().setAttribute("user", user);
     	
     	if(quiz == null){
         	quiz = new Quiz(true, true, false);
@@ -187,7 +202,13 @@ public class BasicQuizServlet extends HttpServlet {
 		double secondsElapsed = (double)(System.currentTimeMillis()-startTime)/1000;
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
 		List<String[]> quizAnswers = (List<String[]>) request.getSession().getAttribute(QUIZ_ANSWERS);
+		User user = (User) request.getSession().getAttribute("user");
+		ScoreManager scoreManager = (ScoreManager) request.getServletContext().getAttribute("ScoreManager");
 		
+		Date date = new Date();
+		DateFormat df = new SimpleDateFormat("yyyyMMdd");
+		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, df.format(date));
+		scoreManager.addScore(quizScore);
 		
 		
 		PrintWriter out = writeHeader(response, PAGE_TITLE);
