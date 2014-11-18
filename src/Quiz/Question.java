@@ -102,7 +102,7 @@ public abstract class Question {
 				if(i < answerStrs[j].length-1) answerStr += ", ";
 			}
 			answers[j] = answerStr;
-		}
+		}		
 		return answers;
 	}
 	
@@ -114,6 +114,7 @@ public abstract class Question {
 		String[] answer = new String[possiblePoints];
 		for(int j = 0; j<possiblePoints; j++){
 			answer[j] = request.getParameter(ANSWER+i+""+j);
+			if(answer[j] == null) answer[j] = "";
 		}
 		return answer;
 	}
