@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import connection.UserConnection;
 
-@WebServlet("/BasicQuizServlet")
+@WebServlet("/ShowQuizServlet")
 public class ShowQuizServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -134,7 +134,7 @@ public class ShowQuizServlet extends HttpServlet {
 			out.println("<img src=\"http://www.reactiongifs.com/r/wrong-gif.gif\" width=\"300\" height=\"250\"><br>");
 			printAnswers(out, q);
 		}
-		out.println("<form action=\"BasicQuizServlet\" method=\"post\">");
+		out.println("<form action=\"ShowQuizServlet\" method=\"post\">");
 		out.println("<input type=\"submit\" value=\"Continue\"></form>");
 		out.println("</body></html>");
 		request.getSession().setAttribute(SHOW_ANSWER, false);
@@ -144,7 +144,7 @@ public class ShowQuizServlet extends HttpServlet {
 		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
 		PrintWriter out = writeHeader(response, PAGE_TITLE);
-		out.println("<form action=\"BasicQuizServlet\" method=\"post\">");
+		out.println("<form action=\"ShowQuizServlet\" method=\"post\">");
 		if(quiz.isManyPages()){
 			if(quiz.wantsImmediateCorrection()){
 				request.getSession().setAttribute(SHOW_ANSWER, true);

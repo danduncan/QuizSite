@@ -2,6 +2,10 @@ package Quiz;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,6 +14,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import quizsite.SiteManager;
+
+import connection.QuizConnection;
 
 @WebServlet("/CreateQuizServlet")
 public class CreateQuizServlet extends HttpServlet {
@@ -26,9 +34,10 @@ public class CreateQuizServlet extends HttpServlet {
 	private static final String IMAGE_URL = "Image URL";
 	private static final String MC_CHOICES = "Multiple Choice Choices";
 	private static final String NUM_ANSWERS = "Number of answers";
+	private static final String DESCRIPTION = "Description";
+	private static final String QUIZ_NAME = "Quiz name";
 	private static final String STR_DELIM = ";";
 	private static final String ARRAY_DELIM = "&&&";
-	
 	
 	private static final String QUESTION_RESPONSE = "Question Response";
 	private static final String PIC_RESPONSE = "Picture Response";
@@ -59,6 +68,8 @@ public class CreateQuizServlet extends HttpServlet {
 	private void createQuizPage(HttpServletResponse response) throws IOException{
 		PrintWriter out = writeHeader(response, "Create Quiz", "Select Quiz Options");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
+		out.println("Quiz name: <input type=\"text\" name=\""+QUIZ_NAME+"\"><br>");
+		out.println("Description: <input type=\"text\" name=\""+DESCRIPTION+"\"><br>");
 		out.println("Should the questions be displayed in random order?<br>");
 		out.println("<select name=\""+RANDOM_ORDER+"\">");
 		out.println("<option value=\"false\">No</option>");
@@ -91,7 +102,7 @@ public class CreateQuizServlet extends HttpServlet {
 		out.println("<option value=\""+MULTI_ANSWER_MULTI_CHOICE+"\">"+MULTI_ANSWER_MULTI_CHOICE+"</option>");
 		out.println("</select>");
 		out.println("<br><input type=\"submit\" value=\"Add Question\"></form>");
-		out.println("<form action=\"BasicQuizServlet\" method=\"get\">");
+		out.println("<form action=\"ShowQuizServlet\" method=\"get\">");
 		out.println("If you are done adding questions please press the \"Complete Quiz\" button below.<br>");
 		out.println("<input type=\"submit\" value=\"Complete Quiz\"></form>");
 		out.println("</body></html>");
@@ -231,7 +242,16 @@ public class CreateQuizServlet extends HttpServlet {
 			boolean randomOrder = Boolean.parseBoolean(randOrd);
 			boolean multiPage = Boolean.parseBoolean(mPage);
 			boolean immediateCorrection = Boolean.parseBoolean(correction);	
+			String name = request.getParameter(QUIZ_NAME);
+			String description = request.getParameter(DESCRIPTION);
+			//SiteManager sm = (SiteManager) request.getServletContext().getAttribute("sitemanager");
+			//int quizid = sm.popNextQuizID();
 			Quiz quiz = new Quiz(randomOrder, multiPage, immediateCorrection);
+			
+			//Date date = new Date();
+			//DateFormat df = new SimpleDateFormat("yyyyMMdd");
+			//Quiz q = Quiz(4, 0, df.format(date), "NEW QUIZ NAME!!!", "THIS IS A TEST DESCRIPTION", multiPage, randomOrder, immediateCorrection, qc);
+			
 			request.getSession().setAttribute(QUIZ_CREATED, quiz);
 			createQuestionPage(request, response);
 		}else if(qType != null){			

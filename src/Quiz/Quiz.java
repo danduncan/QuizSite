@@ -23,6 +23,15 @@ public class Quiz {
 	public ArrayList<Question> questions = new ArrayList<Question>();
 	private QuizConnection quizconnection;
 	
+	public Quiz(boolean randomOrder, boolean manyPages, boolean immediateCorrection, int quizid){
+		this.randomorder = randomOrder;
+		this.multipage = manyPages;
+		this.immediatecorrection = immediateCorrection;
+		numquestions = 0;
+		this.id = quizid;
+		questions = new ArrayList<Question>();
+	}
+	
 	public Quiz(boolean randomOrder, boolean manyPages, boolean immediateCorrection){
 		this.randomorder = randomOrder;
 		this.multipage = manyPages;
@@ -30,20 +39,20 @@ public class Quiz {
 		questions = new ArrayList<Question>();
 	}
 	//creating new quiz
-	public Quiz(Integer ID, Integer AuthorID, String DateMade, String Name, String Description, Integer PracticeMode, boolean MultiPage,
-			boolean RandomOrder, boolean ImmediateCorrection, Integer NumQuestions, Integer NumTaken, ArrayList<Question> Questions, QuizConnection qc){
+	public Quiz(Integer ID, Integer AuthorID, String DateMade, String Name, String Description, boolean MultiPage,
+				boolean RandomOrder, boolean ImmediateCorrection, QuizConnection qc){
 		id = ID;
 		authorid = AuthorID;
 		datemade = DateMade;
 		name = Name;
 		description = Description;
-		practicemode = PracticeMode;
+		practicemode = 0;
 		multipage = MultiPage;
 		randomorder = RandomOrder;
 		immediatecorrection = ImmediateCorrection;
-		numquestions = NumQuestions;
-		numtaken = NumTaken;
-		questions = Questions;
+		numquestions = 0;
+		numtaken = 0;
+		questions = new ArrayList<Question>();
 		quizconnection = qc;
 	}
 	
@@ -73,6 +82,7 @@ public class Quiz {
 		if(randomorder){
 			Collections.shuffle(questions);
 		}
+		numquestions++;
 	}
 	
 	public boolean isManyPages(){
