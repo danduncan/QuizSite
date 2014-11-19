@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 
 public class PictureResponseQuestion extends Question {
 	public String picURL;
-	
+
 	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String question, String[] Answer, String url){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, Question.PICTURE_RESPONSE);
 		picURL = url;

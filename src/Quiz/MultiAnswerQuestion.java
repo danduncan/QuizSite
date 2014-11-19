@@ -8,6 +8,7 @@ import java.util.Set;
 
 
 public class MultiAnswerQuestion extends Question {
+
 	public boolean ordered;
 	
 	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String question, String[][] Answer, boolean Ordered){

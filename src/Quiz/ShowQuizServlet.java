@@ -67,6 +67,8 @@ public class ShowQuizServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		makeTestQuiz(request);
 		
+		
+		
 		List<String[]> quizAnswers = new LinkedList<String[]>();
 		request.getSession().setAttribute(QUIZ_ANSWERS, quizAnswers);
 		request.getSession().setAttribute(QUIZ_PAGE, 0);
@@ -79,6 +81,9 @@ public class ShowQuizServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
+		User user = (User) request.getSession().getAttribute("user");
+		quiz.updateDatabase(true, quiz.id);
+		
 		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 		boolean showAnswer = (Boolean) request.getSession().getAttribute(SHOW_ANSWER);
 		

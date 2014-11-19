@@ -107,7 +107,7 @@ public class CreateQuizServlet extends HttpServlet {
 		out.println("<option value=\""+MULTI_ANSWER_MULTI_CHOICE+"\">"+MULTI_ANSWER_MULTI_CHOICE+"</option>");
 		out.println("</select>");
 		out.println("<br><input type=\"submit\" value=\"Add Question\"></form>");
-		out.println("<form action=\"ShowQuizServlet\" method=\"get\">");
+		out.println("<form action=\"ShowQuizServlet\" method=\"post\">");
 		out.println("If you are done adding questions please press the \"Complete Quiz\" button below.<br>");
 		out.println("<input type=\"submit\" value=\"Complete Quiz\"></form>");
 		out.println("</body></html>");
@@ -298,29 +298,34 @@ public class CreateQuizServlet extends HttpServlet {
 			String question = request.getParameter(QUESTION);
 			String answers[] = getAnswers(request);
 			
-			Random generator = new Random(); 
-			int id = generator.nextInt(1000) + 1;
+			SiteManager sm = (SiteManager) request.getServletContext().getAttribute("SiteManager");
+			Integer qID = sm.popNextQuestionID();
+			
+
+			//need input for question time
 			Integer questiontime = 10;
+			
+			
 			
 			Question q = null;
 			if(qType.equals(QUESTION_RESPONSE)){
-				q = new QuestionResponse(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONRESPONSE, question, answers);
+				q = new QuestionResponse(qID, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONRESPONSE, question, answers);
 			}else if(qType.equals(FILL_BLANK)){
 				String restOfQuestion = request.getParameter(QUESTION+2);
-				q = new FillBlankQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONFILLBLANK, question, restOfQuestion, answers);
+				q = new FillBlankQuestion(qID, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONFILLBLANK, question, restOfQuestion, answers);
 			}else if(qType.equals(PIC_RESPONSE)){
 				String url = request.getParameter(IMAGE_URL);
-				q = new PictureResponseQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONPICTURE, question, answers, url);
+				q = new PictureResponseQuestion(qID, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONPICTURE, question, answers, url);
 			}else if(qType.equals(MULTIPLE_CHOICE)){
 				String choiceStr = request.getParameter(MC_CHOICES);
 				String[] choices = stringToArray(choiceStr, STR_DELIM);
 				//need input for randomized order
-				q = new MultipleChoiceQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLECHOICE, question, answers[0], choices, false);
+				q = new MultipleChoiceQuestion(qID, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLECHOICE, question, answers[0], choices, false);
 			}else if(qType.equals(MULTI_ANSWER_MULTI_CHOICE)){
 				String choiceStr = request.getParameter(MC_CHOICES);
 				String[] choices = stringToArray(choiceStr, STR_DELIM);
 				//need input for randomized order
-				q = new MultiChoiceMultiAnswerQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER, question, answers, choices, false);
+				q = new MultiChoiceMultiAnswerQuestion(qID, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER, question, answers, choices, false);
 			}else if(qType.equals(MULTI_ANSWER)){
 				String orderMatters = request.getParameter(ORDER_MATTERS);
 				List<String[]> answerList = new LinkedList<String[]>();
@@ -329,9 +334,10 @@ public class CreateQuizServlet extends HttpServlet {
 					answerList.add(stringToArray(answers[i], STR_DELIM));
 				}
 				String[][] answerArray = answerList.toArray(new String[][]{});
-				q = new MultiAnswerQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLEANSWER,question, answerArray, Boolean.parseBoolean(orderMatters));
+				q = new MultiAnswerQuestion(qID, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLEANSWER,question, answerArray, Boolean.parseBoolean(orderMatters));
 			}
 			quiz.addQuestion(q);
+			request.getSession().setAttribute("Quiz", quiz);
 			createQuestionPage(request, response);
 		}
 	}
