@@ -53,6 +53,53 @@ public abstract class Question {
 		typeQ = Type;
 	}
 	
+	
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String question, String answer, int type){
+		this(ID, QuizID, QNumber, PageNumber, QuestionTime, NumAttempted, NumCorrect, Type, question, new String[]{answer}, type);
+	}
+	
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String question, String[] answer, int type){
+		this(ID, QuizID, QNumber, PageNumber, QuestionTime, NumAttempted, NumCorrect, Type, question, new String[][]{answer}, type);
+	}
+	
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String question, String[][] answer, int type){
+		id = ID;
+		quizid = QuizID;
+		qnumber = QNumber;
+		pagenumber = PageNumber;
+		questiontime = QuestionTime;
+		numattempted = NumAttempted;
+		numcorrect = NumCorrect;
+		typeQ = Type;
+		this.type = type;
+		questionStr = question;
+		answerStrs = answer;
+		possiblePoints = answer.length;
+	}
+	
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String answer, int type){
+		this(ID, QuizID, QNumber, PageNumber, QuestionTime, Type, question, new String[]{answer}, type);
+	}
+	
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String[] answer, int type){
+		this(ID, QuizID, QNumber, PageNumber, QuestionTime, Type, question, new String[][]{answer}, type);
+	}
+	
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String[][] answer, int type){
+		id = ID;
+		quizid = QuizID;
+		qnumber = QNumber;
+		pagenumber = PageNumber;
+		questiontime = QuestionTime;
+		numattempted = 0;
+		numcorrect = 0;
+		typeQ = Type;
+		this.type = type;
+		questionStr = question;
+		answerStrs = answer;
+		possiblePoints = answer.length;
+	}
+	
 	public Question(int type, String questionStr, String answerStr){
 		this(type, questionStr, new String[]{answerStr});
 	}

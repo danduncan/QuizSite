@@ -4,20 +4,13 @@ import java.io.PrintWriter;
 
 public class PictureResponseQuestion extends Question {
 	public String picURL;
-	public String question;
-	public String[] answer;
-	
-	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String Question, String[] Answer, String url){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type);
-		answer = Answer;
-		question = Question;
+
+	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String question, String[] Answer, String url){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, Question.PICTURE_RESPONSE);
 		picURL = url;
 	}
-	
-	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type,String Question, String[] Answer, String url){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type);
-		answer = Answer;
-		question = Question;
+	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type,String question, String[] Answer, String url){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type, question, Answer, Question.PICTURE_RESPONSE);
 		picURL = url;
 	}
 	

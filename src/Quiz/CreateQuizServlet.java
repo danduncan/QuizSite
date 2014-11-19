@@ -272,10 +272,6 @@ public class CreateQuizServlet extends HttpServlet {
 
 			//Quiz quiz = new Quiz(randomOrder, multiPage, immediateCorrection);
 			
-			//Date date = new Date();
-			//DateFormat df = new SimpleDateFormat("yyyyMMdd");
-			//Quiz q = Quiz(4, 0, df.format(date), "NEW QUIZ NAME!!!", "THIS IS A TEST DESCRIPTION", multiPage, randomOrder, immediateCorrection, qc);
-			
 			request.getSession().setAttribute(QUIZ_CREATED, quiz);
 			createQuestionPage(request, response);
 		}else if(qType != null){			

@@ -10,24 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 
 public class MultiChoiceMultiAnswerQuestion extends Question {
 	public String[] answerChoices;
-	public String question;
-	public String[] answer;
 	public boolean randomizeAnswers;
 	
-	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String Question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type);
+	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, Question.MULTI_CHOICE_MULTI_ANSWER);
 		answerChoices = AnswerChoices;
-		question = Question;
-		answer = Answer;
 		randomizeAnswers = RandomizeAnswers;
 		
 	}
 	
-	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String Question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type);
+	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type, question, Answer, Question.MULTI_CHOICE_MULTI_ANSWER);
 		answerChoices = AnswerChoices;
-		question = Question;
-		answer = Answer;
 		randomizeAnswers = RandomizeAnswers;
 		
 	}
