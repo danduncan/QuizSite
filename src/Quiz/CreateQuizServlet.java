@@ -252,13 +252,8 @@ public class CreateQuizServlet extends HttpServlet {
 			
 			User user = (User) request.getSession().getAttribute("user");
 			
-			//create quiz using random id for now
-			Date date = new Date();
-			DateFormat df = new SimpleDateFormat("yyyyMMdd");			
-			Random generator = new Random(); 
-			int id = generator.nextInt(1000) + 1;
-			Integer practicemode = 0;
-			
+
+			Integer practicemode = 0;			
 			
 			//get question type table and db connection
 			ServletContext sc = request.getServletContext();
@@ -269,8 +264,6 @@ public class CreateQuizServlet extends HttpServlet {
 			int quizid = sm.popNextQuizID();
 			
 			Quiz quiz = new Quiz(quizid,user.id, name, description, practicemode,  multiPage, randomOrder, immediateCorrection, new QuizConnection(dc,qtypes));
-
-			//Quiz quiz = new Quiz(randomOrder, multiPage, immediateCorrection);
 			
 			request.getSession().setAttribute(QUIZ_CREATED, quiz);
 			createQuestionPage(request, response);
