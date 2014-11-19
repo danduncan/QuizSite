@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import quizsite.SiteManager;
 import connection.QuizConnection;
 
 @WebServlet("/CreateQuizServlet")
@@ -38,11 +39,10 @@ public class CreateQuizServlet extends HttpServlet {
 	private static final String IMAGE_URL = "Image URL";
 	private static final String MC_CHOICES = "Multiple Choice Choices";
 	private static final String NUM_ANSWERS = "Number of answers";
-	private static final String STR_DELIM = ";";
-	private static final String ARRAY_DELIM = "&&&";
 	private static final String DESCRIPTION = "Description";
 	private static final String QUIZ_NAME = "Quiz name";
-	
+	private static final String STR_DELIM = ";";
+	private static final String ARRAY_DELIM = "&&&";
 	
 	private static final String QUESTION_RESPONSE = "Question Response";
 	private static final String PIC_RESPONSE = "Picture Response";
@@ -107,7 +107,7 @@ public class CreateQuizServlet extends HttpServlet {
 		out.println("<option value=\""+MULTI_ANSWER_MULTI_CHOICE+"\">"+MULTI_ANSWER_MULTI_CHOICE+"</option>");
 		out.println("</select>");
 		out.println("<br><input type=\"submit\" value=\"Add Question\"></form>");
-		out.println("<form action=\"BasicQuizServlet\" method=\"get\">");
+		out.println("<form action=\"ShowQuizServlet\" method=\"get\">");
 		out.println("If you are done adding questions please press the \"Complete Quiz\" button below.<br>");
 		out.println("<input type=\"submit\" value=\"Complete Quiz\"></form>");
 		out.println("</body></html>");
@@ -265,8 +265,16 @@ public class CreateQuizServlet extends HttpServlet {
 			ArrayList<QuestionType> qtypes = (ArrayList<QuestionType>) sc.getAttribute("questiontypes");
 			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 			
+			SiteManager sm = (SiteManager) request.getServletContext().getAttribute("sitemanager");
+			int quizid = sm.popNextQuizID();
 			
-			Quiz quiz = new Quiz(id,user.id, name, description, practicemode,  multiPage, randomOrder, immediateCorrection, new QuizConnection(dc,qtypes));
+			Quiz quiz = new Quiz(quizid,user.id, name, description, practicemode,  multiPage, randomOrder, immediateCorrection, new QuizConnection(dc,qtypes));
+
+			//Quiz quiz = new Quiz(randomOrder, multiPage, immediateCorrection);
+			
+			//Date date = new Date();
+			//DateFormat df = new SimpleDateFormat("yyyyMMdd");
+			//Quiz q = Quiz(4, 0, df.format(date), "NEW QUIZ NAME!!!", "THIS IS A TEST DESCRIPTION", multiPage, randomOrder, immediateCorrection, qc);
 			
 			request.getSession().setAttribute(QUIZ_CREATED, quiz);
 			createQuestionPage(request, response);

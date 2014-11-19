@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import quizsite.FormatDateTime;
+
 import connection.QuizConnection;
 
 public class Quiz {
@@ -21,10 +23,17 @@ public class Quiz {
 	public boolean multipage;
 	public boolean randomorder;
 	public boolean immediatecorrection;
-	public Integer numquestions;
 	public Integer numtaken;
 	public ArrayList<Question> questions = new ArrayList<Question>();
 	private QuizConnection quizconnection;
+	
+	public Quiz(boolean randomOrder, boolean manyPages, boolean immediateCorrection, int quizid){
+		this.randomorder = randomOrder;
+		this.multipage = manyPages;
+		this.immediatecorrection = immediateCorrection;
+		this.id = quizid;
+		questions = new ArrayList<Question>();
+	}
 	
 	public Quiz(boolean randomOrder, boolean manyPages, boolean immediateCorrection){
 		this.randomorder = randomOrder;
@@ -37,18 +46,15 @@ public class Quiz {
 			boolean RandomOrder, boolean ImmediateCorrection, QuizConnection qc){
 		id = ID;
 		authorid = AuthorID;
-		Date date = new Date();
-		DateFormat df = new SimpleDateFormat("yyyyMMdd");
-		datemade = df.format(date);
+		datemade = FormatDateTime.getCurrentSystemDate();
 		name = Name;
 		description = Description;
-		practicemode = PracticeMode;
+		practicemode = 0;
 		multipage = MultiPage;
 		randomorder = RandomOrder;
 		immediatecorrection = ImmediateCorrection;
-		numquestions = questions.size();
-		numtaken = 0;
-		questions = questions;
+		questions = new ArrayList<Question>();
+		numtaken = 0;	
 		quizconnection = qc;
 	}
 	
@@ -64,7 +70,6 @@ public class Quiz {
 		multipage = Boolean.parseBoolean((String) quizconnection.getAttribute("multipage", id)) ;
 		randomorder = Boolean.parseBoolean((String) quizconnection.getAttribute("randomorder", id));
 		immediatecorrection = Boolean.parseBoolean((String) quizconnection.getAttribute("immediatecorrection", id));
-		numquestions = Integer.parseInt((String) quizconnection.getAttribute("numquestions", id));
 		numtaken = Integer.parseInt((String) quizconnection.getAttribute("numtaken", id));
 		questions = (ArrayList<Question>) quizconnection.getAttribute("questions", id);
 		

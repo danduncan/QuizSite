@@ -63,13 +63,14 @@
 	}
 	out.println("</ul>");
 	
+	//Create new message
 	out.println("<h3>Create New Message</h3>");
 	out.println("<p>User name: <input type=\"text\" name=\"username\"></p>");
 	out.println("<p>Subject: <input type=\"text\" name=\"subject\"></p>");
 	out.println("<p>Body: <textarea name=\"body\" cols=\"50\" rows=\"10\"></textarea>");
-	out.println("<form method=\"post\" action=\"MessageServlet\">");
+	out.println("<form method=\"post\" action=\"CreateMessageServlet\">");
 	out.println("<p><input type=\"submit\" value=\"Send Message\" /></p>");
-	out.println("<input name=\"messagetype\" type=\"hidden\" value= \"2\"");
+	out.println("<input name=\"type\" type=\"hidden\" value= \"2\"");
 	out.println("</body>");
 	out.println("</html>");
 	%>
