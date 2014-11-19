@@ -10,7 +10,7 @@ import java.util.Set;
 public class MultiAnswerQuestion extends Question {
 	private String question;
 	public String[][] answer;
-	private boolean ordered;
+	public boolean ordered;
 	private boolean orderedResponses;
 	
 	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String Question, String[][] Answer, boolean Ordered){
@@ -21,6 +21,16 @@ public class MultiAnswerQuestion extends Question {
 		ordered = Ordered;
 		
 	}
+	
+	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type,String Question, String[][] Answer, boolean Ordered){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type);
+
+		question = Question;
+		answer = Answer;
+		ordered = Ordered;
+		
+	}
+	
 	public MultiAnswerQuestion(String questionStr, String[][] answerStrs, boolean orderedResponses){
 		super(Question.MULTI_ANSWER, questionStr, answerStrs);
 		this.orderedResponses = orderedResponses;

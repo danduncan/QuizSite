@@ -1,8 +1,11 @@
 package Quiz;
 
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,20 +33,22 @@ public class Quiz {
 		questions = new ArrayList<Question>();
 	}
 	//creating new quiz
-	public Quiz(Integer ID, Integer AuthorID, String DateMade, String Name, String Description, Integer PracticeMode, boolean MultiPage,
-			boolean RandomOrder, boolean ImmediateCorrection, Integer NumQuestions, Integer NumTaken, ArrayList<Question> Questions, QuizConnection qc){
+	public Quiz(Integer ID, Integer AuthorID,  String Name, String Description, Integer PracticeMode, boolean MultiPage,
+			boolean RandomOrder, boolean ImmediateCorrection, QuizConnection qc){
 		id = ID;
 		authorid = AuthorID;
-		datemade = DateMade;
+		Date date = new Date();
+		DateFormat df = new SimpleDateFormat("yyyyMMdd");
+		datemade = df.format(date);
 		name = Name;
 		description = Description;
 		practicemode = PracticeMode;
 		multipage = MultiPage;
 		randomorder = RandomOrder;
 		immediatecorrection = ImmediateCorrection;
-		numquestions = NumQuestions;
-		numtaken = NumTaken;
-		questions = Questions;
+		numquestions = questions.size();
+		numtaken = 0;
+		questions = questions;
 		quizconnection = qc;
 	}
 	

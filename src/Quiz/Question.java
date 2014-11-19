@@ -42,6 +42,16 @@ public abstract class Question {
 		numcorrect = NumCorrect;
 		typeQ = Type;
 	}
+	public Question(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type){
+		id = ID;
+		quizid = QuizID;
+		qnumber = QNumber;
+		pagenumber = PageNumber;
+		questiontime = QuestionTime;
+		numattempted = 0;
+		numcorrect = 0;
+		typeQ = Type;
+	}
 	
 	public Question(int type, String questionStr, String answerStr){
 		this(type, questionStr, new String[]{answerStr});

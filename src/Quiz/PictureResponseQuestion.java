@@ -14,6 +14,14 @@ public class PictureResponseQuestion extends Question {
 		picURL = url;
 	}
 	
+	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type,String Question, String[] Answer, String url){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type);
+		answer = Answer;
+		question = Question;
+		picURL = url;
+	}
+	
+	
 	public PictureResponseQuestion(String question, String picURL, String answer){
 		this(question, picURL, new String[]{answer});
 	}

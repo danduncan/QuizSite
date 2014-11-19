@@ -2,14 +2,26 @@ package Quiz;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
+import quizsite.DatabaseConnection;
+import quizsite.MyDBInfo;
+import users.User;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import connection.QuizConnection;
 
 @WebServlet("/CreateQuizServlet")
 public class CreateQuizServlet extends HttpServlet {
@@ -28,6 +40,8 @@ public class CreateQuizServlet extends HttpServlet {
 	private static final String NUM_ANSWERS = "Number of answers";
 	private static final String STR_DELIM = ";";
 	private static final String ARRAY_DELIM = "&&&";
+	private static final String DESCRIPTION = "Description";
+	private static final String QUIZ_NAME = "Quiz name";
 	
 	
 	private static final String QUESTION_RESPONSE = "Question Response";
@@ -59,6 +73,8 @@ public class CreateQuizServlet extends HttpServlet {
 	private void createQuizPage(HttpServletResponse response) throws IOException{
 		PrintWriter out = writeHeader(response, "Create Quiz", "Select Quiz Options");
 		out.println("<form action=\"CreateQuizServlet\" method=\"post\">");
+		out.println("Quiz name: <input type=\"text\" name=\""+QUIZ_NAME+"\"><br>");
+		out.println("Description: <input type=\"text\" name=\""+DESCRIPTION+"\"><br>");
 		out.println("Should the questions be displayed in random order?<br>");
 		out.println("<select name=\""+RANDOM_ORDER+"\">");
 		out.println("<option value=\"false\">No</option>");
@@ -231,7 +247,27 @@ public class CreateQuizServlet extends HttpServlet {
 			boolean randomOrder = Boolean.parseBoolean(randOrd);
 			boolean multiPage = Boolean.parseBoolean(mPage);
 			boolean immediateCorrection = Boolean.parseBoolean(correction);	
-			Quiz quiz = new Quiz(randomOrder, multiPage, immediateCorrection);
+			String name = request.getParameter(QUIZ_NAME);
+			String description = request.getParameter(DESCRIPTION);
+			
+			User user = (User) request.getSession().getAttribute("user");
+			
+			//create quiz using random id for now
+			Date date = new Date();
+			DateFormat df = new SimpleDateFormat("yyyyMMdd");			
+			Random generator = new Random(); 
+			int id = generator.nextInt(1000) + 1;
+			Integer practicemode = 0;
+			
+			
+			//get question type table and db connection
+			ServletContext sc = request.getServletContext();
+			ArrayList<QuestionType> qtypes = (ArrayList<QuestionType>) sc.getAttribute("questiontypes");
+			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
+			
+			
+			Quiz quiz = new Quiz(id,user.id, name, description, practicemode,  multiPage, randomOrder, immediateCorrection, new QuizConnection(dc,qtypes));
+			
 			request.getSession().setAttribute(QUIZ_CREATED, quiz);
 			createQuestionPage(request, response);
 		}else if(qType != null){			
@@ -258,23 +294,29 @@ public class CreateQuizServlet extends HttpServlet {
 			String question = request.getParameter(QUESTION);
 			String answers[] = getAnswers(request);
 			
+			Random generator = new Random(); 
+			int id = generator.nextInt(1000) + 1;
+			Integer questiontime = 10;
+			
 			Question q = null;
 			if(qType.equals(QUESTION_RESPONSE)){
-				q = new QuestionResponse(question, answers);
+				q = new QuestionResponse(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONRESPONSE, question, answers);
 			}else if(qType.equals(FILL_BLANK)){
 				String restOfQuestion = request.getParameter(QUESTION+2);
-				q = new FillBlankQuestion(question, answers, restOfQuestion);
+				q = new FillBlankQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONFILLBLANK, question, restOfQuestion, answers);
 			}else if(qType.equals(PIC_RESPONSE)){
 				String url = request.getParameter(IMAGE_URL);
-				q = new PictureResponseQuestion(question, url, answers);
+				q = new PictureResponseQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONPICTURE, question, answers, url);
 			}else if(qType.equals(MULTIPLE_CHOICE)){
 				String choiceStr = request.getParameter(MC_CHOICES);
 				String[] choices = stringToArray(choiceStr, STR_DELIM);
-				q = new MultipleChoiceQuestion(question, choices, answers[0]);
+				//need input for randomized order
+				q = new MultipleChoiceQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLECHOICE, question, answers[0], choices, false);
 			}else if(qType.equals(MULTI_ANSWER_MULTI_CHOICE)){
 				String choiceStr = request.getParameter(MC_CHOICES);
 				String[] choices = stringToArray(choiceStr, STR_DELIM);
-				q = new MultiChoiceMultiAnswerQuestion(question, choices, answers);
+				//need input for randomized order
+				q = new MultiChoiceMultiAnswerQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER, question, answers, choices, false);
 			}else if(qType.equals(MULTI_ANSWER)){
 				String orderMatters = request.getParameter(ORDER_MATTERS);
 				List<String[]> answerList = new LinkedList<String[]>();
@@ -283,7 +325,7 @@ public class CreateQuizServlet extends HttpServlet {
 					answerList.add(stringToArray(answers[i], STR_DELIM));
 				}
 				String[][] answerArray = answerList.toArray(new String[][]{});
-				q = new MultiAnswerQuestion(question, answerArray, Boolean.parseBoolean(orderMatters));
+				q = new MultiAnswerQuestion(id, quiz.id, quiz.questions.size(), quiz.questions.size(), questiontime, MyDBInfo.QUESTIONMULTIPLEANSWER,question, answerArray, Boolean.parseBoolean(orderMatters));
 			}
 			quiz.addQuestion(q);
 			createQuestionPage(request, response);

@@ -17,6 +17,14 @@ public class MultipleChoiceQuestion extends Question {
 		randomizeAnswers = random;
 	}
 	
+	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String Question, String Answer, String[] AnswerChoices, boolean random){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type);
+		answer = Answer;
+		question = Question;
+		answerChoices = AnswerChoices;
+		randomizeAnswers = random;
+	}
+	
 	public MultipleChoiceQuestion(String question, String[] answers, String answer){
 		super(Question.MULTIPLE_CHOICE, question, answer);
 		this.answers = answers;

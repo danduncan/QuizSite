@@ -13,7 +13,12 @@ public class FillBlankQuestion extends Question{
 		qStr2 = QStr2;
 		answer = Answer;
 	}
-	
+	public FillBlankQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime,  String Type,String QStr1, String QStr2, String[] Answer){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type);
+		qStr1 = QStr1;
+		qStr2 = QStr2;
+		answer = Answer;
+	}
 	public FillBlankQuestion(String qStr1, String answerStr, String qStr2){
 		this(qStr1, new String[]{answerStr}, qStr2);
 	}
