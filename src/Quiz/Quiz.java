@@ -1,8 +1,11 @@
 package Quiz;
 
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,8 +42,8 @@ public class Quiz {
 		questions = new ArrayList<Question>();
 	}
 	//creating new quiz
-	public Quiz(Integer ID, Integer AuthorID, String Name, String Description, boolean MultiPage,
-				boolean RandomOrder, boolean ImmediateCorrection, QuizConnection qc){
+	public Quiz(Integer ID, Integer AuthorID,  String Name, String Description, Integer PracticeMode, boolean MultiPage,
+			boolean RandomOrder, boolean ImmediateCorrection, QuizConnection qc){
 		id = ID;
 		authorid = AuthorID;
 		datemade = FormatDateTime.getCurrentSystemDate();
@@ -50,8 +53,8 @@ public class Quiz {
 		multipage = MultiPage;
 		randomorder = RandomOrder;
 		immediatecorrection = ImmediateCorrection;
-		numtaken = 0;
 		questions = new ArrayList<Question>();
+		numtaken = 0;	
 		quizconnection = qc;
 	}
 	
