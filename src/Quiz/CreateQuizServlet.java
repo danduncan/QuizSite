@@ -244,13 +244,8 @@ public class CreateQuizServlet extends HttpServlet {
 			boolean immediateCorrection = Boolean.parseBoolean(correction);	
 			String name = request.getParameter(QUIZ_NAME);
 			String description = request.getParameter(DESCRIPTION);
-			//SiteManager sm = (SiteManager) request.getServletContext().getAttribute("sitemanager");
-			//int quizid = sm.popNextQuizID();
-			Quiz quiz = new Quiz(randomOrder, multiPage, immediateCorrection);
 			
-			//Date date = new Date();
-			//DateFormat df = new SimpleDateFormat("yyyyMMdd");
-			//Quiz q = Quiz(4, 0, df.format(date), "NEW QUIZ NAME!!!", "THIS IS A TEST DESCRIPTION", multiPage, randomOrder, immediateCorrection, qc);
+			Quiz quiz = new Quiz(randomOrder, multiPage, immediateCorrection);
 			
 			request.getSession().setAttribute(QUIZ_CREATED, quiz);
 			createQuestionPage(request, response);
