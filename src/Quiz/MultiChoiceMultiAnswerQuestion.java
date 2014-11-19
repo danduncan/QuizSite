@@ -12,27 +12,20 @@ public class MultiChoiceMultiAnswerQuestion extends Question {
 	public String[] answerChoices;
 	public boolean randomizeAnswers;
 	
-	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
+	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted,
+										  Integer NumCorrect, String Type, String question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, Question.MULTI_CHOICE_MULTI_ANSWER);
 		answerChoices = AnswerChoices;
 		randomizeAnswers = RandomizeAnswers;
 		
 	}
 	
-	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
+	public MultiChoiceMultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, 
+										  String Type, String question, String[] Answer, String[] AnswerChoices, boolean RandomizeAnswers){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type, question, Answer, Question.MULTI_CHOICE_MULTI_ANSWER);
 		answerChoices = AnswerChoices;
 		randomizeAnswers = RandomizeAnswers;
 		
-	}
-	
-	public MultiChoiceMultiAnswerQuestion(String question, String[] answerChoices, String correctAnswer){
-		this(question, answerChoices, new String[]{correctAnswer});
-	}
-	
-	public MultiChoiceMultiAnswerQuestion(String question, String[] answerChoices, String[] correctAnswers){
-			super(Question.MULTI_CHOICE_MULTI_ANSWER, question, correctAnswers);
-			this.answerChoices = answerChoices;
 	}
 	
 	@Override
