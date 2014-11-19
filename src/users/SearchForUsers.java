@@ -59,22 +59,22 @@ public class SearchForUsers {
 		if (username == null) {
 			username = "";
 		} else {
-			username = sanitizeString(username,nameLegalChars);
+			username = quizsite.FormatString.sanitizeString(username,quizsite.FormatString.NAMELEGALCHARS);
 		}
 		if (firstname == null) {
 			firstname = "";
 		} else {
-			firstname = sanitizeString(firstname,nameLegalChars);
+			firstname = quizsite.FormatString.sanitizeString(firstname,quizsite.FormatString.NAMELEGALCHARS);
 		}
 		if (lastname == null) {
 			lastname = "";
 		} else {
-			lastname = sanitizeString(lastname,nameLegalChars);
+			lastname = quizsite.FormatString.sanitizeString(lastname,quizsite.FormatString.NAMELEGALCHARS);
 		}
 		if (email == null) {
 			email = "";
 		} else {
-			email = sanitizeString(email,emailLegalChars);
+			email = quizsite.FormatString.sanitizeString(email,quizsite.FormatString.EMAILLEGALCHARS);
 		}
 		
 		// Check that at least one input was valid
@@ -126,8 +126,8 @@ public class SearchForUsers {
 	 */
 	protected static String buildBasicQuery(String searchQuery) {
 		// Sanitize the user query
-		String nameQuery = sanitizeString(searchQuery,nameLegalChars);
-		String emailQuery = sanitizeString(searchQuery,emailLegalChars);
+		String nameQuery = quizsite.FormatString.sanitizeString(searchQuery,quizsite.FormatString.NAMELEGALCHARS);
+		String emailQuery = quizsite.FormatString.sanitizeString(searchQuery,quizsite.FormatString.EMAILLEGALCHARS);
 		
 		// Separate the query into one-word substrings
 		String[] nameSplit = nameQuery.split("\\s+");
@@ -160,22 +160,18 @@ public class SearchForUsers {
 	 * @param legal
 	 * @return
 	 */
-	protected static String sanitizeString(String searchQuery, String legalChars) {
-		// Eliminate illegal characters
-		String illegalChars = "[^" + legalChars + "]";
-		searchQuery = searchQuery.replaceAll(illegalChars,"");
-		return searchQuery;
-	}
+//	protected static String sanitizeString(String searchQuery, String legalChars) {
+//		// Eliminate illegal characters
+//		String illegalChars = "[^" + legalChars + "]";
+//		searchQuery = searchQuery.replaceAll(illegalChars,"");
+//		return searchQuery;
+//	}
 	
 	public static void main(String[] args) {
-//		String test = "Dan-iel D'uncan dan\\dun/can2010@\"gmail.com?!?!";
-//		System.out.println("Original: " + test);
-//		System.out.println("All legal chars: " + sanitizeString(test, allLegalChars));
-//		System.out.println("Name formatted: " + sanitizeString(test, nameLegalChars));
-//		System.out.println("Email formatted: " + sanitizeString(test, emailLegalChars));
-//		
-//		System.out.println("Basic MySQL Query:");
-//		System.out.println("\t" + buildBasicQuery(test));
+		String test = "Dan-iel D'uncan dan\\dun/can2010@\"gmail.com?!?!";
+		System.out.println("Original: " + test);
+		System.out.println("Basic MySQL Query:");
+		System.out.println("\t" + buildBasicQuery(test));
 		
 		String user = "d\\u\"n_c^><><,.and";
 		String first = ":::Dan-iel:::";
