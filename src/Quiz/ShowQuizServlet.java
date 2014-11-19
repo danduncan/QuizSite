@@ -2,19 +2,11 @@ package Quiz;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import users.*;
 import quizsite.*;
-import java.util.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -23,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import connection.QuizConnection;
 import connection.UserConnection;
 
 @WebServlet("/ShowQuizServlet")
@@ -68,23 +59,7 @@ public class ShowQuizServlet extends HttpServlet {
     }
     
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		//makeTestQuiz(request);
-		//Integer ID = Integer.parseInt((String)request.getParameter("quizid"));
-		//ServletContext sc = request.getServletContext();
-		//DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
-		//ArrayList<QuestionType> questiontypes =  (ArrayList<QuestionType>) sc.getAttribute("questiontypes"); 
-		
-		
-		//if (ID != null){
-		//	Quiz quiz = new Quiz(ID, new QuizConnection(dc,questiontypes)); 
-		//	request.setAttribute(QUIZ, quiz);
-		//}
-		
-		//Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		//quiz.updateDatabase(true, quiz.id);
-		
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {				
 		request.getSession().setAttribute(QUIZ_ANSWERS, new LinkedList<String[]>());
 		request.getSession().setAttribute(QUIZ_PAGE, 0);
 		request.getSession().setAttribute(NUM_ATTEMPTED, 0);

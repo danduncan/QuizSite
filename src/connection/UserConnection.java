@@ -23,7 +23,7 @@ public class UserConnection {
 		if (field.equals(MyDBInfo.QUIZZESTAKENTABLE)){
 			//construct query
 			query = "SELECT * FROM users u JOIN "+ MyDBInfo.QUIZZESTAKENTABLE +" q ON u.id = q.userid WHERE (u.id = "+ID+")";
-			System.out.println(query);
+			//System.out.println(query);
 			ResultSet rs = db.executeQuery(query);
 			
 			//construct object from query results

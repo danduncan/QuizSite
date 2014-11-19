@@ -116,7 +116,7 @@ public class QuestionConnection {
 			//want array list to be sorted by question number
 			Collections.sort(questions, new Comparator<Question>() {
 				@Override public int compare(Question q1, Question q2) {
-					return q2.qnumber - q1.qnumber; // Descending
+					return q1.qnumber - q2.qnumber; // Descending
 				}
 
 			});
@@ -163,7 +163,7 @@ public class QuestionConnection {
 					formattedChoices += stringdelimiter+answerChoices[j];
 				}
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.questionStr +"\",\""+Q.answerStrs+"\",\""+formattedChoices+"\","+Q.randomizeAnswers+")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.questionStr +"\",\""+Q.answerStrs[0][0]+"\",\""+formattedChoices+"\","+Q.randomizeAnswers+")";
 				db.executeUpdate(insertQ);		
 
 			} else if (type.equals(MyDBInfo.QUESTIONPICTURE)){
@@ -210,7 +210,7 @@ public class QuestionConnection {
 		String formattedAnswer = "";
 		for(int j = 0; j < Answer.length; j++){
 			for(int k = 0; k < Answer[j].length; k++){
-				if(j == 0 && k == 0){
+				if(k == 0){
 					formattedAnswer += Answer[j][k];							
 				} else {
 					formattedAnswer += stringdelimiter+Answer[j][k];
