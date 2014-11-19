@@ -70,6 +70,9 @@ public class ShowQuizServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		makeTestQuiz(request);
+//		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
+//		quiz.updateDatabase(true, quiz.id);
+//	
 		Integer ID = Integer.parseInt((String)request.getParameter("quizid"));
 		ServletContext sc = request.getServletContext();
 		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
@@ -78,11 +81,8 @@ public class ShowQuizServlet extends HttpServlet {
 		
 		if (ID != null){
 			Quiz quiz = new Quiz(ID, new QuizConnection(dc,questiontypes)); 
-			request.setAttribute(QUIZ, quiz);
+			request.getSession().setAttribute(QUIZ, quiz);
 		}
-		
-		//Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		//quiz.updateDatabase(true, quiz.id);
 		
 		
 		List<String[]> quizAnswers = new LinkedList<String[]>();
