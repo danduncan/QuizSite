@@ -16,7 +16,7 @@
 	
 	out.println("<h2> Quiz Info </h2>");
 	//quizzes taken info
-	out.println("<p> Quizzes Taken: "+user.numtaken+ "</p>");
+	out.println("<p> Quizzes Taken: "+user.quizzestaken.size()+ "</p>");
 	out.println("<ul type = \"circle\">");
 	if (user.numtaken > 0){
 		for(int i = 0; i < user.quizzestaken.size(); i++){
@@ -26,7 +26,7 @@
 	out.println("</ul>");
 	
 	//quizzes made info
-	out.println("<p> Quizzes Made: " + user.numcreated + "</p>");
+	out.println("<p> Quizzes Made: " + user.quizzesmade.size() + "</p>");
 	out.println("<form method=\"get\" action=\"CreateQuizServlet\">");
 	out.println("<p><input type=\"submit\" value=\"Create New Quiz\" /></p>");
 	out.println("</form>");
@@ -54,7 +54,8 @@
 	int count = 0;
 	ArrayList<String> newMessages = new ArrayList<String>();
 	for (int i = 0; i < user.messages.size(); i++){
-		if (user.messages.get(i).opened == false){
+		//determine if new message
+		if (user.messages.get(i).opened == false && user.messages.get(i).receiverid == user.id){
 			count++;
 			newMessages.add(user.messages.get(i).toString());
 		}

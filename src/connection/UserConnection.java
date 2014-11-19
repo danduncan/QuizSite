@@ -22,7 +22,8 @@ public class UserConnection {
 		//if statements for all unique objects we need to construct from database
 		if (field.equals(MyDBInfo.QUIZZESTAKENTABLE)){
 			//construct query
-			query = "SELECT * FROM users u JOIN "+ MyDBInfo.QUIZZESTAKENTABLE +" q ON u.id = q.userid WHERE (u.id = "+ID+")";
+			//query = "SELECT * FROM users u JOIN "+ MyDBInfo.QUIZZESTAKENTABLE +" q ON u.id = q.userid WHERE (u.id = "+ID+")";
+			query = "SELECT * FROM "+ MyDBInfo.QUIZZESTAKENTABLE + " WHERE (userid = "+ID+")";
 			//System.out.println(query);
 			ResultSet rs = db.executeQuery(query);
 			
@@ -30,7 +31,7 @@ public class UserConnection {
 			ArrayList<QuizTaken> quizzestaken = new ArrayList<QuizTaken>();
 			//create list of quizzes taken
 			while(rs.next()) {
-				quizzestaken.add(new QuizTaken(rs.getInt("q.id"),rs.getInt("q.quizid"),rs.getInt("u.id"),rs.getString("q.datetaken"),rs.getInt("q.score"),rs.getInt("q.time")));
+				quizzestaken.add(new QuizTaken(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("id"),rs.getString("datetaken"),rs.getInt("score"),rs.getInt("time")));
 			}
 			
 			return quizzestaken;
