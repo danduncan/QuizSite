@@ -9,7 +9,7 @@ public class MyDBInfo {
 	
 	// Login configuration
 	public static final String MYDB_LOGINSALT = "mattginodan";
-	public static final boolean MYDB_LOGINSKIPHASH = true; // Skip hashing passwords if set to true (for testing)
+	public static final boolean MYDB_LOGINSKIPHASH = false; // Skip hashing passwords if set to true (for testing)
 
 	// Names of primary tables
 	public static final String SITEMANAGERTABLE = "siteManager";
