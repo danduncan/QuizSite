@@ -203,6 +203,8 @@ public class ShowQuizServlet extends HttpServlet {
 		ScoreManager scoreManager = (ScoreManager) request.getServletContext().getAttribute("ScoreManager");
 					
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
+		user.quizzestaken.add(new QuizTaken(user.id,quiz.id,));
+		
 		int rank = scoreManager.addScore(quizScore);
 		
 		PrintWriter out = writeHeader(response, PAGE_TITLE);

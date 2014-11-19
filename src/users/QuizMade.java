@@ -1,5 +1,7 @@
 package users; 
 
+import quizsite.FormatDateTime;
+
 public class QuizMade {
 	public Integer userid;
 	public Integer quizid;
@@ -9,6 +11,12 @@ public class QuizMade {
 		userid = UserID;
 		quizid = QuizID;
 		date = Date;	
+	}
+	
+	public QuizMade(Integer UserID, Integer QuizID){
+		userid = UserID;
+		quizid = QuizID;
+		date = FormatDateTime.getCurrentSystemDate();	
 	}
 	
 	public String toString(){
