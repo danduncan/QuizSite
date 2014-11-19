@@ -1,6 +1,6 @@
 /**
- * This class implements the SEARCH function to find users in the table matching basic search criteria
- * This is a static class and requires only a DatabaseConnection and a string of search criteria to work
+ * This static class implements the SEARCH function to find users in the table matching basic search criteria
+ * This requires only a DatabaseConnection and 1 or more strings of search criteria to work
  */
 
 package users;
@@ -8,7 +8,6 @@ package users;
 import java.sql.ResultSet;
 
 public class SearchForUsers {
-	private quizsite.DatabaseConnection dc;
 	private static final String colUsername = "username";
 	private static final String colFirstName = "firstname";
 	private static final String colLastName = "lastname";
@@ -18,8 +17,7 @@ public class SearchForUsers {
 	public static final String emailLegalChars = "a-zA-Z0-9@. -";
 	private static final String SEARCHTABLE = quizsite.MyDBInfo.USERTABLE;
 	
-	public SearchForUsers(quizsite.DatabaseConnection dc) {
-		this.dc = dc;
+	public SearchForUsers() {
 	}
 	
 	/**
@@ -29,6 +27,95 @@ public class SearchForUsers {
 	public static ResultSet basicSearch(quizsite.DatabaseConnection dc, String searchQuery) {
 		String query = buildBasicQuery(searchQuery);
 		return dc.executeQuery(query);
+	}
+	
+	/**
+	 * Given strings for username, firstname, lastname, and/or email, find all matches
+	 * Note: null's or empty strings may be provided for any field you do not wish to search
+	 */
+	public static ResultSet advancedSearch(quizsite.DatabaseConnection dc, String username, String firstname, String lastname, String email) {
+		if(dc==null) return null;
+		String query = buildAdvancedQuery(username,firstname,lastname,email);
+		if(query == null || query.isEmpty()) return null;
+		ResultSet rs = dc.executeQuery(query);
+		return rs;
+	}
+	
+	/**
+	 * Given the strings for search criteria, construct a search query
+	 * @param username
+	 * @param firstname
+	 * @param lastname
+	 * @param email
+	 * @return
+	 */
+	protected static String buildAdvancedQuery(String username, String firstname, String lastname, String email) {	
+		// Check that at least one input was provided
+		if (username==null && firstname==null && lastname==null && email==null) {
+			return null;
+		}
+		
+		// Sanitize all inputs or create dummies for null inputs
+		if (username == null) {
+			username = "";
+		} else {
+			username = sanitizeString(username,nameLegalChars);
+		}
+		if (firstname == null) {
+			firstname = "";
+		} else {
+			firstname = sanitizeString(firstname,nameLegalChars);
+		}
+		if (lastname == null) {
+			lastname = "";
+		} else {
+			lastname = sanitizeString(lastname,nameLegalChars);
+		}
+		if (email == null) {
+			email = "";
+		} else {
+			email = sanitizeString(email,emailLegalChars);
+		}
+		
+		// Check that at least one input was valid
+		if (username.isEmpty() && firstname.isEmpty() && lastname.isEmpty() && email.isEmpty()) {
+			return null;
+		}
+		
+		// Build the query from the sanitized inputs
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM " + SEARCHTABLE + " WHERE ");
+		boolean one = false; // Tracks whether OR's need to be added
+		if(!username.isEmpty()) {
+			one = true;
+			sb.append(colUsername + " LIKE \"%" + username + "%\"");
+		}
+
+		if(!firstname.isEmpty()) {
+			if(one) {
+				sb.append(" OR ");
+			}
+			one = true;
+			sb.append(colFirstName + " LIKE \"%" + firstname + "%\"");
+		}
+		if(!lastname.isEmpty()) {
+			if(one) {
+				sb.append(" OR ");
+			}
+			one = true;
+			sb.append(colLastName + " LIKE \"%" + lastname + "%\"");
+		}
+		if(!email.isEmpty()) {
+			if(one) {
+				sb.append(" OR ");
+			}
+			one = true;
+			sb.append(colEmail + " LIKE \"%" + email + "%\"");
+		}
+		sb.append(";");
+		
+		// Return the completed query
+		return sb.toString();
 	}
 	
 	
@@ -81,14 +168,44 @@ public class SearchForUsers {
 	}
 	
 	public static void main(String[] args) {
-		String test = "Dan-iel D'uncan dan\\dun/can2010@\"gmail.com?!?!";
-		System.out.println("Original: " + test);
-		System.out.println("All legal chars: " + sanitizeString(test, allLegalChars));
-		System.out.println("Name formatted: " + sanitizeString(test, nameLegalChars));
-		System.out.println("Email formatted: " + sanitizeString(test, emailLegalChars));
+//		String test = "Dan-iel D'uncan dan\\dun/can2010@\"gmail.com?!?!";
+//		System.out.println("Original: " + test);
+//		System.out.println("All legal chars: " + sanitizeString(test, allLegalChars));
+//		System.out.println("Name formatted: " + sanitizeString(test, nameLegalChars));
+//		System.out.println("Email formatted: " + sanitizeString(test, emailLegalChars));
+//		
+//		System.out.println("Basic MySQL Query:");
+//		System.out.println("\t" + buildBasicQuery(test));
 		
-		System.out.println("Basic MySQL Query:");
-		System.out.println("\t" + buildBasicQuery(test));
+		String user = "d\\u\"n_c^><><,.and";
+		String first = ":::Dan-iel:::";
+		String last = "D'uncan";
+		String email = "dan\\duncan/2010!@#gma%^&il.com";
+		System.out.println("Unformatted advanced query: " + user + " " + first + " " + last + " " + email);
+		System.out.println("query(user,first,last,email): ");
+		System.out.println("\t" + buildAdvancedQuery(user,first,last,email));
+		System.out.println("query(null,first,last,email): ");
+		System.out.println("\t" + buildAdvancedQuery(null,first,last,email));
+		System.out.println("query(null,null,last,\"\"): ");
+		System.out.println("\t" + buildAdvancedQuery(null,null,last,""));
+		System.out.println("query(null,null,null,null): ");
+		if(buildAdvancedQuery(null,null,null,null) == null ) {
+			System.out.println("\tSuccess: Result was null");
+		} else if (buildAdvancedQuery(null,null,null,null).isEmpty() ) {
+			System.out.println("\tResult was empty string");
+		} else {
+			System.out.println("\tResult was: " + buildAdvancedQuery(null,null,null,null));
+		}
+		System.out.println("query(\"\",\"\",\"\",\"\"): ");
+		if(buildAdvancedQuery("","","","") == null ) {
+			System.out.println("\tSuccess: Result was null");
+		} else if (buildAdvancedQuery("","","","").isEmpty() ) {
+			System.out.println("\tResult was empty string");
+		} else {
+			System.out.println("\tResult was: " + buildAdvancedQuery("","","",""));
+		}
+		
+		
 		
 	}
 
