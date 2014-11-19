@@ -6,21 +6,18 @@ public class MultipleChoiceQuestion extends Question {
 	public String[] answerChoices;
 	public boolean randomizeAnswers;
 
-	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String question, String Answer, String[] AnswerChoices, boolean random){
+	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted,
+								  Integer NumCorrect, String Type, String question, String Answer, String[] AnswerChoices, boolean random){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type,question, Answer, Question.MULTIPLE_CHOICE);
 		answerChoices = AnswerChoices;
 		randomizeAnswers = random;
 	}
 	
-	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String Answer, String[] AnswerChoices, boolean random){
+	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime,
+								String Type, String question, String Answer, String[] AnswerChoices, boolean random){	
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type, question, Answer, Question.MULTIPLE_CHOICE);
 		answerChoices = AnswerChoices;
 		randomizeAnswers = random;
-	}
-	
-	public MultipleChoiceQuestion(String question, String[] answers, String answer){
-		super(Question.MULTIPLE_CHOICE, question, answer);
-		answerChoices = answers;
 	}
 	
 	public void printToJSP(PrintWriter out, int i){

@@ -5,23 +5,15 @@ import java.io.PrintWriter;
 public class PictureResponseQuestion extends Question {
 	public String picURL;
 
-	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String question, String[] Answer, String url){
+	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, 
+								Integer NumAttempted, Integer NumCorrect, String Type,String question, String[] Answer, String url){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, Question.PICTURE_RESPONSE);
 		picURL = url;
 	}
-	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type,String question, String[] Answer, String url){
+	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber,
+									Integer QuestionTime, String Type,String question, String[] Answer, String url){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type, question, Answer, Question.PICTURE_RESPONSE);
 		picURL = url;
-	}
-	
-	
-	public PictureResponseQuestion(String question, String picURL, String answer){
-		this(question, picURL, new String[]{answer});
-	}
-	
-	public PictureResponseQuestion(String question, String picURL, String[] answers){
-		super(Question.PICTURE_RESPONSE, question, answers);
-		this.picURL = picURL;
 	}
 	
 	public void printToJSP(PrintWriter out, int i){

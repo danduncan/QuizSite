@@ -8,45 +8,33 @@ import java.util.Set;
 
 
 public class MultiAnswerQuestion extends Question {
-
 	public boolean ordered;
 	
-	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String question, String[][] Answer, boolean Ordered){
+	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, 
+						Integer NumAttempted, Integer NumCorrect, String Type,String question, String[][] Answer, boolean Ordered){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, Question.MULTI_ANSWER);
 		ordered = Ordered;
 	}
-	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String[][] Answer, boolean Ordered){
+	
+	
+	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime,
+							String Type, String question, String[][] Answer, boolean Ordered){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type, question, Answer, Question.MULTI_ANSWER);
 		ordered = Ordered;
 	}
-	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String question, String[] Answer, boolean Ordered, int type){
+	
+	
+	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime,
+						Integer NumAttempted, Integer NumCorrect, String Type,String question, String[] Answer, boolean Ordered, int type){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, type);
-		ordered = Ordered;
-	}
-	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String[] Answer, boolean Ordered, int type){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type, question, Answer, type);
-		ordered = Ordered;
-	}
-	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String question, String Answer, boolean Ordered, int type){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type, question, Answer, type);
-		ordered = Ordered;
-	}
-	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String Answer, boolean Ordered, int type){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type, question, Answer, type);
 		ordered = Ordered;
 	}
 	
-	public MultiAnswerQuestion(String questionStr, String[][] answerStrs, boolean orderedResponses){
-		super(Question.MULTI_ANSWER, questionStr, answerStrs);
-		this.ordered = orderedResponses;
-	}
-	public MultiAnswerQuestion(int type, String questionStr, String answerStr){
-		super(type, questionStr, answerStr);
-		ordered = true;
-	}
-	public MultiAnswerQuestion(int type, String questionStr, String[] answerStrs){
-		super(type, questionStr, answerStrs);
-		ordered = true;
+	
+	public MultiAnswerQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime,
+								String Type, String question, String[] Answer, boolean Ordered, int type){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime, Type, question, Answer, type);
+		ordered = Ordered;
 	}
 	
 	@Override
