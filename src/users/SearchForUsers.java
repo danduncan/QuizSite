@@ -32,13 +32,28 @@ public class SearchForUsers {
 	/**
 	 * Given strings for username, firstname, lastname, and/or email, find all matches
 	 * Note: null's or empty strings may be provided for any field you do not wish to search
+	 * If andTerms == false, search for term1 OR term2 OR term3 ...
+	 * If andTerms == true, search for term1 AND term2 AND term3 ...
 	 */
-	public static ResultSet advancedSearch(quizsite.DatabaseConnection dc, String username, String firstname, String lastname, String email) {
+	public static ResultSet advancedSearch(quizsite.DatabaseConnection dc, String username, String firstname, String lastname, String email, boolean andTerms) {
 		if(dc==null) return null;
-		String query = buildAdvancedQuery(username,firstname,lastname,email);
+		String query = buildAdvancedQuery(username,firstname,lastname,email,andTerms);
 		if(query == null || query.isEmpty()) return null;
 		ResultSet rs = dc.executeQuery(query);
 		return rs;
+	}
+	
+	/**
+	 * If no value is specified for the andTerms boolean, default to false
+	 * @param dc
+	 * @param username
+	 * @param firstname
+	 * @param lastname
+	 * @param email
+	 * @return
+	 */
+	public static ResultSet advancedSearch(quizsite.DatabaseConnection dc, String username, String firstname, String lastname, String email) {
+		return advancedSearch(dc,username,firstname,lastname,email,false);
 	}
 	
 	/**
@@ -49,7 +64,7 @@ public class SearchForUsers {
 	 * @param email
 	 * @return
 	 */
-	protected static String buildAdvancedQuery(String username, String firstname, String lastname, String email) {	
+	protected static String buildAdvancedQuery(String username, String firstname, String lastname, String email, boolean andTerms) {	
 		// Check that at least one input was provided
 		if (username==null && firstname==null && lastname==null && email==null) {
 			return null;
@@ -82,6 +97,16 @@ public class SearchForUsers {
 			return null;
 		}
 		
+		String strBw = "";
+		// Check whether we are ANDing or ORing
+		if (andTerms) {
+			strBw = "AND";
+		}
+		else {
+			strBw = "OR";
+		}
+		strBw = " " + strBw + " ";
+		
 		// Build the query from the sanitized inputs
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT * FROM " + SEARCHTABLE + " WHERE ");
@@ -93,21 +118,21 @@ public class SearchForUsers {
 
 		if(!firstname.isEmpty()) {
 			if(one) {
-				sb.append(" OR ");
+				sb.append(strBw);
 			}
 			one = true;
 			sb.append(colFirstName + " LIKE \"%" + firstname + "%\"");
 		}
 		if(!lastname.isEmpty()) {
 			if(one) {
-				sb.append(" OR ");
+				sb.append(strBw);
 			}
 			one = true;
 			sb.append(colLastName + " LIKE \"%" + lastname + "%\"");
 		}
 		if(!email.isEmpty()) {
 			if(one) {
-				sb.append(" OR ");
+				sb.append(strBw);
 			}
 			one = true;
 			sb.append(colEmail + " LIKE \"%" + email + "%\"");
@@ -154,18 +179,6 @@ public class SearchForUsers {
 	}
 
 	
-	/**
-	 * Given a user string, sanitize it by removing all characters not specified in the legalChars regex
-	 * @param searchQuery
-	 * @param legal
-	 * @return
-	 */
-//	protected static String sanitizeString(String searchQuery, String legalChars) {
-//		// Eliminate illegal characters
-//		String illegalChars = "[^" + legalChars + "]";
-//		searchQuery = searchQuery.replaceAll(illegalChars,"");
-//		return searchQuery;
-//	}
 	
 	public static void main(String[] args) {
 		String test = "Dan-iel D'uncan dan\\dun/can2010@\"gmail.com?!?!";
@@ -178,30 +191,28 @@ public class SearchForUsers {
 		String last = "D'uncan";
 		String email = "dan\\duncan/2010!@#gma%^&il.com";
 		System.out.println("Unformatted advanced query: " + user + " " + first + " " + last + " " + email);
-		System.out.println("query(user,first,last,email): ");
-		System.out.println("\t" + buildAdvancedQuery(user,first,last,email));
-		System.out.println("query(null,first,last,email): ");
-		System.out.println("\t" + buildAdvancedQuery(null,first,last,email));
-		System.out.println("query(null,null,last,\"\"): ");
-		System.out.println("\t" + buildAdvancedQuery(null,null,last,""));
-		System.out.println("query(null,null,null,null): ");
-		if(buildAdvancedQuery(null,null,null,null) == null ) {
+		System.out.println("query(user,first,last,email,OR): ");
+		System.out.println("\t" + buildAdvancedQuery(user,first,last,email,false));
+		System.out.println("query(null,first,last,email,AND): ");
+		System.out.println("\t" + buildAdvancedQuery(null,first,last,email,true));
+		System.out.println("query(null,null,last,\"\",AND): ");
+		System.out.println("\t" + buildAdvancedQuery(null,null,last,"",true));
+		System.out.println("query(null,null,null,null,OR): ");
+		if(buildAdvancedQuery(null,null,null,null,false) == null ) {
 			System.out.println("\tSuccess: Result was null");
-		} else if (buildAdvancedQuery(null,null,null,null).isEmpty() ) {
+		} else if (buildAdvancedQuery(null,null,null,null,false).isEmpty() ) {
 			System.out.println("\tResult was empty string");
 		} else {
-			System.out.println("\tResult was: " + buildAdvancedQuery(null,null,null,null));
+			System.out.println("\tResult was: " + buildAdvancedQuery(null,null,null,null,false));
 		}
-		System.out.println("query(\"\",\"\",\"\",\"\"): ");
-		if(buildAdvancedQuery("","","","") == null ) {
+		System.out.println("query(\"\",\"\",\"\",\"\",AND): ");
+		if(buildAdvancedQuery("","","","",true) == null ) {
 			System.out.println("\tSuccess: Result was null");
-		} else if (buildAdvancedQuery("","","","").isEmpty() ) {
+		} else if (buildAdvancedQuery("","","","",true).isEmpty() ) {
 			System.out.println("\tResult was empty string");
 		} else {
-			System.out.println("\tResult was: " + buildAdvancedQuery("","","",""));
+			System.out.println("\tResult was: " + buildAdvancedQuery("","","","",true));
 		}
-		
-		
 		
 	}
 
