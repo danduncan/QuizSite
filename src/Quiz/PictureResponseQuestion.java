@@ -4,8 +4,8 @@ import java.io.PrintWriter;
 
 public class PictureResponseQuestion extends Question {
 	public String picURL;
-	private String question;
-	private String[] answer;
+	public String question;
+	public String[] answer;
 	
 	public PictureResponseQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type,String Question, String[] Answer, String url){
 		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type);

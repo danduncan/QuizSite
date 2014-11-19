@@ -136,28 +136,22 @@ public class QuestionConnection {
 			if (type.equals(MyDBInfo.QUESTIONRESPONSE)){
 				QuestionResponse Q = (QuestionResponse) quiz.questions.get(i); 
 				//need to convert Answer String array to formatted string
-				String[] Answer = Q.getAnswerStrs();
-				String formattedAnswer = Answer[0];
+				String[][] Answer = Q.answer;
+				String formattedAnswer = formatAnswer(Answer);
 				
-				for(int j = 1; j < Answer.length; j++){
-					formattedAnswer += stringdelimiter+Answer[j];
-				}
-				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.numcorrect+",\""+ Q.getQuestionStr()+"\",\""+formattedAnswer+"\")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question+"\",\""+formattedAnswer+"\")";
 				db.executeUpdate(insertQ);
 				
 			} else if (type.equals(MyDBInfo.QUESTIONFILLBLANK)){
 				FillBlankQuestion Q = (FillBlankQuestion) quiz.questions.get(i); 
 				//need to convert Answer and Question String array to formatted string
-				String[] Answer = Q.answer;
-				String formattedAnswer = Answer[0];
-				for(int j = 1; j < Answer.length; j++){
-					formattedAnswer += stringdelimiter+Answer[j];
-				}
+				String[][] Answer = Q.answer;
+				String formattedAnswer = formatAnswer(Answer);
+				
 				//format question
 				String q = Q.qStr1 + stringdelimiter + Q.qStr2;
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.numcorrect+",\""+ q +"\",\""+formattedAnswer+"\")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ q +"\",\""+formattedAnswer+"\")";
 				db.executeUpdate(insertQ);		
 				
 			} else if (type.equals(MyDBInfo.QUESTIONMULTIPLECHOICE)){
@@ -169,49 +163,33 @@ public class QuestionConnection {
 					formattedChoices += stringdelimiter+answerChoices[j];
 				}
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.numcorrect+",\""+ Q.getQuestionStr() +"\",\""+Q.getAnswerStrs()+"\",\""+formattedChoices+"\","+Q.randomizeAnswers+")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+Q.answer+"\",\""+formattedChoices+"\","+Q.randomizeAnswers+")";
 				db.executeUpdate(insertQ);		
 
 			} else if (type.equals(MyDBInfo.QUESTIONPICTURE)){
 				PictureResponseQuestion Q = (PictureResponseQuestion) quiz.questions.get(i); 
 				//need to convert Answer array to formatted string
-				String[] Answer = Q.getAnswerStrs();
-				String formattedAnswer = Answer[0];
-				for(int j = 1; j < Answer.length; j++){
-					formattedAnswer += stringdelimiter+Answer[j];
-				}
+				String[][] Answer = Q.answer;
+				String formattedAnswer = formatAnswer(Answer);
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.numcorrect+",\""+ Q.getQuestionStr() +"\",\""+formattedAnswer+"\",\""+Q.picURL+"\")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+formattedAnswer+"\",\""+Q.picURL+"\")";
 				db.executeUpdate(insertQ);
 				
 			} else if (type.equals(MyDBInfo.QUESTIONMULTIPLEANSWER)){
 				MultiAnswerQuestion Q = (MultiAnswerQuestion) quiz.questions.get(i); 
-				//need to convert Answer and Question String array to formatted string
+				//need to convert Answer to formatted string
 				String[][] Answer = Q.answer;
-				String formattedAnswer = "";
-				for(int j = 0; j < Answer.length; j++){
-					for(int k = 0; k < Answer[j].length; k++){
-						if(j == 0 && k == 0){
-							formattedAnswer += Answer[i][j];							
-						} else {
-							formattedAnswer += stringdelimiter+Answer[i][j];
-						}
-					}
-					formattedAnswer += arraydelimiter;
-				}
+				String formattedAnswer = formatAnswer(Answer);
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.numcorrect+",\""+ Q.getQuestionStr() +"\",\""+formattedAnswer+"\","+Q.ordered+")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+formattedAnswer+"\","+Q.ordered+")";
 				db.executeUpdate(insertQ);
 				
 				
 			} else if (type.equals(MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER)){
 				MultiChoiceMultiAnswerQuestion Q = (MultiChoiceMultiAnswerQuestion) quiz.questions.get(i); 
 				//need to convert Answer array/choices to formatted string
-				String[] Answer = Q.getAnswerStrs();
-				String formattedAnswer = Answer[0];
-				for(int j = 1; j < Answer.length; j++){
-					formattedAnswer += stringdelimiter+Answer[j];
-				}
+				String[][] Answer = Q.answer;
+				String formattedAnswer = formatAnswer(Answer);
 				
 				String[] answerChoices = Q.answerChoices;
 				String formattedChoices = answerChoices[0];
@@ -219,7 +197,7 @@ public class QuestionConnection {
 					formattedChoices += stringdelimiter+answerChoices[j];
 				}
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.numcorrect+",\""+ Q.getQuestionStr() +"\",\""+formattedAnswer+"\",\""+formattedChoices+"\"," + Q.randomizeAnswers+")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+formattedAnswer+"\",\""+formattedChoices+"\"," + Q.randomizeAnswers+")";
 				db.executeUpdate(insertQ);
 				
 			}
@@ -227,5 +205,21 @@ public class QuestionConnection {
 			//String insertQ = "INSERT INTO " +question.typeQ + " VALUES(";
 		}
 		
+	}
+	public String formatAnswer(String[][] Answer){
+		String formattedAnswer = "";
+		for(int j = 0; j < Answer.length; j++){
+			for(int k = 0; k < Answer[j].length; k++){
+				if(j == 0 && k == 0){
+					formattedAnswer += Answer[j][k];							
+				} else {
+					formattedAnswer += stringdelimiter+Answer[j][k];
+				}
+			}
+			if( j != (Answer.length -1)){
+				formattedAnswer += arraydelimiter;
+			}
+		}
+		return formattedAnswer;
 	}
 }

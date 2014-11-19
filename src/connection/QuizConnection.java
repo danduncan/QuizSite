@@ -55,9 +55,9 @@ public class QuizConnection {
 		//new quiz is insert
 		if (newQuiz){
 			//insert quiz info
-			String insert = "INSERT INTO " + MyDBInfo.QUIZZESTABLE + " VALUES("+quiz.id+","+quiz.authorid+", \"" + quiz.datemade + "\", \"" + quiz.description + "\"," + quiz.practicemode + ", " + quiz.multipage
-            + ", " + quiz.randomorder + "," + quiz.immediatecorrection + ","+quiz.questions.size()+ ","+ quiz.numtaken +")";   
-		
+			String insert = "INSERT INTO " + MyDBInfo.QUIZZESTABLE + " VALUES("+quiz.id+","+quiz.authorid+", \"" + quiz.datemade + "\",\""+quiz.name +"\" ,\"" + quiz.description + "\"," + quiz.practicemode + ", " + quiz.multipage
+            + ", " + quiz.randomorder + "," + quiz.immediatecorrection + ","+quiz.questions.size()+ ","+ quiz.numtaken +")";   			
+			
 			db.executeUpdate(insert);
 			
 			qc.insertQuestions(quiz);

@@ -3,8 +3,8 @@ package Quiz;
 import java.io.PrintWriter;
 
 public class MultipleChoiceQuestion extends Question {
-	private String answer;
-	private String question;
+	public String answer;
+	public String question;
 	public String[] answerChoices;
 	public boolean randomizeAnswers;
 	private String[] answers;

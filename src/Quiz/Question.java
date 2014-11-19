@@ -17,8 +17,8 @@ public abstract class Question {
 	public static final String ARRAY_DELIM = "%%%";
 	
 	protected int type;
-	protected String questionStr;
-	protected String[][] answerStrs;
+	public String questionStr;
+	public String[][] answerStrs;
 	protected int possiblePoints;
 	
 	
