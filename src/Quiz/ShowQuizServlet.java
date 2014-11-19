@@ -8,14 +8,12 @@ import java.util.List;
 import users.*;
 import quizsite.*;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import connection.UserConnection;
 
 @WebServlet("/ShowQuizServlet")
 public class ShowQuizServlet extends HttpServlet {
@@ -31,33 +29,6 @@ public class ShowQuizServlet extends HttpServlet {
 	private static final String PAGE_TITLE = "Quiz";
 	
     public ShowQuizServlet() {}
-    
-    private void makeTestQuiz(HttpServletRequest request){
-    	Quiz quiz = (Quiz)request.getSession().getAttribute(CreateQuizServlet.QUIZ_CREATED);
-    	User user = (User)request.getSession().getAttribute("user");
-    	
-    	if(user == null){
-			ServletContext sc = request.getServletContext();
-			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
-			user = new User(0, new UserConnection(dc));
-    	}
-    	request.getSession().setAttribute("user", user);
-    	
-    	if(quiz == null){
-        	quiz = new Quiz(true, false, false, 3);
-        	String[] ans1 = new String[]{"Packers", "packers"};
-        	String[] ans2 = new String[]{"Badgers", "badgers"};
-        	String[] ans3 = new String[]{"bears"};
-        	quiz.addQuestion(new MultiAnswerQuestion("Best sports teams?", new String[][]{ans1, ans2, ans3}, false));
-        	quiz.addQuestion(new FillBlankQuestion("What", "the", "fuck"));
-        	quiz.addQuestion(new PictureResponseQuestion("What is the name of this building?","http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
-        	quiz.addQuestion(new QuestionResponse("What are you doing?", new String[]{"IDK", "big things"}));
-        	quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", new String[] {"a", "b duh", "a shit"}, "a shit"));
-        	quiz.addQuestion(new MultiChoiceMultiAnswerQuestion("Favorite letter?", new String[] {"a", "poop man", "shit bro"}, new String[]{"poop man","shit bro"}));	
-    	}
-    	request.getSession().setAttribute(QUIZ, quiz);
-    }
-    
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {				
 		request.getSession().setAttribute(QUIZ_ANSWERS, new LinkedList<String[]>());
@@ -203,8 +174,7 @@ public class ShowQuizServlet extends HttpServlet {
 		ScoreManager scoreManager = (ScoreManager) request.getServletContext().getAttribute("ScoreManager");
 					
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
-		user.quizzestaken.add(new QuizTaken(user.id,quiz.id));
-		
+		//user.quizzestaken.add(new QuizTaken(user.id,quiz.id,));	
 		int rank = scoreManager.addScore(quizScore);
 		
 		PrintWriter out = writeHeader(response, PAGE_TITLE);

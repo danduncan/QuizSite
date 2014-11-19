@@ -25,35 +25,8 @@ public class QuizHomepageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     public QuizHomepageServlet() {}
-
-    private void makeTestQuiz(HttpServletRequest request){
-    	Quiz quiz = (Quiz)request.getSession().getAttribute(CreateQuizServlet.QUIZ_CREATED);
-    	User user = (User)request.getSession().getAttribute("user");
-    	
-    	if(user == null){
-			ServletContext sc = request.getServletContext();
-			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
-			user = new User(0, new UserConnection(dc));
-    	}
-    	request.getSession().setAttribute("user", user);
-    	
-    	if(quiz == null){
-        	quiz = new Quiz(true, true, true, 3);
-        	String[] ans1 = new String[]{"Packers", "packers"};
-        	String[] ans2 = new String[]{"Badgers", "badgers"};
-        	String[] ans3 = new String[]{"bears"};
-        	quiz.addQuestion(new MultiAnswerQuestion("Best sports teams?", new String[][]{ans1, ans2, ans3}, false));
-        	quiz.addQuestion(new FillBlankQuestion("What", "the", "fuck"));
-        	quiz.addQuestion(new PictureResponseQuestion("What is the name of this building?","http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
-        	quiz.addQuestion(new QuestionResponse("What are you doing?", new String[]{"IDK", "big things"}));
-        	quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", new String[] {"a", "b", "shit"}, "shit"));
-        	quiz.addQuestion(new MultiChoiceMultiAnswerQuestion("Favorite letter?", new String[] {"a", "poop", "shit"}, new String[]{"poop","shit"}));	
-    	}
-    	request.getSession().setAttribute(ShowQuizServlet.QUIZ, quiz);
-    }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//makeTestQuiz(request);
 		Integer ID = Integer.parseInt((String)request.getParameter("quizid"));
 		System.out.println(ID);
 		ServletContext sc = request.getServletContext();
