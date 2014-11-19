@@ -107,7 +107,7 @@ public class CreateQuizServlet extends HttpServlet {
 		out.println("<option value=\""+MULTI_ANSWER_MULTI_CHOICE+"\">"+MULTI_ANSWER_MULTI_CHOICE+"</option>");
 		out.println("</select>");
 		out.println("<br><input type=\"submit\" value=\"Add Question\"></form>");
-		out.println("<form action=\"ShowQuizServlet\" method=\"post\">");
+		out.println("<form action=\"ShowQuizServlet\" method=\"get\">");
 		out.println("If you are done adding questions please press the \"Complete Quiz\" button below.<br>");
 		out.println("<input type=\"submit\" value=\"Complete Quiz\"></form>");
 		out.println("</body></html>");

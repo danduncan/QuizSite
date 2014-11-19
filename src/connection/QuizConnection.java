@@ -36,7 +36,7 @@ public class QuizConnection {
 				return qc.getQuestions(ID);
 				
 			} else {
-				query = "SELECT " + field + "  FROM quizzes WHERE (quizid = "+ID+")";
+				query = "SELECT " + field + "  FROM quizzes WHERE (id = "+ID+")";
 				ResultSet rs = db.executeQuery(query);
 			
 				String fieldvalue = "";

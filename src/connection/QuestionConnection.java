@@ -49,7 +49,7 @@ public class QuestionConnection {
 						String formattedString = rs.getString("answer");
 						String[] answer = formattedString.split(stringdelimiter);
 						//need to format answer
-						questions.add(new QuestionResponse(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattemped"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONRESPONSE, rs.getString("question"),answer));
+						questions.add(new QuestionResponse(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONRESPONSE, rs.getString("question"),answer));
 					}
 				} else if (type.equals(MyDBInfo.QUESTIONFILLBLANK)){
 					while (rs.next()){
@@ -59,21 +59,21 @@ public class QuestionConnection {
 						//split question string if needed
 						String formattedQ = rs.getString("question");
 						String[] question = formattedQ.split(stringdelimiter, -1);
-						questions.add(new FillBlankQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattemped"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONFILLBLANK, question[0], question[1],answer));
+						questions.add(new FillBlankQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONFILLBLANK, question[0], question[1],answer));
 					}
 				} else if (type.equals(MyDBInfo.QUESTIONMULTIPLECHOICE)){
 					while (rs.next()){
 						//need to get answer choices
 						String formAnsChoices = rs.getString("answerChoices");
 						String[] answerChoices = formAnsChoices.split(stringdelimiter);
-						questions.add(new MultipleChoiceQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattemped"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLECHOICE,rs.getString("question"), rs.getString("answer"),answerChoices, rs.getBoolean("randomizeAnswers")));
+						questions.add(new MultipleChoiceQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLECHOICE,rs.getString("question"), rs.getString("answer"),answerChoices, rs.getBoolean("randomizeAnswers")));
 					}
 				} else if (type.equals(MyDBInfo.QUESTIONPICTURE)){
 					while (rs.next()){
 						//need to get answers string
 						String formattedString = rs.getString("answer");
 						String[] answers = formattedString.split(stringdelimiter);
-						questions.add(new PictureResponseQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattemped"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONPICTURE, rs.getString("question"), answers, rs.getString("url")));
+						questions.add(new PictureResponseQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONPICTURE, rs.getString("question"), answers, rs.getString("url")));
 					}
 				} else if (type.equals(MyDBInfo.QUESTIONMULTIPLEANSWER)){
 					while (rs.next()){
@@ -97,7 +97,7 @@ public class QuestionConnection {
 						for (int j = 0; j < numAns; j++){
 							answers[j] = numAnswers[j].split(stringdelimiter);
 						}
-						questions.add(new MultiAnswerQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattemped"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLEANSWER, rs.getString("question"), answers, rs.getBoolean("ordered")));
+						questions.add(new MultiAnswerQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLEANSWER, rs.getString("question"), answers, rs.getBoolean("ordered")));
 					} 
 				} else if (type.equals(MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER)){
 					while (rs.next()){
@@ -107,7 +107,7 @@ public class QuestionConnection {
 						String formattedChoices = rs.getString("answerChoices");
 						String[] choices = formattedChoices.split(stringdelimiter);
 
-						questions.add(new MultiChoiceMultiAnswerQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattemped"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER, rs.getString("question"), answers, choices, rs.getBoolean("randomizeAnswers")));
+						questions.add(new MultiChoiceMultiAnswerQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER, rs.getString("question"), answers, choices, rs.getBoolean("randomizeAnswers")));
 					}
 				}
 
@@ -136,16 +136,16 @@ public class QuestionConnection {
 			if (type.equals(MyDBInfo.QUESTIONRESPONSE)){
 				QuestionResponse Q = (QuestionResponse) quiz.questions.get(i); 
 				//need to convert Answer String array to formatted string
-				String[][] Answer = Q.answer;
+				String[][] Answer = Q.answerStrs;
 				String formattedAnswer = formatAnswer(Answer);
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question+"\",\""+formattedAnswer+"\")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.questionStr+"\",\""+formattedAnswer+"\")";
 				db.executeUpdate(insertQ);
 				
 			} else if (type.equals(MyDBInfo.QUESTIONFILLBLANK)){
 				FillBlankQuestion Q = (FillBlankQuestion) quiz.questions.get(i); 
 				//need to convert Answer and Question String array to formatted string
-				String[][] Answer = Q.answer;
+				String[][] Answer = Q.answerStrs;
 				String formattedAnswer = formatAnswer(Answer);
 				
 				//format question
@@ -163,32 +163,32 @@ public class QuestionConnection {
 					formattedChoices += stringdelimiter+answerChoices[j];
 				}
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+Q.answer+"\",\""+formattedChoices+"\","+Q.randomizeAnswers+")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.questionStr +"\",\""+Q.answerStrs+"\",\""+formattedChoices+"\","+Q.randomizeAnswers+")";
 				db.executeUpdate(insertQ);		
 
 			} else if (type.equals(MyDBInfo.QUESTIONPICTURE)){
 				PictureResponseQuestion Q = (PictureResponseQuestion) quiz.questions.get(i); 
 				//need to convert Answer array to formatted string
-				String[][] Answer = Q.answer;
+				String[][] Answer = Q.answerStrs;
 				String formattedAnswer = formatAnswer(Answer);
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+formattedAnswer+"\",\""+Q.picURL+"\")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.questionStr +"\",\""+formattedAnswer+"\",\""+Q.picURL+"\")";
 				db.executeUpdate(insertQ);
 				
 			} else if (type.equals(MyDBInfo.QUESTIONMULTIPLEANSWER)){
 				MultiAnswerQuestion Q = (MultiAnswerQuestion) quiz.questions.get(i); 
 				//need to convert Answer to formatted string
-				String[][] Answer = Q.answer;
+				String[][] Answer = Q.answerStrs;
 				String formattedAnswer = formatAnswer(Answer);
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+formattedAnswer+"\","+Q.ordered+")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.questionStr +"\",\""+formattedAnswer+"\","+Q.ordered+")";
 				db.executeUpdate(insertQ);
 				
 				
 			} else if (type.equals(MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER)){
 				MultiChoiceMultiAnswerQuestion Q = (MultiChoiceMultiAnswerQuestion) quiz.questions.get(i); 
 				//need to convert Answer array/choices to formatted string
-				String[][] Answer = Q.answer;
+				String[][] Answer = Q.answerStrs;
 				String formattedAnswer = formatAnswer(Answer);
 				
 				String[] answerChoices = Q.answerChoices;
@@ -197,7 +197,7 @@ public class QuestionConnection {
 					formattedChoices += stringdelimiter+answerChoices[j];
 				}
 				
-				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.question +"\",\""+formattedAnswer+"\",\""+formattedChoices+"\"," + Q.randomizeAnswers+")";
+				String insertQ = "INSERT INTO " +type + " VALUES("+Q.id+","+Q.quizid+","+Q.qnumber+","+Q.pagenumber+","+Q.questiontime+","+Q.numattempted+","+Q.numcorrect+",\""+ Q.questionStr +"\",\""+formattedAnswer+"\",\""+formattedChoices+"\"," + Q.randomizeAnswers+")";
 				db.executeUpdate(insertQ);
 				
 			}

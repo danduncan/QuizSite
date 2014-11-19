@@ -31,11 +31,14 @@
 	out.println("<p><input type=\"submit\" value=\"Create New Quiz\" /></p>");
 	out.println("</form>");
 	out.println("<ul type = \"circle\">");
+	out.println("<form method=\"get\" action=\"ShowQuizServlet\">");
 	if (user.numcreated > 0){
 		for(int i = 0; i < user.quizzesmade.size(); i++){
-			out.println("<li>"+user.quizzesmade.get(i).toString()+"</li>");
+			Integer id = user.quizzesmade.get(i).quizid;
+			out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
 		}
 	}
+	out.println("</form>");
 	out.println("</ul>");
 	
 	//achievements info

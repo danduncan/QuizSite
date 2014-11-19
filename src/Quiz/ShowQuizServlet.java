@@ -6,11 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import users.*;
 import quizsite.*;
+import java.util.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import connection.QuizConnection;
 import connection.UserConnection;
 
 @WebServlet("/ShowQuizServlet")
@@ -65,7 +68,19 @@ public class ShowQuizServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		makeTestQuiz(request);
+		Integer ID = Integer.parseInt((String)request.getParameter("quizid"));
+		ServletContext sc = request.getServletContext();
+		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
+		ArrayList<QuestionType> questiontypes =  (ArrayList<QuestionType>) sc.getAttribute("questiontypes"); 
 		
+		
+		if (ID != null){
+			Quiz quiz = new Quiz(ID, new QuizConnection(dc,questiontypes)); 
+			request.setAttribute(QUIZ, quiz);
+		}
+		
+		//Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
+		//quiz.updateDatabase(true, quiz.id);
 		
 		
 		List<String[]> quizAnswers = new LinkedList<String[]>();
@@ -80,8 +95,7 @@ public class ShowQuizServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		User user = (User) request.getSession().getAttribute("user");
-		quiz.updateDatabase(true, quiz.id);
+		
 		
 		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 		boolean showAnswer = (Boolean) request.getSession().getAttribute(SHOW_ANSWER);
