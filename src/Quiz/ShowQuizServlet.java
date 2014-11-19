@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,8 +61,8 @@ public class ShowQuizServlet extends HttpServlet {
         	quiz.addQuestion(new FillBlankQuestion("What", "the", "fuck"));
         	quiz.addQuestion(new PictureResponseQuestion("What is the name of this building?","http://events.stanford.edu/events/252/25201/Memchu_small.jpg", "Memchu"));
         	quiz.addQuestion(new QuestionResponse("What are you doing?", new String[]{"IDK", "big things"}));
-        	quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", new String[] {"a", "b", "shit"}, "shit"));
-        	quiz.addQuestion(new MultiChoiceMultiAnswerQuestion("Favorite letter?", new String[] {"a", "poop", "shit"}, new String[]{"poop","shit"}));	
+        	quiz.addQuestion(new MultipleChoiceQuestion("Favorite letter?", new String[] {"a", "b duh", "a shit"}, "a shit"));
+        	quiz.addQuestion(new MultiChoiceMultiAnswerQuestion("Favorite letter?", new String[] {"a", "poop man", "shit bro"}, new String[]{"poop man","shit bro"}));	
     	}
     	request.getSession().setAttribute(QUIZ, quiz);
     }
@@ -228,8 +230,6 @@ public class ShowQuizServlet extends HttpServlet {
 					
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
 		int rank = scoreManager.addScore(quizScore);
-	
-		if(quiz == null) System.out.println("FUCK");
 		
 		PrintWriter out = writeHeader(response, PAGE_TITLE);
 		out.println("<h1>Quiz Results</h1>");

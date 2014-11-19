@@ -25,8 +25,7 @@ public class MultipleChoiceQuestion extends Question {
 	public void printToJSP(PrintWriter out, int i){
 		out.println(getQuestionStr() + "<br>");
 		for(int j = 0 ; j < answerChoices.length; j++){
-			out.println("<input type=\"radio\" name=\""+Question.ANSWER+i+""+0+"\" value="+ answerChoices[j] +">" + answerChoices[j] + "<br>");
-		}
+			out.println("<input type=\"radio\" name=\""+Question.ANSWER+i+""+0+"\" value="+ answerChoices[j] +">" + answerChoices[j] + "<br>");		}
 	}
 
 }
