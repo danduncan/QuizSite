@@ -68,7 +68,7 @@ public class MultiChoiceMultiAnswerQuestion extends Question {
 	public void printToJSP(PrintWriter out, int i) {
 		out.println(getQuestionStr() + "<br>");
 		for(int j = 0 ; j < answerChoices.length; j++){
-			out.println("<input type=\"checkbox\" name=\""+Question.ANSWER+i+""+j+"\" value="+ answerChoices[j] +">" + answerChoices[j] + "<br>");
+			out.println("<input type=\"checkbox\" name=\""+Question.ANSWER+i+""+j+"\" value=\""+ answerChoices[j] +"\">" + answerChoices[j] + "<br>");
 		}
 	}
 }
