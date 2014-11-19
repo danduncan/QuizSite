@@ -110,11 +110,48 @@ public class FormatDateTime {
 		return getUserDate(new Date());
 	}
 	
+	// Take a string formatted to show elapsed time in seconds
+	// Convert to a string in the format hh:mm:ss
+	public static String getUserElapsedTime(String timeInSeconds) {
+		// Check validity of input
+		if (timeInSeconds == null || timeInSeconds.isEmpty()) return null;
+		Integer time = Integer.parseInt(timeInSeconds);
+		if (time == null || time < 0) return null;
+		
+		// Format output
+		String formatStr = "%02d";
+		StringBuilder sb = new StringBuilder();
+		if (time >= 3600) {
+			int numHours = time/3600;
+			time = time % 3600;
+			sb.append(String.format(formatStr,numHours) + ":");
+		} else {
+			sb.append("00:");
+		}
+		if (time >= 60) {
+			int numMinutes = time/60;
+			time = time % 60;
+			sb.append(String.format(formatStr,numMinutes) + ":");
+		} else {
+			sb.append("00:");
+		}
+		sb.append(String.format(formatStr,time));
+		
+		return sb.toString();
+		
+	}
+	
 	// For testing:
 	public static void main(String[] args) {
+		System.out.println("Testing formatting of date and time:");
 		System.out.println(FormatDateTime.getCurrentSystemDate());
 		System.out.println(FormatDateTime.getCurrentSystemTime());
 		System.out.println(FormatDateTime.getCurrentUserDate());
 		System.out.println(FormatDateTime.getCurrentUserTime());
+		System.out.println("Testing formatting of elapsed time:");
+		System.out.println("Correct: 01:43:06");
+		System.out.println(getUserElapsedTime("6186"));
+		
+		
 	}
 }
