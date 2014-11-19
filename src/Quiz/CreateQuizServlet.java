@@ -265,7 +265,7 @@ public class CreateQuizServlet extends HttpServlet {
 			ArrayList<QuestionType> qtypes = (ArrayList<QuestionType>) sc.getAttribute("questiontypes");
 			DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 			
-			SiteManager sm = (SiteManager) request.getServletContext().getAttribute("sitemanager");
+			SiteManager sm = (SiteManager) request.getServletContext().getAttribute("SiteManager");
 			int quizid = sm.popNextQuizID();
 			
 			Quiz quiz = new Quiz(quizid,user.id, name, description, practicemode,  multiPage, randomOrder, immediateCorrection, new QuizConnection(dc,qtypes));

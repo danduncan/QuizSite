@@ -48,7 +48,7 @@ public class ShowQuizServlet extends HttpServlet {
     	request.getSession().setAttribute("user", user);
     	
     	if(quiz == null){
-        	quiz = new Quiz(true, true, true, 3);
+        	quiz = new Quiz(true, false, false, 3);
         	String[] ans1 = new String[]{"Packers", "packers"};
         	String[] ans2 = new String[]{"Badgers", "badgers"};
         	String[] ans3 = new String[]{"bears"};
@@ -209,7 +209,9 @@ public class ShowQuizServlet extends HttpServlet {
 					
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
 		int rank = scoreManager.addScore(quizScore);
-			
+	
+		if(quiz == null) System.out.println("FUCK");
+		
 		PrintWriter out = writeHeader(response, PAGE_TITLE);
 		out.println("<h1>Quiz Results</h1>");
 		out.println("Points earned: "+numCorrect+"<br>");

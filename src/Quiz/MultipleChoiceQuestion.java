@@ -3,24 +3,18 @@ package Quiz;
 import java.io.PrintWriter;
 
 public class MultipleChoiceQuestion extends Question {
-	private String answer;
-	private String question;
 	public String[] answerChoices;
 	public boolean randomizeAnswers;
 	private String[] answers;
 	
-	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String Question, String Answer, String[] AnswerChoices, boolean random){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type);
-		answer = Answer;
-		question = Question;
+	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, Integer NumAttempted, Integer NumCorrect, String Type, String question, String Answer, String[] AnswerChoices, boolean random){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,NumAttempted,NumCorrect, Type,question, Answer, Question.MULTIPLE_CHOICE);
 		answerChoices = AnswerChoices;
 		randomizeAnswers = random;
 	}
 	
-	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String Question, String Answer, String[] AnswerChoices, boolean random){
-		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type);
-		answer = Answer;
-		question = Question;
+	public MultipleChoiceQuestion(Integer ID, Integer QuizID, Integer QNumber, Integer PageNumber, Integer QuestionTime, String Type, String question, String Answer, String[] AnswerChoices, boolean random){
+		super(ID,QuizID,QNumber,PageNumber,QuestionTime,Type, question, Answer, Question.MULTIPLE_CHOICE);
 		answerChoices = AnswerChoices;
 		randomizeAnswers = random;
 	}
