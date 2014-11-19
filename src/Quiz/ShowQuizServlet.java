@@ -69,24 +69,23 @@ public class ShowQuizServlet extends HttpServlet {
     
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		makeTestQuiz(request);
-		Integer ID = Integer.parseInt((String)request.getParameter("quizid"));
-		ServletContext sc = request.getServletContext();
-		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
-		ArrayList<QuestionType> questiontypes =  (ArrayList<QuestionType>) sc.getAttribute("questiontypes"); 
+		//makeTestQuiz(request);
+		//Integer ID = Integer.parseInt((String)request.getParameter("quizid"));
+		//ServletContext sc = request.getServletContext();
+		//DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
+		//ArrayList<QuestionType> questiontypes =  (ArrayList<QuestionType>) sc.getAttribute("questiontypes"); 
 		
 		
-		if (ID != null){
-			Quiz quiz = new Quiz(ID, new QuizConnection(dc,questiontypes)); 
-			request.setAttribute(QUIZ, quiz);
-		}
+		//if (ID != null){
+		//	Quiz quiz = new Quiz(ID, new QuizConnection(dc,questiontypes)); 
+		//	request.setAttribute(QUIZ, quiz);
+		//}
 		
 		//Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
 		//quiz.updateDatabase(true, quiz.id);
 		
 		
-		List<String[]> quizAnswers = new LinkedList<String[]>();
-		request.getSession().setAttribute(QUIZ_ANSWERS, quizAnswers);
+		request.getSession().setAttribute(QUIZ_ANSWERS, new LinkedList<String[]>());
 		request.getSession().setAttribute(QUIZ_PAGE, 0);
 		request.getSession().setAttribute(NUM_ATTEMPTED, 0);
 		request.getSession().setAttribute(SHOW_ANSWER, false);
@@ -252,6 +251,7 @@ public class ShowQuizServlet extends HttpServlet {
 			out.println("<br>");
 			out.println("</li>");
 		}
+		out.println("<a href=\"welcomepage.jsp\">Go to welcome page!</a>");
 		out.println("</ul></body></html>");
 	}
 	
