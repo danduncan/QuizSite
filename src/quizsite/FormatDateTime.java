@@ -21,6 +21,61 @@ public class FormatDateTime {
 	private static final String TIMESYSTEMPATTERN = "hhmmss";
 	
 	
+	// Given a timestamp formatted as "yyyyMMdd hhmmss", get the user-friendly version as a String[] array
+	// Note that if the input is empty or null, null is returned
+	// If the input has only one word, its length is checked. Length 8 = yyyyMMdd, 6 = hhmmss
+	// The returned String[] array always has two entries: [0] = date, [1] = time
+	// In the event of invalid formatting, an entry will revert to the empty string (e.g. [0] = "" or [1] = "")
+	public static String[] getUserDateTime(String timestamp) {
+		// This will be the array that gets returned
+		String[] output = new String[2];
+		output[0] = ""; output[1] = "";
+
+		// Check for valid input
+		if (timestamp == null) {
+			return null;
+		} else if (timestamp.isEmpty()) {
+			return output;
+		}
+		
+		// Find number of words in timestamp
+		String[] parsed = FormatString.parseStringByWhitespace(timestamp);
+		
+		int n = parsed.length;
+		
+		if (n == 1) {
+			// Only one word was provided. Check whether it is a date or a time
+			if (parsed[0].length() == DATESYSTEMPATTERN.length()) {
+				// The one word is a date. Convert it to user-format and store in output[0]
+				output[0] = getUserDate(parsed[0]);
+			} else if (parsed[0].length() == TIMESYSTEMPATTERN.length()) {
+				output[1] = getUserTime(parsed[0]);
+			}
+		} else {
+			// At least two words were provided. 
+			// parsed[0] = date, parsed[1] = time
+			output[0] = getUserDate(parsed[0]);
+			output[1] = getUserTime(parsed[1]);
+		}
+		
+		// Return the final string array
+		return output;
+	}
+	
+	// Format a user-formatted date and time, either as separate strings or a {date,time} string array, into a systme-formatted single string
+	public static String getSystemDateTime(String userDate, String userTime) {
+		return getSystemDate(userDate) + " " + getSystemTime(userTime);
+	}
+	public static String getSystemDateTime(String[] userDateTime) {
+		if (userDateTime.length < 2) return null;
+		return getSystemDateTime(userDateTime[0],userDateTime[1]);
+	}
+	
+	// Get the current date-time timestamp in system format
+	public static String getCurrentSystemDateTime() {
+		return getCurrentSystemDate() + " " + getCurrentSystemTime();
+	}
+	
 	// Takes a date object and returns a String formatted for system use
 	public static String getSystemDate(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat(DATESYSTEMPATTERN);
@@ -151,6 +206,17 @@ public class FormatDateTime {
 		System.out.println("Testing formatting of elapsed time:");
 		System.out.println("Correct: 01:43:06");
 		System.out.println(getUserElapsedTime("6186"));
+		
+		// Test conversion of more complex date-time strings to user format
+		String[] dt0 = getUserDateTime("20141225 012345");
+		String[] dt1 = getUserDateTime("20141226");
+		String[] dt2 = getUserDateTime("040608");
+		System.out.println("dt0: \"" + dt0[0] + "\" ; \"" + dt0[1] + "\"");
+		System.out.println("dt1: \"" + dt1[0] + "\" ; \"" + dt1[1] + "\"");
+		System.out.println("dt2: \"" + dt2[0] + "\" ; \"" + dt2[1] + "\"");
+		
+		// Test conversion of date-time strings to system format
+		System.out.println("Current system timestamp: \"" + getCurrentSystemDateTime() + "\"");
 		
 		
 	}
