@@ -172,9 +172,11 @@ public class ShowQuizServlet extends HttpServlet {
 		List<String[]> quizAnswers = (List<String[]>) request.getSession().getAttribute(QUIZ_ANSWERS);
 		User user = (User) request.getSession().getAttribute("user");
 		ScoreManager scoreManager = (ScoreManager) request.getServletContext().getAttribute("ScoreManager");
-					
+		SiteManager sm = (SiteManager) request.getServletContext().getAttribute("SiteManager");	
+		
+		
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
-		//user.quizzestaken.add(new QuizTaken(user.id,quiz.id,));	
+		user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
 		int rank = scoreManager.addScore(quizScore);
 		
 		PrintWriter out = writeHeader(response, PAGE_TITLE);

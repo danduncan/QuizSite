@@ -105,11 +105,11 @@ public class CreateMessageServlet extends HttpServlet {
 		try {
 			if (!rs.first()) return -1;
 			receiverid = rs.getInt("id");
+			return receiverid;
 			//if (receiverid == -1) return -1; // Be careful. 0 is a valid userid
 		} catch (SQLException ignored) {
 			return -1;
 		}
-		return -1;
 	}
 	
 	private void updateDatabase(users.Message msg, DatabaseConnection dc) {
@@ -119,10 +119,10 @@ public class CreateMessageServlet extends HttpServlet {
 		sb.append("(id, type, datesent, timesent, senderid, receiverid, opened, replied, subject, body) ");
 		sb.append("VALUES "); //(1, 2, 3, "20141225", 100, 5);");
 		sb.append("(" + msg.id + ", " + msg.type + ", ");
-		sb.append(msg.datesent + ", " + msg.timesent + ", ");
-		sb.append(msg.senderid + ", " + msg.receiverid + ", ");
+		sb.append("\""+msg.datesent + "\", \"" + msg.timesent + "\", ");
+		sb.append(msg.senderid + ", \"" + msg.receiverid + "\", ");
 		sb.append(msg.opened + ", " + msg.replied + ", ");
-		sb.append(msg.subject + ", " + msg.body + ");");
+		sb.append("\""+msg.subject + "\", \"" + msg.body + "\");");
 		dc.executeUpdate(sb.toString());
 	}
 

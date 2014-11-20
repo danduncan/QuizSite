@@ -20,7 +20,7 @@
 	out.println("<ul type = \"circle\">");
 	if (user.numtaken > 0){
 		for(int i = 0; i < user.quizzestaken.size(); i++){
-			out.println("<li>"+user.quizzestaken.get(i).toString()+"</li>");
+			out.println("<li>"+user.quizzestaken.get(i).toString()+"</li>");			
 		}
 	}
 	out.println("</ul>");
@@ -35,7 +35,8 @@
 	if (user.numcreated > 0){
 		for(int i = 0; i < user.quizzesmade.size(); i++){
 			Integer id = user.quizzesmade.get(i).quizid;
-			out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
+			//out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
+			out.println("<li> <a href=\"QuizHomepageServlet?quizid="+id+"\">"+user.quizzesmade.get(i).toString()+"</a> </li>");
 		}
 	}
 	out.println("</form>");
@@ -69,10 +70,10 @@
 	
 	//Create new message
 	out.println("<h3>Create New Message</h3>");
-	out.println("<p>User name: <input type=\"text\" name=\"username\"></p>");
+	out.println("<form method=\"post\" action=\"CreateMessageServlet\">");
+	out.println("<p>User name: <input type=\"text\" name=\"receiverUsername\"></p>");
 	out.println("<p>Subject: <input type=\"text\" name=\"subject\"></p>");
 	out.println("<p>Body: <textarea name=\"body\" cols=\"50\" rows=\"10\"></textarea>");
-	out.println("<form method=\"post\" action=\"CreateMessageServlet\">");
 	out.println("<p><input type=\"submit\" value=\"Send Message\" /></p>");
 	out.println("<input name=\"type\" type=\"hidden\" value= \"2\"");
 	out.println("</body>");

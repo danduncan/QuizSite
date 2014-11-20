@@ -8,9 +8,9 @@ public class QuizTaken {
 	public Integer userid;
 	public String datetaken;
 	public Integer score;
-	public Integer time;
+	public double time;
 	
-	public QuizTaken(Integer ID, Integer QuizID, Integer UserID, String DateTaken,Integer Score,  Integer Time){
+	public QuizTaken(Integer ID, Integer QuizID, Integer UserID, String DateTaken,Integer Score,  double Time){
 		id = ID;
 		quizid = QuizID;
 		userid = UserID;
@@ -19,7 +19,7 @@ public class QuizTaken {
 		time = Time;		
 	}
 	
-	public QuizTaken(Integer ID, Integer QuizID, Integer UserID, Integer Score,  Integer Time){
+	public QuizTaken(Integer ID, Integer QuizID, Integer UserID, Integer Score,  double Time){
 		id = ID;
 		quizid = QuizID;
 		userid = UserID;
