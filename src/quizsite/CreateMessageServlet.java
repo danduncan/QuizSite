@@ -85,8 +85,11 @@ public class CreateMessageServlet extends HttpServlet {
 		
 		// Get ID of receiver
 		String receiverUsername = request.getParameter(messageReceiverUsername);
-		int receiverid = getUserIDFromDatabase(receiverUsername, dc);
+		Integer receiverid = getUserIDFromDatabase(receiverUsername, dc);
+		request.getSession().setAttribute("receiverid", receiverid);
 		
+		if (receiverid != -1){		
+			
 		// Construct the new Message
 		users.Message msg = new users.Message(id, type, date, time, senderid, receiverid, opened, replied, subject, body);
 		
@@ -95,6 +98,18 @@ public class CreateMessageServlet extends HttpServlet {
 		
 		// Add message to user
 		user.messages.add(msg);
+		
+		//forward to successful message send page
+		RequestDispatcher dispatch = request.getRequestDispatcher("sendmessage.jsp");
+		dispatch.forward(request, response);
+		
+		} else {
+			//forward to unsuccessful send
+			RequestDispatcher dispatch = request.getRequestDispatcher("sendmessage.jsp");
+			dispatch.forward(request, response);
+		}
+		
+		
 	}
 	
 	private int getUserIDFromDatabase(String username, DatabaseConnection dc) {
