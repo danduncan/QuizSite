@@ -36,4 +36,13 @@ public class FormatString {
 		return str.split("\\s+");
 	}
 	
+	// Testing only
+	public static void main(String[] args) {
+		String test = "Dan-i\\e;l D'un,ca/n+= d\"a'nduncan2010,;@gmail.com?!?!?! !@#$%^&*()-_=+[]{}\\|;:'\",.<>/?`~";
+		System.out.println("Original string: \"" + test + "\"");
+		System.out.println("All legal chars: \"" + sanitizeString(test,ALLLEGALCHARS) + "\"");
+		System.out.println("All name chars: \"" + sanitizeString(test,NAMELEGALCHARS) + "\"");
+		System.out.println("All email chars: \"" + sanitizeString(test,EMAILLEGALCHARS) + "\"");
+		
+	}
 }
