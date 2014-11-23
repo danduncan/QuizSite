@@ -53,10 +53,12 @@
 	//messages (TODO I want to allow users to click on their unread message that will take them to an inbox page)
 	out.println("<h2> Messages </h2>");
 	int count = 0;
+	ArrayList<Integer> newmessageNums = new ArrayList<Integer>();
 	ArrayList<String> newMessages = new ArrayList<String>();
 	for (int i = 0; i < user.messages.size(); i++){
 		//determine if new message
 		if (user.messages.get(i).opened == false && user.messages.get(i).receiverid == user.id){
+			newmessageNums.add(i);
 			count++;
 			newMessages.add(user.messages.get(i).toString());
 		}
@@ -64,7 +66,7 @@
 	out.println("<p> You have " + count + " new Messages</p>");
 	out.println("<ul type = \"circle\">");
 	for(int i = 0; i < newMessages.size(); i++){
-		out.println("<li>"+newMessages.get(i).toString()+"</li>");
+		out.println("<li><a href=\"checkmessage.jsp?messageNum="+newmessageNums.get(i)+"\">"+newMessages.get(i).toString()+"</a></li>");
 	}
 	out.println("</ul>");
 	
