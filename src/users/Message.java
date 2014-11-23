@@ -25,7 +25,7 @@ public class Message {
 		body = Body;
 	}
 	public String toString(){
-		return "From: " + senderid + "  Sent: " + datesent + "  Type: " + type + " Subject: " + subject;
+		return "  Sent: " + datesent + "  Type: " + type + " Subject: " + subject;
 	}
 	
 }

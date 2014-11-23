@@ -15,6 +15,7 @@ public class UserConnection {
 		//store connection as variable
 		db = DB;
 	}
+	
 	//get attribute function will return object of field requested from database
 	public Object getAttribute(String field, Integer ID){
 		String query;

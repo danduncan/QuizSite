@@ -14,7 +14,7 @@
 	User user = (User) session.getAttribute("user");
 	Integer messageNum = Integer.parseInt(request.getParameter("messageNum"));
 	Message msg = user.messages.get(messageNum);
-	out.println("<p>From: "+msg.receiverid+"</p>");
+	out.println("<p>From: "+user.userconnection.getAttribute("username",msg.senderid)+"</p>");
 	out.println("<p>Date: "+msg.datesent+"</p>");
 	out.println("<p>Subject: "+msg.subject+"</p>");
 	out.println("<p>Body: "+msg.body+"</p>");

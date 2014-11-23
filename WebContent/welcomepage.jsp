@@ -66,7 +66,7 @@
 	out.println("<p> You have " + count + " new Messages</p>");
 	out.println("<ul type = \"circle\">");
 	for(int i = 0; i < newMessages.size(); i++){
-		out.println("<li><a href=\"checkmessage.jsp?messageNum="+newmessageNums.get(i)+"\">"+newMessages.get(i).toString()+"</a></li>");
+		out.println("<li><a href=\"checkmessage.jsp?messageNum="+newmessageNums.get(i)+"\"> From: "+user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid)+newMessages.get(i).toString()+"</a></li>");
 	}
 	out.println("</ul>");
 	
