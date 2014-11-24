@@ -1,24 +1,44 @@
 <div class="header">
 	<div class="sharedheadermainpanel">
 		<div class="sharedheaderleftpanel">
-			<a class="responsive-logo" href="signin.html">
+			<a class="responsive-logo" href="/QuizSite/home.jsp">
 				<img class="logo-image" src="/QuizSite/qwizard_images/wizard_hat_small.png" />
 				<span class="logo-text">Qwizard<span class="copyright">¨</span></span>
 			</a>
 
 			<div class="headerlinks">
-				<a class="headerlink" href="signin.html">Home</a>  
-				<a class="headerlink" href="signin.html">Users</a>  
-				<a class="headerlink" href="signin.html">Quizzes</a> 	 
-				<a class="headerlink" href="signin.html">Achievements</a>
+				<a class="headerlink" href="/QuizSite/home.jsp">Home</a>  
+				<a class="headerlink" href="/QuizSite/home.jsp">Users</a>  
+				<a class="headerlink" href="/QuizSite/home.jsp">Quizzes</a> 	 
+				<a class="headerlink" href="/QuizSite/home.jsp">Achievements</a>
 			</div>
 		</div>
 
 		<div class="sharedheaderrightpanel">
-			<a class="sharedheaderrightpanellink" id="sharedheaderlink1" href="signin.html">Sign in</a>
-			<a class="sharedheaderrightpanellink sharedheaderrightsignup" id="sharedheaderlink2" href="signin.html">Register</a>
-			<span class="sharedheaderrightpanellink sharedheaderwelcomeuser" id="sharedheaderlink3">Welcome, <a href="signin.html" id="profilelink">Dan</a>!</span>
-			<a class="sharedheaderrightpanellink sharedheaderrightsignup" id="sharedheaderlink4" href="signin.html">Logout</a>
+			<a class="sharedheaderrightpanellink" id="sharedheaderlink1" href="/QuizSite/signin.jsp">Sign in</a>
+			<a class="sharedheaderrightpanellink sharedheaderrightsignup" id="sharedheaderlink2" href="/QuizSite/signin.jsp">Register</a>
+			<span class="sharedheaderrightpanellink sharedheaderwelcomeuser" id="sharedheaderlink3">Welcome, <a href="/QuizSite/home.jsp" id="profilelink">Dan</a>!</span>
+			<a class="sharedheaderrightpanellink sharedheaderrightsignup" id="sharedheaderlink4" href="/QuizSite/home.jsp">Logout</a>
 		</div>
 	</div>
+	<script>
+		var link1 = document.getElementById("sharedheaderlink1"); var link2 = document.getElementById("sharedheaderlink2");
+		var link3 = document.getElementById("sharedheaderlink3"); var link4 = document.getElementById("sharedheaderlink4");
+		var docUsername = document.getElementByID("docUsername"); var docUserID = documet.getElementById("docUserID");
+		if (docUsername.value == null) { // || docUserID.value == null) {
+			link1.style.display = "inline-block";
+			link2.style.display = "inline-block";
+			link3.style.display = "none";
+			link4.style.display = "none";
+		} else {
+			document.getElementByID("profilelink").innerHTML = username;
+			document.getElementByID("profilelink").href = "/profile/userid";
+			
+			link1.style.display = "none";
+			link2.style.display = "none";
+			link3.style.display = "inline-block";
+			link4.style.display = "inline-block";
+
+		}
+	</script>
 </div>
