@@ -11,6 +11,17 @@
 	id="signinStylesheet" />
 </head>
 <body>
+	<%-- Forward to homepage if user is already logged in --%>
+	<% 
+		String username = (String) session.getAttribute("username");	
+		Integer userid = (Integer) session.getAttribute("userid");
+		if (username != null && !username.equals("") && userid != null && userid >= 0) {
+			%>
+			<jsp:forward page="/home.jsp" />
+			<%
+		}
+	%>
+	
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
 	
 	<div class="loginFrame">
