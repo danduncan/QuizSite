@@ -34,7 +34,7 @@
 				<input type="submit" value="Sign In" class="loginbutton" />
 		</form>
 
-		<div class="createaccountlink" ><a href="createAccount.html" >
+		<div class="createaccountlink" ><a href="/QuizSite/createaccount.jsp" >
 			Create New Account</a></div>
 	</div>
 	
