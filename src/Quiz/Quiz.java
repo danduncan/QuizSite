@@ -1,6 +1,8 @@
 package Quiz;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import quizsite.DatabaseConnection;
 import quizsite.FormatDateTime;
 
 import connection.QuizConnection;
@@ -118,5 +121,18 @@ public class Quiz {
 		Question q = questions.get(i);
 		q.printToJSP(out, i);
 		out.println("<br>");
+	}
+	
+	//static method to pull name from database based on id
+	public static String getName(Integer ID, DatabaseConnection dc) throws SQLException{
+		String query = "SELECT name FROM quizzes WHERE (id = "+ID+")";
+		ResultSet rs = dc.executeQuery(query);
+	
+		String fieldvalue = "";
+		while(rs.next()) {
+			fieldvalue = rs.getString("name");
+		}
+
+		return fieldvalue;
 	}
 }

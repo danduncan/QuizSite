@@ -29,7 +29,7 @@ public class QuizTaken {
 	}
 	
 	public String toString(){
-		return "Quiz ID:     " + quizid + "      Date Taken:  " +datetaken
+		return "     Date Taken:  " +datetaken
 			+ "      Score:     " +score + "      Time to Completion:     " + time + "s";
 	}
 }

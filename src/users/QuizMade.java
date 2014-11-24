@@ -20,6 +20,6 @@ public class QuizMade {
 	}
 	
 	public String toString(){
-		return "QuizID:   " + quizid + "    Date Created: " + date;
+		return "    Date Created: " + date;
 	}
 }

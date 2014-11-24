@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="java.util.*, users.*" %>
+    <%@ page import="java.util.*, users.*,quizsite.*,Quiz.*" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,6 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <% 
 	User user = (User) session.getAttribute("user");
+	ServletContext sc = getServletContext();
+	DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 	//welcome back info
 	out.println("<title>Welcome "+user.firstname+"!</title>");
 	out.println(" </head>");
@@ -20,7 +22,9 @@
 	out.println("<ul type = \"circle\">");
 	if (user.numtaken > 0){
 		for(int i = 0; i < user.quizzestaken.size(); i++){
-			out.println("<li>"+user.quizzestaken.get(i).toString()+"</li>");			
+			Integer id = user.quizzestaken.get(i).quizid;
+			String quizname = Quiz.getName(id,dc);
+			out.println("<li> Quiz Name: <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>    " + user.quizzestaken.get(i).toString()+ "</li>");
 		}
 	}
 	out.println("</ul>");
@@ -35,8 +39,9 @@
 	if (user.numcreated > 0){
 		for(int i = 0; i < user.quizzesmade.size(); i++){
 			Integer id = user.quizzesmade.get(i).quizid;
+			String quizname = Quiz.getName(id,dc);
 			//out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
-			out.println("<li> <a href=\"QuizHomepageServlet?quizid="+id+"\">"+user.quizzesmade.get(i).toString()+"</a> </li>");
+			out.println("<li> Quiz Name: <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>    " + user.quizzesmade.get(i).toString()+ "</li>");
 		}
 	}
 	out.println("</form>");
@@ -50,7 +55,7 @@
 	}
 	out.println("</ul>");
 	
-	//messages (TODO I want to allow users to click on their unread message that will take them to an inbox page)
+	//messages
 	out.println("<h2> Messages </h2>");
 	int count = 0;
 	ArrayList<Integer> newmessageNums = new ArrayList<Integer>();
@@ -70,6 +75,9 @@
 	}
 	out.println("</ul>");
 	
+	//view all messages button
+	out.println("<p><a href=\"checkmessage.jsp?messageNum=-1\">View All Messages</a></li>");
+	
 	//Create new message
 	out.println("<h3>Create New Message</h3>");
 	out.println("<form method=\"post\" action=\"CreateMessageServlet\">");
@@ -81,3 +89,5 @@
 	out.println("</body>");
 	out.println("</html>");
 	%>
+	
+	
