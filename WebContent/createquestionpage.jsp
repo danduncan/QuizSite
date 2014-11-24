@@ -24,7 +24,7 @@
 	<br><input type="submit" value="Add Question"></form>
 
 	<form action="SaveQuizServlet" method="get">
-		"If you are done adding questions please press the "Complete Quiz" button below.<br>
+		If you are done adding questions please press the "Complete Quiz" button below.<br>
 	<input type="submit" value="Complete Quiz"></form>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
