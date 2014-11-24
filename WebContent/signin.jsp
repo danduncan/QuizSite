@@ -26,5 +26,7 @@
 		<div class="createaccountlink" ><a href="createAccount.html" >
 			Create New Account</a></div>
 	</div>
+	
+	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

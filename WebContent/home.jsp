@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
-	<h1>Dan was here</h1>
+	<h1>You need to sign in. <a href="/QuizSite/signin.jsp">Sign in here</a>.</a></h1>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
