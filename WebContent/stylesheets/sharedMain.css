@@ -63,3 +63,28 @@ body {
 	text-decoration: none;
 	font-color: red;
 }
+
+.sharedFooter {
+	font-size: 14px;
+	background-color: #DDDDDD;
+	color: #CCCCCC;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.footerLinks {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+.footerLink {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.sharedFooter a:link { color: #999999; }
+.sharedFooter a:visited { color: #999999; }
+.sharedFooter a:hover { color: #999999;}
+.sharedFooter a:active { color: #999999;}
+
