@@ -25,11 +25,12 @@
 		var link1 = document.getElementById("sharedheaderlink1"); var link2 = document.getElementById("sharedheaderlink2");
 		var link3 = document.getElementById("sharedheaderlink3"); var link4 = document.getElementById("sharedheaderlink4");
 		var docUsername = document.getElementByID("docUsername"); var docUserID = documet.getElementById("docUserID");
-		if (docUsername.value == null) { // || docUserID.value == null) {
+		if (docUsername.value == null) || docUserID.value == null) {
 			link1.style.display = "inline-block";
 			link2.style.display = "inline-block";
 			link3.style.display = "none";
 			link4.style.display = "none";
+			alert("values were null");
 		} else {
 			document.getElementByID("profilelink").innerHTML = username;
 			document.getElementByID("profilelink").href = "/profile/userid";
@@ -38,7 +39,7 @@
 			link2.style.display = "none";
 			link3.style.display = "inline-block";
 			link4.style.display = "inline-block";
-
+			alert("Values were non-null");
 		}
 	</script>
 </div>

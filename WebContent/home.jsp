@@ -11,17 +11,8 @@
 	id="homeStylesheet" />
 </head>
 <body>
-	<%
-		// Set the parameters for determining user identity
-		String username = (String) session.getAttribute("username");
-		Integer userid = (Integer) session.getAttribute("userid");
-		if (username == null || username == null) { username = null; userid = null;}
-		out.println("<input type=\"hidden\" id=\"docUsername\" value=\"" + username + "\">");
-		//out.println("<input type=\"hidden\" id=\"docUserID\" value=\"" + userid + "\">");
-
-		out.println(sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html")); 
-	%>
-	<h1>You need to sign in. <a href="/QuizSite/signin.jsp">Sign in here</a>.</a></h1>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	<h1>You need to sign in. <a href="/QuizSite/signin.jsp">Sign in here</a></h1>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

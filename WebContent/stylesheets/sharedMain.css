@@ -104,10 +104,10 @@ body {
 #sharedheaderlink1 { display: inline-block; }
 #sharedheaderlink2 { display: inline-block; }
 #sharedheaderlink3 { 
-	display: none; 
+	display: inline-block; 
 	padding-right: 0px;
 }
-#sharedheaderlink4 { display: none; }
+#sharedheaderlink4 { display: inline-block; }
 
 
 .sharedFooter {

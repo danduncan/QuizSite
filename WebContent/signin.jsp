@@ -11,8 +11,8 @@
 	id="signinStylesheet" />
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
-
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	
 	<div class="loginFrame">
 		<div class="logininstructions" >Sign In</div>
 		<form method="post" action="LoginServlet" >
