@@ -11,7 +11,17 @@
 	id="homeStylesheet" />
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
-	<h1>Dan was here</h1>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	<%
+		String username = (String) session.getAttribute("username");	
+		Integer userid = (Integer) session.getAttribute("userid");
+		if (username != null && !username.equals("") && userid != null && userid >= 0) {
+			out.println("<h1>You are signed in, " + username + "!");
+		} else {
+			out.println("<h1>You need to sign in. <a href=\"/QuizSite/signin.jsp\" >Sign in here</a></h1>");
+		}
+	%>
+	
+	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

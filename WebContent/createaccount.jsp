@@ -25,19 +25,16 @@
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
 	
 	<div class="loginFrame">
-		<div class="logininstructions" >Sign In</div>
-		<form method="post" action="LoginServlet" >
-			<span class="loginlabel" >Enter your username: </span>
+		<div class="logininstructions" >Create Account</div>
+		<form method="post" action="CreateServlet" >
+			<span class="loginlabel" >Enter your desired username: </span>
 				<input type="text" name="username" class="logintextbox" >
 			<span class="loginlabel" >Enter your password: </span>
 				<input type="password" name="password" class="logintextbox" > 
-				<input type="submit" value="Sign In" class="loginbutton" />
+				<input type="submit" value="Register" class="loginbutton" />
 		</form>
-
-		<div class="createaccountlink" ><a href="/QuizSite/createaccount.jsp" >
-			Create New Account</a></div>
 	</div>
-	
+
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

@@ -25,7 +25,7 @@
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
 	
 	<div class="loginFrame">
-		<div class="logininstructions" >Sign In</div>
+		<div class="logininstructions" >Please Try Again</div>
 		<form method="post" action="LoginServlet" >
 			<span class="loginlabel" >Enter your username: </span>
 				<input type="text" name="username" class="logintextbox" >
