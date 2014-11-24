@@ -6,31 +6,45 @@ body {
 	font-family: sans-serif;
 }
 
-.mainpage {
-	width: 100%;
-	padding-top: 0px;
-	background-color: #FFFFFF;
-}
+/* Style sheet for Qwizard website */
 
 .header {
+	width: 100%;
 	padding-top: 10px;
-	padding-bottom: 5px;
+	padding-bottom: 8px;
 	text-align: center;
 	background-color: #000055;
 }
 
-.responsive-logo {
-	width: 1000px;
-	text-decoration: none;
+.sharedheadermainpanel {
+	position: relative;
+	width: 700px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.sharedheaderleftpanel {
+	width: 60%;
+	text-align: left;
+}
+
+.sharedheaderrightpanel {
+	width:25%;
+	text-align: right;
+	position: absolute;
+	bottom: 0px;
+	right: 5px;
+}
+
+.responsive-logo {
+	text-decoration: none;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-.header a:link { color: #FFFFFF; }
-.header a:visited { color: #FFFFFF; }
-.header a:hover { color: #FFFFFF;}
-.header a:active { color: #FFFFFF;}
+.sharedheaderleftpanel a:link { color: #FFFFFF; }
+.sharedheaderleftpanel a:visited { color: #FFFFFF; }
+.sharedheaderleftpanel a:hover { color: #FFFFFF;}
+.sharedheaderleftpanel a:active { color: #FFFFFF;}
 .headerlinks a:hover { color: #EEEEFF;}
 .headerlinks a:active { color: #DDDDFF;}
 
@@ -51,18 +65,50 @@ body {
 
 .headerlinks {
 	padding-top: 10px;
-	width: 100%;
 }
 
 .headerlink {
 	padding-left: 5px;
-	padding-right: 5px;
+	padding-right: 15px;
 }
 
 .header a:link {
 	text-decoration: none;
 	font-color: red;
 }
+
+.sharedheaderrightpanellink {
+	display: inline-block;
+	color: #FFFFFF;
+	font-weight: lighter;
+	outline: none;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 6px;
+	padding-bottom: 0px;
+	margin-top: 10px;
+	margin-left: 5px;
+}
+
+.sharedheaderrightsignup {
+	background-color: #3B5998;
+	color: #FFFFFF;
+}
+
+#profilelink {
+	color: white;
+	text-decoration: underline;
+	font-weight: 500;
+}
+
+#sharedheaderlink1 { display: inline-block; }
+#sharedheaderlink2 { display: inline-block; }
+#sharedheaderlink3 { 
+	display: none; 
+	padding-right: 0px;
+}
+#sharedheaderlink4 { display: none; }
+
 
 .sharedFooter {
 	font-size: 14px;
