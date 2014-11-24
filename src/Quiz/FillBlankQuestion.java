@@ -1,6 +1,9 @@
 package Quiz;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+
+import javax.servlet.jsp.JspWriter;
 
 public class FillBlankQuestion extends Question{
 	public String qStr1;
@@ -19,7 +22,7 @@ public class FillBlankQuestion extends Question{
 		qStr2 = QStr2;
 	}
 	
-	public void printToJSP(PrintWriter out, int i){
+	public void printToJSP(JspWriter out, int i) throws IOException{
 		out.println(qStr1 + " <input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\"> " + qStr2);
 	}
 }

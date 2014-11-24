@@ -1,10 +1,13 @@
 package Quiz;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.jsp.JspWriter;
 
 
 public class MultiAnswerQuestion extends Question {
@@ -69,7 +72,7 @@ public class MultiAnswerQuestion extends Question {
 	}
 	
 	
-	public void printToJSP(PrintWriter out, int i){
+	public void printToJSP(JspWriter out, int i) throws IOException{
 		out.println(getQuestionStr() + "<br>");
 		for(int j = 0; j<possiblePoints; j++){
 			if(possiblePoints != 1){

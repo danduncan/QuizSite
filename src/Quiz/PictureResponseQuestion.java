@@ -1,6 +1,9 @@
 package Quiz;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+
+import javax.servlet.jsp.JspWriter;
 
 public class PictureResponseQuestion extends Question {
 	public String picURL;
@@ -16,7 +19,7 @@ public class PictureResponseQuestion extends Question {
 		picURL = url;
 	}
 	
-	public void printToJSP(PrintWriter out, int i){
+	public void printToJSP(JspWriter out, int i) throws IOException{
 		out.println(questionStr + "<br>");
 		out.println("<img src="+picURL+" alt="+picURL+"><br>");
 		out.println("<input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\">");
