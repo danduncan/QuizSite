@@ -2,35 +2,40 @@
 <html>
 <head>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedpagehead.html") %>
-<link href="/QuizSite/stylesheets/home.css" 
+
+<link href="/QuizSite/stylesheets/signin.css" 
 	type="text/css" 
 	rel="stylesheet" 
-	id="homeStylesheet" />
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Information Incorrect</title>
+	id="signinStylesheet" />
 </head>
 <body>
+	<%-- Forward to homepage if user is already logged in --%>
+	<% 
+		String username = (String) session.getAttribute("username");	
+		Integer userid = (Integer) session.getAttribute("userid");
+		if (username != null && !username.equals("") && userid != null && userid >= 0) {
+			%>
+			<jsp:forward page="/home.jsp" />
+			<%
+		}
+	%>
+	
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	
+	<div class="loginFrame">
+		<div class="logininstructions" >Please Try Again</div>
+		<form method="post" action="LoginServlet" >
+			<span class="loginlabel" >Enter your username: </span>
+				<input type="text" name="username" class="logintextbox" >
+			<span class="loginlabel" >Enter your password: </span>
+				<input type="password" name="password" class="logintextbox" > 
+				<input type="submit" value="Sign In" class="loginbutton" />
+		</form>
 
-	<h1>Please Try Again</h1>
-	<p>Either your user name or password is incorrect. Please try
-		again.</p>
-	<form method="post" action="LoginServlet">
-		<p>
-			User Name: <input type="text" name="username">
-		</p>
-		<p>
-			Password: <input type="password" name="password">
-		</p>
-		<p>
-			<input type="submit" value="Login" />
-		</p>
-	</form>
-
-	<p>
-		<a href="createprofile.jsp">Create New Account</a>
-	</p>
-<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
-
+		<div class="createaccountlink" ><a href="/QuizSite/createaccount.jsp" >
+			Create New Account</a></div>
+	</div>
+	
+	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

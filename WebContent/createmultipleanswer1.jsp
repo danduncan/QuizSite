@@ -4,10 +4,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedpagehead.html") %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a Question</title>
 </head>
 <body>
+	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
 	<h1><%=CreateQuizServlet.MULTI_ANSWER%></h1>
 	<form action="CreateQuizServlet" method="post">
 		Does the order of the answers matter? <br>
@@ -29,5 +31,6 @@
 		<input type="hidden" name="<%= CreateQuizServlet.QUESTION_TYPE %>" value="<%= CreateQuizServlet.MULTI_ANSWER %>">
 		<input type="submit" value="Update Settings">
 	</form>
+	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

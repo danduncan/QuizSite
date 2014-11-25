@@ -1,5 +1,6 @@
 package Quiz;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspWriter;
 
 public class MultiChoiceMultiAnswerQuestion extends Question {
 	public String[] answerChoices;
@@ -58,7 +60,7 @@ public class MultiChoiceMultiAnswerQuestion extends Question {
 		return numCorrect;
 	}
 	
-	public void printToJSP(PrintWriter out, int i) {
+	public void printToJSP(JspWriter out, int i) throws IOException {
 		out.println(getQuestionStr() + "<br>");
 		for(int j = 0 ; j < answerChoices.length; j++){
 			out.println("<input type=\"checkbox\" name=\""+Question.ANSWER+i+""+j+"\" value=\""+ answerChoices[j] +"\">" + answerChoices[j] + "<br>");

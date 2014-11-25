@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get requests are invalid. Forward client to homepage.
 		// TODO Add address of homepage
-		String homePage = "";
+		String homePage = "home.jsp";
 		RequestDispatcher dispatch = request.getRequestDispatcher(homePage);
 		dispatch.forward(request, response);
 	}
@@ -114,7 +114,7 @@ public class LoginServlet extends HttpServlet {
 		
 		// Construct query for users database
 		String query = "select id from " + MyDBInfo.USERTABLE + " where username = \"" + username + "\" and password = \"" + hashpw + "\" LIMIT 1;";
-		System.out.println("LoginServlet.getUserID() query: " + query);
+		//System.out.println("LoginServlet.getUserID() query: " + query);
 		
 		// Get DatabaseConnection and execute query
 		ServletContext sc = getServletContext();

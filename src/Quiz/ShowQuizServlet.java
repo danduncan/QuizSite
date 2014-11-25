@@ -1,32 +1,29 @@
 package Quiz;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import java.util.LinkedList;
 import java.util.List;
-import users.*;
-import quizsite.*;
-
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspWriter;
 
 
 @WebServlet("/ShowQuizServlet")
 public class ShowQuizServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private static final String START_TIME = "Start Time";
+	public static final String START_TIME = "Start Time";
 	public static final String QUIZ = "Quiz";
-	private static final String QUIZ_PAGE = "Quiz Page";
-	private static final String QUIZ_ANSWERS = "Quiz Answers";
-	private static final String NUM_CORRECT = "Number Correct";
-	private static final String NUM_ATTEMPTED = "Number Attempted";
-	private static final String SHOW_ANSWER = "Show Answer Boolean";
-	private static final String PAGE_TITLE = "Quiz";
+	public static final String QUIZ_PAGE = "Quiz Page";
+	public static final String QUIZ_ANSWERS = "Quiz Answers";
+	public static final String NUM_CORRECT = "Number Correct";
+	public static final String NUM_ATTEMPTED = "Number Attempted";
+	public static final String SHOW_ANSWER = "Show Answer Boolean";
+	public static final String PAGE_TITLE = "Quiz";
 	
     public ShowQuizServlet() {}
     
@@ -42,8 +39,6 @@ public class ShowQuizServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		
-		
 		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 		boolean showAnswer = (Boolean) request.getSession().getAttribute(SHOW_ANSWER);
 		
@@ -64,67 +59,60 @@ public class ShowQuizServlet extends HttpServlet {
 			if(quiz.getQuizSize()>quizPage){
 				showQuiz(request, response);
 			}else{
-				showResults(request, response);
+				forwardRequest(request, response, "quizresults.jsp");
 			}
 			
 		}else{
 			for(int i = 0; i< quiz.getQuizSize(); i++) checkAnswer(request, i);
-			showResults(request,response);
+			forwardRequest(request, response, "quizresults.jsp");
 		}
 	}
-	
-	private PrintWriter writeHeader(HttpServletResponse response, String title) throws IOException{
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>");
-		out.println("<head>");
-		out.println("<meta charset=\"UTF-8\" />");
-		out.println("<title>"+title+"</title>");
-		out.println("</head>");
-		out.println("<body>");
-		return out;
-	}
-	
-	private void showAnswer(HttpServletResponse response, HttpServletRequest request) throws IOException{
+		
+	private void showAnswer(HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException{
 		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
 		Question q = quiz.getQuestion(quizPage);
 		String[] answer = q.getResponses(request, quizPage);
 		
-		PrintWriter out = writeHeader(response, PAGE_TITLE);
 		if(q.isCorrect(answer)){
-			out.println("<h1>That is correct!</h1>");
-			out.println("<img src=\"http://media0.giphy.com/media/PS7d4tm1Hq6Sk/giphy.gif\">");
+			forwardRequest(request, response, "correctanswer.jsp");
 		}else{
-			out.println("<h1>That is wrong.</h1>");
-			out.println("<img src=\"http://www.reactiongifs.com/r/wrong-gif.gif\" width=\"300\" height=\"250\"><br>");
-			printAnswers(out, q);
+			forwardRequest(request, response, "wronganswer.jsp");
 		}
-		out.println("<form action=\"ShowQuizServlet\" method=\"post\">");
-		out.println("<input type=\"submit\" value=\"Continue\"></form>");
-		out.println("</body></html>");
 		request.getSession().setAttribute(SHOW_ANSWER, false);
 	}
 
-	private void showQuiz(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		int quizPage = (Integer) request.getSession().getAttribute(QUIZ_PAGE);
+	private void showQuiz(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		PrintWriter out = writeHeader(response, PAGE_TITLE);
-		out.println("<form action=\"ShowQuizServlet\" method=\"post\">");
+		
 		if(quiz.isManyPages()){
 			if(quiz.wantsImmediateCorrection()){
 				request.getSession().setAttribute(SHOW_ANSWER, true);
 			}
-			quiz.printQuizPageToJSP(out, quizPage);
-			out.println("<input type=\"submit\" value=\"Submit Answer\">");
+			forwardRequest(request, response, "showquizpage.jsp");
 		}else{
-			quiz.printEntireQuizToJSP(out);
-			out.println("<input type=\"submit\" value=\"Submit Quiz\">");
+			forwardRequest(request, response, "showentirequiz.jsp");
 		}
-		out.println("</form></body></html>");
 	}
 	
-	private void printAnswers(PrintWriter out, Question q){
+	private void checkAnswer(HttpServletRequest request, int i){
+		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
+		int numAttempted = (Integer) request.getSession().getAttribute(NUM_ATTEMPTED);
+		int numCorrect = (Integer) request.getSession().getAttribute(NUM_CORRECT);
+		List<String[]> quizAnswers = (List<String[]>) request.getSession().getAttribute(QUIZ_ANSWERS);
+		
+		Question q = quiz.getQuestion(i);
+		String[] answer = q.getResponses(request, i);
+		quizAnswers.add(answer);
+		
+		request.getSession().setAttribute(QUIZ_ANSWERS, quizAnswers);
+		int correct = q.numCorrect(answer);
+		request.getSession().setAttribute(NUM_CORRECT, numCorrect+correct);
+		int attempted = q.numAttempted();
+		request.getSession().setAttribute(NUM_ATTEMPTED, numAttempted+attempted);
+	}
+	
+	public static void printAnswers(JspWriter out, Question q) throws IOException{
 		String[] answers = q.getAnswerStrs();
 		if(answers.length == 1){
 			out.println("The answers are: "+ answers[0]+"<br>");
@@ -141,7 +129,7 @@ public class ShowQuizServlet extends HttpServlet {
 		}
 	}
 	
-	private void printResponses(PrintWriter out, String[] responses, Question q){
+	public static void printResponses(JspWriter out, String[] responses, Question q) throws IOException{
 		if(q.numAttempted() == 1){
 			String responseStr = "";
 			for(int i = 0; i<responses.length; i++){
@@ -163,61 +151,9 @@ public class ShowQuizServlet extends HttpServlet {
 	}
 	
 	
-	private void showResults(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		int numAttempted = (Integer) request.getSession().getAttribute(NUM_ATTEMPTED);
-		int numCorrect = (Integer) request.getSession().getAttribute(NUM_CORRECT);
-		long startTime = (Long) request.getSession().getAttribute(START_TIME);
-		double secondsElapsed = (double)(System.currentTimeMillis()-startTime)/1000;
-		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		List<String[]> quizAnswers = (List<String[]>) request.getSession().getAttribute(QUIZ_ANSWERS);
-		User user = (User) request.getSession().getAttribute("user");
-		ScoreManager scoreManager = (ScoreManager) request.getServletContext().getAttribute("ScoreManager");
-		SiteManager sm = (SiteManager) request.getServletContext().getAttribute("SiteManager");	
-		
-		
-		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
-		user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
-		int rank = scoreManager.addScore(quizScore);
-		
-		PrintWriter out = writeHeader(response, PAGE_TITLE);
-		out.println("<h1>Quiz Results</h1>");
-		out.println("Points earned: "+numCorrect+"<br>");
-		out.println("Points possible: "+numAttempted+"<br>");
-		out.println("Percent score: "+100*((double)numCorrect/(double)numAttempted)+"%<br>");
-		out.println("Time: "+secondsElapsed+" seconds<br>");
-		if(rank != 0){
-			out.println("High score!!!<br>");
-			out.println("All-time score rank: "+rank+"<br>");
-		}
-		
-		out.println("<h1>Answers</h1>");
-		out.println("<ul style=\"list-style-type:square\">");
-		for(int i = 0; i<quiz.getQuizSize(); i++){
-			out.println("<li>");
-			out.println("Question " + (i+1)+":<br>");
-			printResponses(out, quizAnswers.get(i), quiz.getQuestion(i));
-			printAnswers(out, quiz.getQuestion(i));
-			out.println("<br>");
-			out.println("</li>");
-		}
-		out.println("<a href=\"welcomepage.jsp\">Go to welcome page!</a>");
-		out.println("</ul></body></html>");
+	private void forwardRequest(HttpServletRequest request, HttpServletResponse response, String dest) throws IOException, ServletException{
+		RequestDispatcher dispatch = request.getRequestDispatcher(dest);
+		dispatch.forward(request, response);
 	}
 	
-	private void checkAnswer(HttpServletRequest request, int i){
-		Quiz quiz = (Quiz) request.getSession().getAttribute(QUIZ);
-		int numAttempted = (Integer) request.getSession().getAttribute(NUM_ATTEMPTED);
-		int numCorrect = (Integer) request.getSession().getAttribute(NUM_CORRECT);
-		List<String[]> quizAnswers = (List<String[]>) request.getSession().getAttribute(QUIZ_ANSWERS);
-		
-		Question q = quiz.getQuestion(i);
-		String[] answer = q.getResponses(request, i);
-		quizAnswers.add(answer);
-		
-		request.getSession().setAttribute(QUIZ_ANSWERS, quizAnswers);
-		int correct = q.numCorrect(answer);
-		request.getSession().setAttribute(NUM_CORRECT, numCorrect+correct);
-		int attempted = q.numAttempted();
-		request.getSession().setAttribute(NUM_ATTEMPTED, numAttempted+attempted);
-	}
 }

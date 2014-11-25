@@ -11,6 +11,9 @@
 	rel="stylesheet" 
 	id="homeStylesheet" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
 <% 
 	User user = (User) session.getAttribute("user");
 	ServletContext sc = getServletContext();
@@ -19,9 +22,6 @@
 	out.println("<title>Welcome "+user.firstname+"!</title>");
 	
 %>
-</head>
-<body>	
-<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
 <% 
 	out.println("<h1>Welcome "+user.firstname+"!</h1>");
 	
@@ -99,4 +99,3 @@
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
-	

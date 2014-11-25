@@ -1,19 +1,12 @@
 package Quiz;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
 import quizsite.DatabaseConnection;
 import quizsite.MyDBInfo;
 import users.User;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -65,7 +58,7 @@ public class CreateQuizServlet extends HttpServlet {
 		String correction = request.getParameter(CORRECTION);
 		String qType = request.getParameter(QUESTION_TYPE);
 		
-		if(randOrd!=null && mPage != null && correction != null){
+		if(randOrd!=null && mPage != null && correction != null){			
 			boolean randomOrder = Boolean.parseBoolean(randOrd);
 			boolean multiPage = Boolean.parseBoolean(mPage);
 			boolean immediateCorrection = Boolean.parseBoolean(correction);	
@@ -84,7 +77,7 @@ public class CreateQuizServlet extends HttpServlet {
 			SiteManager sm = (SiteManager) request.getServletContext().getAttribute("SiteManager");
 			int quizid = sm.popNextQuizID();
 			
-			Quiz quiz = new Quiz(quizid,user.id, name, description, practicemode,  multiPage, randomOrder, immediateCorrection, new QuizConnection(dc,qtypes));
+			Quiz quiz = new Quiz(quizid,user.id, name, description, practicemode,  multiPage, randomOrder, immediateCorrection, new QuizConnection(dc,qtypes));			
 			
 			request.getSession().setAttribute(QUIZ_CREATED, quiz);
 			forwardRequest(request, response, "createquestionpage.jsp");

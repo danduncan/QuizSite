@@ -4,10 +4,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedpagehead.html") %>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a Question</title>
 </head>
 <body>
+	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
 	<h1>Create a Question</h1>
 	<form action="CreateQuizServlet" method="post">
 		<br>What type of question would you like to add to your quiz?<br>
@@ -22,7 +24,8 @@
 	<br><input type="submit" value="Add Question"></form>
 
 	<form action="SaveQuizServlet" method="get">
-		"If you are done adding questions please press the "Complete Quiz" button below.<br>
+		If you are done adding questions please press the "Complete Quiz" button below.<br>
 	<input type="submit" value="Complete Quiz"></form>
+	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

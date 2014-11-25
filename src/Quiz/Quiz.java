@@ -1,5 +1,6 @@
 package Quiz;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.servlet.jsp.JspWriter;
 
 import quizsite.DatabaseConnection;
 import quizsite.FormatDateTime;
@@ -69,10 +72,11 @@ public class Quiz {
 		authorid = Integer.parseInt((String) quizconnection.getAttribute("authorid", id));
 		datemade = (String) quizconnection.getAttribute("datemade", id);
 		name = (String) quizconnection.getAttribute("name", id);
-		practicemode = Integer.parseInt((String) quizconnection.getAttribute("practicemode", id));
-		multipage = Boolean.parseBoolean((String) quizconnection.getAttribute("multipage", id)) ;
-		randomorder = Boolean.parseBoolean((String) quizconnection.getAttribute("randomorder", id));
-		immediatecorrection = Boolean.parseBoolean((String) quizconnection.getAttribute("immediatecorrection", id));
+		practicemode = Integer.parseInt((String)quizconnection.getAttribute("practicemode", id));
+		// the booleans are stored in database as strings which are 1 or 0 it seems since boolean.parse... was not working
+		multipage = ((String)quizconnection.getAttribute("multipage", id)).equals("1");
+		randomorder = ((String)quizconnection.getAttribute("randomorder", id)).equals("1");
+		immediatecorrection = ((String) quizconnection.getAttribute("immediatecorrection", id)).equals("1");
 		numtaken = Integer.parseInt((String) quizconnection.getAttribute("numtaken", id));
 		questions = (ArrayList<Question>) quizconnection.getAttribute("questions", id);
 		
@@ -104,7 +108,7 @@ public class Quiz {
 		return questions.size();
 	}
 	
-	public void printEntireQuizToJSP(PrintWriter out){
+	public void printEntireQuizToJSP(JspWriter out) throws IOException{
 		out.println("<h1>Basic Quiz</h1>");
 		out.println("<ol>");
 		for(int i = 0; i<questions.size(); i++){
@@ -116,7 +120,7 @@ public class Quiz {
 		out.println("</ol>");
 	}
 	
-	public void printQuizPageToJSP(PrintWriter out, int i){
+	public void printQuizPageToJSP(JspWriter out, int i) throws IOException{
 		out.println("<h1>Question "+ (i+1) +"</h1>");
 		Question q = questions.get(i);
 		q.printToJSP(out, i);

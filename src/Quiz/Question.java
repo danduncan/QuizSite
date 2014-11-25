@@ -1,10 +1,12 @@
 package Quiz;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspWriter;
 
 public abstract class Question {
 	public static final int QUESTION_RESPONSE = 0;
@@ -180,5 +182,5 @@ public abstract class Question {
 		return answer;
 	}
 	
-	public abstract void printToJSP(PrintWriter out, int i);
+	public abstract void printToJSP(JspWriter out, int i) throws IOException;
 }
