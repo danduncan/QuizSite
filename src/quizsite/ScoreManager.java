@@ -2,13 +2,18 @@ package quizsite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+
+import quizsite.*;
 
 public class ScoreManager {
 	// Connection to database
 	private DatabaseConnection dc = null;
 	private SiteManager sm = null;
 	private static final String table = MyDBInfo.QUIZZESTAKENTABLE;
-	private static final int NUMHIGHSCORES = 10; // Number of high scores to track for a given quiz
+	private static final int NUMHIGHSCORES = 5; // Number of high scores to track for a given quiz
+	private static final int NUMRECENTSCORES = 5; // Number of recent scores to track for a given quiz
+	private static final int NUMUSERSCORES = 5; //Number of scores to track for a user
 	
 	public ScoreManager(DatabaseConnection dc, SiteManager sm) {
 		// Database Connection
@@ -26,14 +31,58 @@ public class ScoreManager {
 	// Get only the top scores for a particular quiz
 	public ResultSet getHighScores(int quizid) {
 		String query = "SELECT * FROM " + table + " WHERE quizid = " + quizid + " ORDER BY score DESC, time ASC LIMIT " + this.NUMHIGHSCORES + ";";
-		return dc.executeQuery(query);
+		ResultSet rs = dc.executeQuery(query);
+		return rs;
+	}
+	
+	// Get only the top scores for a particular quiz today
+	public ResultSet getHighScoresToday(int quizid) {
+		String date = FormatDateTime.getSystemDate(new Date());
+		String query = "SELECT * FROM " + table + " WHERE quizid = " + quizid + " AND datetaken LIKE \"" +date + "%\" ORDER BY score DESC, time ASC LIMIT " + this.NUMHIGHSCORES + ";";
+		ResultSet rs = dc.executeQuery(query);
+		return rs;
 	}
 	
 	// Get only the lowest scores for a particular quiz
 	public ResultSet getLowScores(int quizid) {
 		String query = "SELECT * FROM " + table + " WHERE quizid = " + quizid + " ORDER BY score ASC, time DESC LIMIT " + this.NUMHIGHSCORES + ";";
-		return dc.executeQuery(query);
+		ResultSet rs = dc.executeQuery(query);
+		return rs;
 	}
+	
+	// Get only the most recent scores for a particular quiz
+	public ResultSet getRecentScores(int quizid) {
+		String query = "SELECT * FROM " + table + " WHERE quizid = " + quizid + " ORDER BY datetaken DESC LIMIT " + this.NUMRECENTSCORES + ";";
+		ResultSet rs = dc.executeQuery(query);
+		return rs;
+	}
+	
+	// Get only the high scores for the user in question
+	public ResultSet getUserScores(int quizid, int userid) {
+		String query = "SELECT * FROM " + table + " WHERE quizid = " + quizid + " AND userid = " + userid + " ORDER BY score DESC, time ASC LIMIT " + this.NUMUSERSCORES + ";";
+		ResultSet rs = dc.executeQuery(query);
+		return rs;
+	}
+	
+	//returns high score, low score, average score in an array
+	public double[] getSummaryStats(int quizid) throws SQLException{
+		ResultSet rs = getAllScores(quizid);
+		int total = 0;
+		int highScore = -1;
+		int lowScore = -1;
+		int counter = 0;
+		while(rs.next()){
+			counter++;
+			int score = rs.getInt("score");
+			total += score;
+			if(lowScore == -1 || score<lowScore) lowScore = score;
+			if(highScore == -1 || score>highScore) highScore = score;
+		}
+		double average = -1;
+		if(counter>0) average = ((double) total)/counter;
+		return new double[]{average, (double)lowScore, (double)highScore};
+	}
+	
 	
 	/**
 	 * Add a new quiz taken. Returns rank if the user got a high score (i.e. 1 for first place, 10 for 10th). Returns 0 if the user did not.

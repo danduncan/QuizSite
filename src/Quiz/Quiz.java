@@ -108,6 +108,14 @@ public class Quiz {
 		return questions.size();
 	}
 	
+	public int numPointsPossible(){
+		int total = 0;
+		for(int i = 0; i<questions.size(); i++){
+			total += questions.get(i).numAttempted();
+		}
+		return total;
+	}
+	
 	public void printEntireQuizToJSP(JspWriter out) throws IOException{
 		out.println("<h1>Basic Quiz</h1>");
 		out.println("<ol>");
