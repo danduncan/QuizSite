@@ -6,18 +6,23 @@
 <html>
 <head>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedpagehead.html") %>
+<link href="/QuizSite/stylesheets/home.css" 
+	type="text/css" 
+	rel="stylesheet" 
+	id="homeStylesheet" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
-
 <% 
 	User user = (User) session.getAttribute("user");
 	ServletContext sc = getServletContext();
 	DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 	//welcome back info
 	out.println("<title>Welcome "+user.firstname+"!</title>");
-	out.println(" </head>");
-	out.println("<body>");
+	
+%>
+<% 
 	out.println("<h1>Welcome "+user.firstname+"!</h1>");
 	
 	out.println("<h2> Quiz Info </h2>");
@@ -81,19 +86,16 @@
 	
 	//view all messages button
 	out.println("<p><a href=\"checkmessage.jsp?messageNum=-1\">View All Messages</a></li>");
-	
-	//Create new message
-	out.println("<h3>Create New Message</h3>");
-	out.println("<form method=\"post\" action=\"CreateMessageServlet\">");
-	out.println("<p>User name: <input type=\"text\" name=\"receiverUsername\"></p>");
-	out.println("<p>Subject: <input type=\"text\" name=\"subject\"></p>");
-	out.println("<p>Body: <textarea name=\"body\" cols=\"50\" rows=\"10\"></textarea>");
-	out.println("<p><input type=\"submit\" value=\"Send Message\" /></p>");
-	out.println("<input name=\"type\" type=\"hidden\" value= \"2\"");
-	out.println("</body>");
-	out.println("</html>");
-	%>
-	
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
+%>
+
+<h3>Create New Message</h3>
+<form method="post" action="CreateMessageServlet">
+<p>User name: <input type="text" name="receiverUsername"></p>
+<p>Subject: <input type="text" name="subject"></p>
+<p>Body: <textarea name="body" cols="50" rows="10"></textarea>
+<p><input type="submit" value="Send Message" /></p>
+<input name="type" type="hidden" value= "2"/>
+
+<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
