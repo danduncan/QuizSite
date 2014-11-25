@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
 			
 			// Forward user to the try-again page
 			// TODO Need address for try-again page/servlet
-			String tryAgainPage = "tryagain.html";
+			String tryAgainPage = "tryagain.jsp";
 			RequestDispatcher dispatch = request.getRequestDispatcher(tryAgainPage);
 			dispatch.forward(request, response);
 		} else {
