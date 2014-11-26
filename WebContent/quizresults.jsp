@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="Quiz.*, users.*, quizsite.*, java.util.List, java.text.DecimalFormat" %>
+<%@ page import="Quiz.*, users.*, quizsite.*, java.util.List, java.text.DecimalFormat, java.sql.*, java.io.IOException" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +10,7 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
+	
 	<%
 		int numAttempted = (Integer) request.getSession().getAttribute(ShowQuizServlet.NUM_ATTEMPTED);
 		int numCorrect = (Integer) request.getSession().getAttribute(ShowQuizServlet.NUM_CORRECT);
@@ -36,8 +37,9 @@
 	Time: <%= secondsElapsed %> seconds<br>
 	<%
 		if(rank != 0){
-			out.println("High score!!!<br>");
-			out.println("All-time score rank: " +rank +"<br>");
+			out.println("<h1>You got a high score!!</h1>");
+			ResultSet rs = scoreManager.getHighScores(quiz.id);
+		 	ScoreManager.printScoresToJSP(out, rs, quiz.numPointsPossible());
 		}
 	%>
 		
