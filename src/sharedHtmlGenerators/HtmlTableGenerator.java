@@ -1,5 +1,7 @@
 /**
- * This class takes a MySQL ResultSet and converts it into an HTML table
+ * This class takes an input and converts it into a formatted HTML table complete with class names
+ * 	Acceptable inputs include: MySQL ResultSet OR String[][] table OR String[][] tableData, String[] colNames OR String[] tableData, String[] colNames
+ * 
  * It can automatically extract the column names from the ResultSet, printing them in their original order
  * Alternatively, you can give it an array of column names and it will output only those columns (case-sensitive)
  * You can also specify a second array of column names. The table will print those column names at the top of the column
@@ -22,6 +24,14 @@ public class HtmlTableGenerator {
 	public HtmlTableGenerator() {
 	}
 	
+	/**
+	 * Convert a ResultSet into an HTML table. All other arguments are optional and can be replaced with null
+	 * @param rs - MySQL ResultSet
+	 * @param colNames - String[] array of the names of columns you want in the table. Must match names present in the ResultSet
+	 * @param printedColNames - String[] array of the way you wish for the column names to be printed at the top of the table
+	 * @param tableClass - If specified, the value gets put into the table's HTML class name (i.e. <table class="myClassName">)
+	 * @return
+	 */
 	public static String getHtml(ResultSet rs, String[] colNames, String[] printedColNames, String tableClass) {
 		// First, check that the names specified for the ResultSet are valid
 		if (!checkValidity(rs,colNames,printedColNames)) {
@@ -135,15 +145,12 @@ public class HtmlTableGenerator {
 		// Return the table
 		return sb.toString();
 	}
-
 	public static String getHtml(ResultSet rs) {
 		return getHtml(rs,null,null,null);
 	}
-	
 	public static String getHtml(ResultSet rs, String[] colNames) {
 		return getHtml(rs,colNames,null,null);
 	}
-	
 	public static String getHtml(ResultSet rs, String[] colNames, String[] printedColNames) {
 		return getHtml(rs,colNames,printedColNames,null);
 	}
@@ -181,7 +188,130 @@ public class HtmlTableGenerator {
 		return true;
 	}
 	
+	/** 
+	 * Converts a String[row][col] grid into an HTML table
+	 * @param table
+	 * @param tableClass = optional class specifier (can be replaced with null)
+	 * @return
+	 */
+	public static String getHtml(String[][] table, String tableClass) {
+		// Check validity of inputs
+		if (table == null || table.length < 1 || table[0].length < 1) return "";
+		int rowCount = table.length;
+		int colCount = table[0].length;
+		for (int i = 1; i < rowCount; i++) {
+			if (table[i].length != colCount) return "";
+		}
+		
+		// Now begin building the table
+		StringBuilder sb = new StringBuilder();
+		String ls = System.getProperty("line.separator");
+		
+		// Begin the table
+		if (tableClass != null && !tableClass.isEmpty()) {
+			sb.append("<table class=\"" + tableClass + "\">" + ls);
+		} else {
+			sb.append("<table>" + ls);
+		}
+
+		// Add the row of column names
+		sb.append("\t" + "<tr class=\"headerrow\">" + ls);
+		for (int i = 0; i < colCount; i++) {
+			String c = "";
+			if (i == 0) c = c + "firstcol ";
+			if (i == colCount - 1) c = c + "lastcol ";
+			if (i > 0 && i < colCount - 1) c = c + "innercol ";
+
+			if (!c.isEmpty()) {
+				sb.append("\t\t" + "<th class=\"" + c.trim() + "\">" + table[0][i] + "</th>" + ls);
+			} else {
+				sb.append("\t\t" + "<th>" + table[0][i] + "</th>" + ls);
+			}
+		}
+		sb.append("\t" + "</tr>" + ls);
+
+		// Add all data rows (rows are 1-indexed)
+		for (int r = 1; r < rowCount; r++) {
+			// Begin new row
+			String cls = "";
+			if (r == 1) cls = cls + "firstrow ";
+			if (r == rowCount - 1) cls = cls + "lastrow ";
+			if (r % 2 == 1) {
+				cls = cls + "oddrow ";
+			} else {
+				cls = cls + "evenrow ";
+			}
+			sb.append("\t" + "<tr class=\"" + cls.trim() + "\">" + ls);
+
+			// Add data cells to row
+			for (int c = 0; c < colCount; c++) {
+				cls = "";
+				if (c == 0) cls = cls + "firstcol ";
+				if (c == colCount - 1) cls = cls + "lastcol";
+				if (c > 0 && c < colCount - 1) cls = cls + "innercol";
+
+				sb.append("\t\t" + "<td class=\"" + cls.trim() + "\">");
+				String cur = table[r][c];
+				if (cur == null) cur = "";
+				sb.append(cur);
+				sb.append("</td>" + ls);
+			}
+
+			// End row
+			sb.append("\t" + "</tr>" + ls);
+		}
+
+		// End the table
+		sb.append("</table>" + ls);
+
+		// Return the table
+		return sb.toString();
+	}
+	public static String getHtml(String[][] table) {
+		return getHtml(table,(String) null);
+	}
 	
+	/** 
+	 * Converts a String[][] array of table data and a separate String[] array of column names into an HTML table
+	 * @param table
+	 * @return
+	 */
+	public static String getHtml(String[][] tableData, String[] colNames, String tableClass) {
+		// First, verify validity
+		if (tableData == null || colNames == null || colNames.length == 0) return "";
+		
+		// Combine tableData and colNames into a single array
+		String[][] table = new String[tableData.length + 1][];
+		table[0] = colNames;
+		for (int i = 0; i < tableData.length; i++) {
+			table[i+1] = tableData[i];
+		}
+		
+		// Parse the result into an HTML table
+		return getHtml(table,tableClass);
+	}
+	public static String getHtml(String[][] tableData, String[] colNames) {
+		return getHtml(tableData,colNames,null);
+	}
+	
+	/**
+	 * These methods allow a table with only one row of data to be passed in as a String[]
+	 * @param tableData
+	 * @param colNames
+	 * @param tableClass
+	 * @return
+	 */
+	public static String getHtml(String[] tableData, String[] colNames, String tableClass) {
+		String[][] newTableData = new String[1][];
+		newTableData[0] = tableData;
+		return getHtml(newTableData,colNames,tableClass);
+	}
+	public static String getHtml(String[] tableData, String[] colNames) {
+		return getHtml(tableData,colNames,null);
+	}
+	
+	
+	// For testing purposes only
 	public static void main(String[] args) {
 		// Get a ResultSet from the database
 		quizsite.DatabaseConnection dc = new quizsite.DatabaseConnection();
@@ -205,12 +335,23 @@ public class HtmlTableGenerator {
 			return;
 		}
 		
-		String table = getHtml(rs,colNames,printedColNames,tableClass);
-		if (table.isEmpty()) {
+		String tableHtml = getHtml(rs,colNames,printedColNames,tableClass);
+		if (tableHtml.isEmpty()) {
 			System.out.println("Table is empty!");
 		} else {
-			System.out.println(table);
+			System.out.println(tableHtml);
 		}
+		
+		// Test the functionality for a String[][] table
+		String[][] table = new String[2][];
+		String[] labels = {"Next User","Next Quiz","Next Question","Next Message","Next Quiz Taken"};
+		String[] values = {"123", "456", "789", "987", "654"};
+		table[0] = labels;
+		table[1] = values;
+		String tableHtml2 = getHtml(table,tableClass);
+		System.out.println(tableHtml2);
+		System.out.println(getHtml(values,labels,tableClass + " secondClass"));
+		
 	}
 
 }
