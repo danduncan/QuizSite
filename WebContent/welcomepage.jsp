@@ -45,7 +45,7 @@
 	out.println("</form>");
 	out.println("<ul type = \"circle\">");
 	out.println("<form method=\"get\" action=\"QuizHomepageServlet\">");
-	if (user.numcreated > 0){
+	if (user.quizzesmade.size() > 0){
 		for(int i = 0; i < user.quizzesmade.size(); i++){
 			Integer id = user.quizzesmade.get(i).quizid;
 			String quizname = Quiz.getName(id,dc);
