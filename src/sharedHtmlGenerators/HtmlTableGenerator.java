@@ -143,7 +143,7 @@ public class HtmlTableGenerator {
 				sb.append("\t\t" + "<td class=\"" + cls.trim() + "\">");
 				try {
 					String cur = rs.getString(colNames[c]);
-					if (cur.equalsIgnoreCase("null")) cur = ""; // Clear out any null strings
+					if (cur == null || cur.equalsIgnoreCase("null")) cur = ""; // Clear out any null strings
 					sb.append(cur);
 				} catch(SQLException ignored) {
 					System.out.println("HtmlTableGenerator.getHtml(): SQLException occured getting data for row " + r + " and column \"" + colNames[c] + "\"");
@@ -345,7 +345,7 @@ public class HtmlTableGenerator {
 		quizsite.DatabaseConnection dc = new quizsite.DatabaseConnection();
 		
 		// Specify setup for test
-		String query = "SELECT * from siteManager;";
+		String query = "SELECT * from friends;";
 		String[] colNames = {"nextuserid","nextquizid","nextquestionid","nextmessageid","nextquiztakenid"};
 		String [] printedColNames = {"Next User","Next Quiz","Next Question","Next Message","Next Quiz Taken"};
 		String tableClass = "myTable";
@@ -363,27 +363,27 @@ public class HtmlTableGenerator {
 			return;
 		}
 		
-		String tableHtml = getHtml(rs,colNames,printedColNames,tableClass);
+		String tableHtml = getHtml(rs);
 		if (tableHtml.isEmpty()) {
 			System.out.println("Table is empty!");
 		} else {
 			System.out.println(tableHtml);
 		}
 		
-		// Test the functionality for a String[][] table
-		String[][] table = new String[4][];
-		String[] labels = {"Next User","Next Quiz","Next Question","Next Message","Next Quiz Taken"};
-		String[] values1 = {"123", "456", "789", "987", "654"};
-		String[] values2 = {"a", "b", "c", "d", "e"};
-		String[] values3 = {"f", "g", "h", "i", "j"};
-		
-		table[0] = labels;
-		table[1] = values1;
-		table[2] = values2;
-		table[3] = values3;
-		String tableHtml2 = getHtml(table,tableClass);
-		System.out.println(tableHtml2);
-		System.out.println(getHtml(values1,labels,tableClass + " secondClass"));
+//		// Test the functionality for a String[][] table
+//		String[][] table = new String[4][];
+//		String[] labels = {"Next User","Next Quiz","Next Question","Next Message","Next Quiz Taken"};
+//		String[] values1 = {"123", "456", "789", "987", "654"};
+//		String[] values2 = {"a", "b", "c", "d", "e"};
+//		String[] values3 = {"f", "g", "h", "i", "j"};
+//		
+//		table[0] = labels;
+//		table[1] = values1;
+//		table[2] = values2;
+//		table[3] = values3;
+//		String tableHtml2 = getHtml(table,tableClass);
+//		System.out.println(tableHtml2);
+//		System.out.println(getHtml(values1,labels,tableClass + " secondClass"));
 		
 	}
 
