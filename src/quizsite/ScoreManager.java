@@ -1,8 +1,12 @@
 package quizsite;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Date;
+
+import javax.servlet.jsp.JspWriter;
 
 import quizsite.*;
 
@@ -81,6 +85,41 @@ public class ScoreManager {
 		double average = -1;
 		if(counter>0) average = ((double) total)/counter;
 		return new double[]{average, (double)lowScore, (double)highScore};
+	}
+	
+	/**
+	 * This method is called within JSPs to print scores  of a quiz in a table with the 
+	 * following columns: UserID, Score, Time, DateTaken. Possible points is the possible 
+	 * points of the quiz in question.
+	 */
+	public static void printScoresToJSP(JspWriter out, ResultSet rs, int possiblePoints) throws IOException, SQLException{
+		if(rs == null){
+			out.println("Oops! Something went wrong! <br>");
+			return;
+		}
+		rs.last();
+		int numScores = rs.getRow();
+		rs.beforeFirst();
+		if(numScores>0){
+			DecimalFormat df = new DecimalFormat("#.00");
+			String[] columnNames = new String[]{"User ID", "Score", "Time", "Date Taken"};
+			String[][] table = new String[numScores][columnNames.length];
+			int rowInd = 0;
+			while(rs.next()){
+				try{
+					table[rowInd][0] = "" + rs.getInt("userid");
+					int score = rs.getInt("score");
+					double percent = 100*((double)score/(double)possiblePoints);
+					table[rowInd][1] = df.format(percent) + "%";
+					table[rowInd][2] = rs.getInt("time") + "s";
+					table[rowInd][3] = FormatDateTime.getUserDateTime(rs.getString("datetaken"))[0];
+					rowInd++;
+				} catch (SQLException ignored){}
+			}
+			out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(table, columnNames));
+		}else{
+			out.println("These statistics have not yet been populated! <br>");
+		}
 	}
 	
 	
