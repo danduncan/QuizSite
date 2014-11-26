@@ -95,7 +95,7 @@
 <p>Body: <textarea name="body" cols="50" rows="10"></textarea>
 <p><input type="submit" value="Send Message" /></p>
 <input name="type" type="hidden" value= "2"/>
-
+</form>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

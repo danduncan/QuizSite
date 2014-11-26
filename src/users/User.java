@@ -73,7 +73,7 @@ public class User {
 		//add new user to database
 		if (create){
 			String insert = "INSERT INTO users VALUES("+id+",\""+username+"\", \"" + password + "\", \"" + firstname + "\",\"" + lastname + "\", \"" + email
-			                  + "\", \"" + datejoined + "\"," + numfriends + ","+numtaken+ ","+ numtakenpractice +","+numcreated+","+highscores+",\""+profilepicture+ "\")";   
+			                  + "\", \"" + datejoined + "\"," + numfriends + ","+quizzestaken.size()+ ","+ numtakenpractice +","+quizzesmade.size()+","+highscores+",\""+profilepicture+ "\")";   
 			userconnection.updateUserDatabase(insert);
 			create = false;
 		//update current user in database

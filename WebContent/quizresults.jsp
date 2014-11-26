@@ -12,21 +12,26 @@
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
 	
 	<%
-		int numAttempted = (Integer) request.getSession().getAttribute(ShowQuizServlet.NUM_ATTEMPTED);
-		int numCorrect = (Integer) request.getSession().getAttribute(ShowQuizServlet.NUM_CORRECT);
-		long startTime = (Long) request.getSession().getAttribute(ShowQuizServlet.START_TIME);
+		HttpSession ses = request.getSession();
+		ServletContext con = request.getServletContext();
+		int numAttempted = (Integer) ses.getAttribute(ShowQuizServlet.NUM_ATTEMPTED);
+		int numCorrect = (Integer) ses.getAttribute(ShowQuizServlet.NUM_CORRECT);
+		long startTime = (Long) ses.getAttribute(ShowQuizServlet.START_TIME);
 		double secondsElapsed = (double)(System.currentTimeMillis()-startTime)/1000;
-		Quiz quiz = (Quiz) request.getSession().getAttribute(ShowQuizServlet.QUIZ);
-		List<String[]> quizAnswers = (List<String[]>) request.getSession().getAttribute(ShowQuizServlet.QUIZ_ANSWERS);
-		User user = (User) request.getSession().getAttribute("user");
-		ScoreManager scoreManager = (ScoreManager) request.getServletContext().getAttribute("ScoreManager");
-		SiteManager sm = (SiteManager) request.getServletContext().getAttribute("SiteManager");	
+		Quiz quiz = (Quiz) ses.getAttribute(ShowQuizServlet.QUIZ);
+		List<String[]> quizAnswers = (List<String[]>) ses.getAttribute(ShowQuizServlet.QUIZ_ANSWERS);
+		User user = (User) ses.getAttribute("user");
+		ScoreManager scoreManager = (ScoreManager) con.getAttribute("ScoreManager");
+		SiteManager sm = (SiteManager) con.getAttribute("SiteManager");	
+		
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
 		user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
 		int rank = scoreManager.addScore(quizScore);
 		DecimalFormat df = new DecimalFormat("#.00");
 		String percentScore = df.format(100*((double)numCorrect/(double)numAttempted));
 		
+		List<Achievement> achieved = Achievement.updateQuizTakenAchievements(user, rank);
+		Achievement.updateSiteAchievements(user, achieved, (DatabaseConnection)con.getAttribute("DatabaseConnection"));
 	%>
 	<h1>Quiz Results</h1>
 	Points earned: <%=numCorrect%><br>
@@ -36,6 +41,12 @@
 	Percent score:  <%=percentScore%>%<br>
 	Time: <%= secondsElapsed %> seconds<br>
 	<%
+		if(achieved.size()>0){
+			List<AchievementType> achievementTypes = (List<AchievementType>)con.getAttribute("achievementtypes");
+			String achievementStr = Achievement.getAchievementNames(achieved, achievementTypes);
+			out.println(achievementStr);
+		}
+	
 		if(rank != 0){
 			out.println("<h1>You got a high score!!</h1>");
 			ResultSet rs = scoreManager.getHighScores(quiz.id);
