@@ -11,10 +11,10 @@
 <body>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
 
-	<%!
+	<%!	
 	public void printResultSet(JspWriter out, ResultSet rs, int possiblePoints) throws IOException, SQLException{
 		if(rs == null){
-			out.println("Oops! Result set is null! <br>");
+			out.println("Oops! Something went wrong! <br>");
 			return;
 		}
 		
@@ -22,22 +22,24 @@
 		int numScores = rs.getRow();
 		rs.beforeFirst();
 		if(numScores>0){
-			out.println("<ol>");
 			DecimalFormat df = new DecimalFormat("#.00");
+			String[] columnNames = new String[]{"User ID", "Score", "Time", "Date Taken"};
+			String[][] table = new String[numScores][columnNames.length];
+			int rowInd = 0;
 			while(rs.next()){
 				try{
-					int userID = rs.getInt("userid");
+					table[rowInd][0] = "" + rs.getInt("userid");
 					int score = rs.getInt("score");
 					double percent = 100*((double)score/(double)possiblePoints);
-					String percentStr = df.format(percent);
-					String date = FormatDateTime.getUserDateTime(rs.getString("datetaken"))[0];
-					int time = rs.getInt("time");
-					out.println("<li> User #"+ userID + " got " + percentStr + "% in " + time +" seconds on " + date + "</li>");
+					table[rowInd][1] = df.format(percent) + "%";
+					table[rowInd][2] = rs.getInt("time") + "s";
+					table[rowInd][3] = FormatDateTime.getUserDateTime(rs.getString("datetaken"))[0];
+					rowInd++;
 				} catch (SQLException ignored){}
 			}
-			out.println("</ol><br>");
+			out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(table, columnNames));
 		}else{
-			out.println("No users have taken this quiz yet! <br>");
+			out.println("These statistics have not yet been populated! <br>");
 		}
 	}
 	%>
@@ -66,7 +68,6 @@
 	<h1>Quiz Summary</h1>
 	Name: <%=quiz.name%><br>
 	Description: <%=quiz.description%><br>
-	<%//this won't work properly.. need to chance welcomepage jsp for integration %>
 	Creator: <%=quizAuthor.firstname%> <%=quizAuthor.lastname%><br>
 	Created on: <%= FormatDateTime.getUserDateTime(quiz.datemade)[0] %><br>
 	Average Score: <%=printStats(stats[0], quiz.numPointsPossible())%><br>
@@ -86,23 +87,22 @@
 	 	printResultSet(out, rs, quiz.numPointsPossible());
 	%>
 	
-	
-	<h1>Overall Low Scores</h1>
+	<h1>You High Scores</h1>
 	<%
-		rs = scoreManager.getLowScores(quiz.id);
+		User currUser = (User) request.getSession().getAttribute("user");
+		rs = scoreManager.getUserScores(quiz.id, currUser.id);
 	 	printResultSet(out, rs, quiz.numPointsPossible());
 	%>
 	
-	<h1>Recent Scores on Quiz</h1>
+	<h1>Most Recent Quiz Scores</h1>
 	<%
 		rs = scoreManager.getRecentScores(quiz.id);
 	 	printResultSet(out, rs, quiz.numPointsPossible());
 	%>
 	
-	<h1>User High Scores</h1>
+	<h1>Overall Low Scores</h1>
 	<%
-		User currUser = (User) request.getSession().getAttribute("user");
-		rs = scoreManager.getUserScores(quiz.id, currUser.id);
+		rs = scoreManager.getLowScores(quiz.id);
 	 	printResultSet(out, rs, quiz.numPointsPossible());
 	%>
 	
