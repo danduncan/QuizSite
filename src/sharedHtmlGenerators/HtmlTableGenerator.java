@@ -20,7 +20,23 @@ import java.sql.SQLException;
 import java.sql.ResultSetMetaData;
 
 public class HtmlTableGenerator {
+	// Class names for the <table> tag
+	public static final String universalTableClass = "qwizardtable";
+	
+	// Class names for the <tr> tag
+	public static final String headerrow = "headerrow";
+	public static final String firstrow = "firstrow";
+	public static final String innerrow = "innerrow";
+	public static final String lastrow = "lastrow";
+	public static final String evenrow = "evenrow";
+	public static final String oddrow = "oddrow";
+	
+	// Class names for the <th> and <td> tags
+	public static final String firstcol = "firstcol";
+	public static final String innercol = "innercol";
+	public static final String lastcol = "lastcol";
 
+	
 	public HtmlTableGenerator() {
 	}
 	
@@ -76,6 +92,11 @@ public class HtmlTableGenerator {
 		String ls = System.getProperty("line.separator");
 		
 		// Begin the table
+		if (tableClass != null)	{
+			tableClass = universalTableClass + " " + tableClass;
+		} else {
+			tableClass = universalTableClass;
+		}
 		if (tableClass != null && !tableClass.isEmpty()) {
 			sb.append("<table class=\"" + tableClass + "\">" + ls);
 		} else {
@@ -83,12 +104,12 @@ public class HtmlTableGenerator {
 		}
 		
 		// Add the row of column names
-		sb.append("\t" + "<tr class=\"headerrow\">" + ls);
+		sb.append("\t" + "<tr class=\"" + headerrow + "\">" + ls);
 		for (int i = 0; i < printedColNames.length; i++) {
 			String c = "";
-			if (i == 0) c = c + "firstcol ";
-			if (i == printedColNames.length - 1) c = c + "lastcol ";
-			if (i > 0 && i < printedColNames.length - 1) c = c + "innercol ";
+			if (i == 0) c = c + firstcol + " ";
+			if (i == printedColNames.length - 1) c = c + lastcol + " ";
+			if (i > 0 && i < printedColNames.length - 1) c = c + innercol + " ";
 			
 			if (!c.isEmpty()) {
 				sb.append("\t\t" + "<th class=\"" + c.trim() + "\">" + printedColNames[i] + "</th>" + ls);
@@ -102,21 +123,22 @@ public class HtmlTableGenerator {
 		for (int r = 1; r <= rowCount; r++) {
 			// Begin new row
 			String cls = "";
-			if (r == 1) cls = cls + "firstrow ";
-			if (r == rowCount) cls = cls + "lastrow ";
+			if (r == 1) cls = cls + firstrow + " ";
+			if (r > 1 && r < rowCount) cls = cls + innerrow + " ";
+			if (r == rowCount) cls = cls + lastrow + " ";
 			if (r % 2 == 1) {
-				cls = cls + "oddrow ";
+				cls = cls + oddrow + " ";
 			} else {
-				cls = cls + "evenrow ";
+				cls = cls + evenrow + " ";
 			}
 			sb.append("\t" + "<tr class=\"" + cls.trim() + "\">" + ls);
 			
 			// Add data cells to row
 			for (int c = 0; c < colNames.length; c++) {
 				cls = "";
-				if (c == 0) cls = cls + "firstcol ";
-				if (c == colNames.length - 1) cls = cls + "lastcol";
-				if (c > 0 && c < colNames.length - 1) cls = cls + "innercol";
+				if (c == 0) cls = cls + firstcol + " ";
+				if (c == colNames.length - 1) cls = cls + lastcol + " ";
+				if (c > 0 && c < colNames.length - 1) cls = cls + innercol + " ";
 				
 				sb.append("\t\t" + "<td class=\"" + cls.trim() + "\">");
 				try {
@@ -208,6 +230,11 @@ public class HtmlTableGenerator {
 		String ls = System.getProperty("line.separator");
 		
 		// Begin the table
+		if (tableClass == null) {
+			tableClass = universalTableClass;
+		} else {
+			tableClass = universalTableClass + " " + tableClass;
+		}
 		if (tableClass != null && !tableClass.isEmpty()) {
 			sb.append("<table class=\"" + tableClass + "\">" + ls);
 		} else {
@@ -215,12 +242,12 @@ public class HtmlTableGenerator {
 		}
 
 		// Add the row of column names
-		sb.append("\t" + "<tr class=\"headerrow\">" + ls);
+		sb.append("\t" + "<tr class=\"" + headerrow + "\">" + ls);
 		for (int i = 0; i < colCount; i++) {
 			String c = "";
-			if (i == 0) c = c + "firstcol ";
-			if (i == colCount - 1) c = c + "lastcol ";
-			if (i > 0 && i < colCount - 1) c = c + "innercol ";
+			if (i == 0) c = c + firstcol + " ";
+			if (i == colCount - 1) c = c + lastcol + " ";
+			if (i > 0 && i < colCount - 1) c = c + innercol + " ";
 
 			if (!c.isEmpty()) {
 				sb.append("\t\t" + "<th class=\"" + c.trim() + "\">" + table[0][i] + "</th>" + ls);
@@ -234,21 +261,22 @@ public class HtmlTableGenerator {
 		for (int r = 1; r < rowCount; r++) {
 			// Begin new row
 			String cls = "";
-			if (r == 1) cls = cls + "firstrow ";
-			if (r == rowCount - 1) cls = cls + "lastrow ";
+			if (r == 1) cls = cls + firstrow + " ";
+			if (r > 1 && r < rowCount - 1) cls = cls + innerrow + " ";
+			if (r == rowCount - 1) cls = cls + lastrow + " ";
 			if (r % 2 == 1) {
-				cls = cls + "oddrow ";
+				cls = cls + oddrow + " ";
 			} else {
-				cls = cls + "evenrow ";
+				cls = cls + evenrow + " ";
 			}
 			sb.append("\t" + "<tr class=\"" + cls.trim() + "\">" + ls);
 
 			// Add data cells to row
 			for (int c = 0; c < colCount; c++) {
 				cls = "";
-				if (c == 0) cls = cls + "firstcol ";
-				if (c == colCount - 1) cls = cls + "lastcol";
-				if (c > 0 && c < colCount - 1) cls = cls + "innercol";
+				if (c == 0) cls = cls + firstcol + " ";
+				if (c == colCount - 1) cls = cls + lastcol + " ";
+				if (c > 0 && c < colCount - 1) cls = cls + innercol + " ";
 
 				sb.append("\t\t" + "<td class=\"" + cls.trim() + "\">");
 				String cur = table[r][c];
@@ -343,14 +371,19 @@ public class HtmlTableGenerator {
 		}
 		
 		// Test the functionality for a String[][] table
-		String[][] table = new String[2][];
+		String[][] table = new String[4][];
 		String[] labels = {"Next User","Next Quiz","Next Question","Next Message","Next Quiz Taken"};
-		String[] values = {"123", "456", "789", "987", "654"};
+		String[] values1 = {"123", "456", "789", "987", "654"};
+		String[] values2 = {"a", "b", "c", "d", "e"};
+		String[] values3 = {"f", "g", "h", "i", "j"};
+		
 		table[0] = labels;
-		table[1] = values;
+		table[1] = values1;
+		table[2] = values2;
+		table[3] = values3;
 		String tableHtml2 = getHtml(table,tableClass);
 		System.out.println(tableHtml2);
-		System.out.println(getHtml(values,labels,tableClass + " secondClass"));
+		System.out.println(getHtml(values1,labels,tableClass + " secondClass"));
 		
 	}
 
