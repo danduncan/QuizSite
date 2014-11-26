@@ -178,7 +178,10 @@ public class HtmlTableGenerator {
 	}
 	
 	private static boolean checkValidity(ResultSet rs, String[] colNames, String[] printedColNames) {
-		// First, check if colNames contains valid column names
+		// First check if there is a ResultSet
+		if (rs == null) return false;
+		
+		// Next, check if colNames contains valid column names
 		if (colNames != null) {
 			for (int i = 0; i < colNames.length; i++) {
 				try {
