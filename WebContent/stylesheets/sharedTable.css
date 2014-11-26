@@ -1,0 +1,59 @@
+/* Stylesheet for auto-generated tables on Qwizard webpage */
+/* Current classnames eligible for formatting include: */
+/* qwizardtable, headerrow, firstrow, innerrow, lastrow, evenrow, oddrow */
+/* firstcol, innercol, outercol */
+/* The script also allows you to specify your own custom table class, in which case you can write your own custom stylesheet */
+/*@CHARSET "UTF-8";*/
+
+
+.qwizardtable {
+	border-collapse: collapse;
+	margin-left: 30px;
+	margin-right: 3px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.qwizardtable th {
+	color: white;
+	background-color: #706F65;
+	border: 1px solid white;
+
+	margin: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 8px;
+	padding-right: 8px;
+
+	text-align: center;
+	font-weight: normal;
+}
+
+.qwizardtable th.firstcol, .qwizardtable th.innercol {
+	border-right: 1px solid white;
+}
+
+.qwizardtable td {
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+	border-right: none;
+	border-left: none;
+
+	margin: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+.qwizardtable .oddrow {
+	background-color: #EAEAE8;
+}
+
+.qwizardtable .evenrow {
+	background-color: #EAEAE8;
+}
+
+.qwizardtable tr:hover {
+	background-color: #E5F4F3;
+}
