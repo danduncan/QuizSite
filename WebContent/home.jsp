@@ -29,7 +29,7 @@
 	<h3><em>Correct output is the complete content of the "friends" table</em></h3>
 	<% 
 		quizsite.DatabaseConnection dc = (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection");
-		String query = "SELECT * from friends";
+		String query = "SELECT * FROM friends;";
 		ResultSet rs = dc.executeQuery(query);
 		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
 	%>
