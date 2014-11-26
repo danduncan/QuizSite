@@ -80,7 +80,7 @@ public class User {
 		} else {
 			String update = "UPDATE users SET (id, username, password, firstname, lastname, email, datejoined, numfriends, numtaken, numtakenpractice, numcreated, highscores, profilepicture) = " +
 					"("+id+",\""+username+"\", \"" + password + "\", \"" + firstname + "\",\"" + lastname + "\", \"" + email
-            + "\", \"" + datejoined + "\"," + numfriends + ","+numtaken+ ","+ numtakenpractice +","+numcreated+","+highscores+",\""+profilepicture+ "\") WHERE ( id = " + id +")";   
+            + "\", \"" + datejoined + "\"," + numfriends + ","+quizzestaken.size()+ ","+ numtakenpractice +","+quizzesmade.size()+","+highscores+",\""+profilepicture+ "\") WHERE ( id = " + id +")";   
 			System.out.println(update);
 			userconnection.updateUserDatabase(update);
 		}
