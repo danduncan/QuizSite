@@ -75,7 +75,8 @@
 	
 	//achievements table
 	out.println("<p> Achievements: " + user.achievements.size() + "</p>");
-	out.println("<ul type = \"circle\">");
+	//out.println("<ul type = \"circle\">");
+	//out.println("</ul>");
 	
 	String[] cNames = new String[]{"Name","Description","Date Achieved"};
 	String[][] achieveData = new String[user.achievements.size()][cNames.length];
@@ -119,10 +120,11 @@
 <form method="post" action="CreateMessageServlet">
 <p>User name: <input type="text" name="receiverUsername"></p>
 <p>Subject: <input type="text" name="subject"></p>
-<p>Body: <textarea name="body" cols="50" rows="10"></textarea>
+<p>Body: <textarea name="body" cols="50" rows="10"></textarea></p>
 <p><input type="submit" value="Send Message" /></p>
-<input name="type" type="hidden" value= "2"/>
+<input name="type" type="hidden" value= "2" />
 </form>
+
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
