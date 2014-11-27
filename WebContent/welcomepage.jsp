@@ -75,7 +75,6 @@
 	
 	//achievements table
 	out.println("<p> Achievements: " + user.achievements.size() + "</p>");
-	out.println("<ul type = \"circle\">");
 	
 	String[] cNames = new String[]{"Name","Description","Date Achieved"};
 	String[][] achieveData = new String[user.achievements.size()][cNames.length];
@@ -98,7 +97,7 @@
 	ArrayList<String> newMessages = new ArrayList<String>();
 	for (int i = 0; i < user.messages.size(); i++){
 		//determine if new message
-		if (user.messages.get(i).opened == false && user.messages.get(i).receiverid == user.id){
+		if (user.messages.get(i).opened == false && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 2){
 			newmessageNums.add(i);
 			count++;
 			newMessages.add(user.messages.get(i).toString());
@@ -125,4 +124,34 @@
 </form>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
+
+<h2> Friends </h2>
+<%	int countFriendReq = 0;
+	ArrayList<Integer> messageNum = new ArrayList<Integer>();
+	ArrayList<Integer> newFriendID = new ArrayList<Integer>();
+	ArrayList<Message> newFriendReq = new ArrayList<Message>();
+	for (int i = 0; i < user.messages.size(); i++){
+	//determine if new message
+	if (user.messages.get(i).opened == false && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 0){
+		newFriendID.add(user.messages.get(i).senderid);
+		messageNum.add(i);
+		countFriendReq++;
+		newFriendReq.add(user.messages.get(i));
+		}
+	}
+	out.println("<p> You have " + countFriendReq + " new Friend Requests</p>");
+	out.println("<ul type = \"circle\">");
+	for(int i = 0; i < newFriendReq.size(); i++){
+		out.println("<li> From: <a href=\"profile.jsp?userID="+newFriendID.get(i)+"\">"+ user.userconnection.getAttribute("username",newFriendID.get(i))+"</a> On: "+newFriendReq.get(i).datesent);
+		out.println("<form method=\"post\" action=\"FriendRequestServlet\">");
+		out.println("<input type=\"submit\" name = \"friendreq\" value = \"accept\"/>   <input type=\"submit\" name = \"friendreq\" value = \"decline\">");
+		out.println("<input type=\"hidden\" name = \"friendID\" value = \""+newFriendID.get(i)+"\"");
+		out.println("<input type=\"hidden\" name = \"messageNum\" value = \""+messageNum.get(i)+"\"");
+		out.println("</form>");
+		out.println("</li>");	
+	
+	}
+	out.println("</ul>"); %>
+
+
 </html>

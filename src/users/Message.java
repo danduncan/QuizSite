@@ -47,6 +47,7 @@ public class Message {
 		StringBuilder sb = new StringBuilder();
 		sb.append("UPDATE "+ MyDBInfo.MESSAGESTABLE+" SET ");
 		sb.append("opened = "+opened);
+		sb.append(", replied = "+replied);
 		sb.append(" WHERE (id = "+id+")");
 		
 		try {
