@@ -34,7 +34,9 @@
 				<input type="submit" value="Sign In" class="loginbutton" />
 		</form>
 
-		<div class="createaccountlink" ><a href="createprofile.jsp" >
+		<div class="createaccountlink" >
+			<a href="createprofile.jsp" >Create Account</a>
+		</div>
 
 	</div>
 	
