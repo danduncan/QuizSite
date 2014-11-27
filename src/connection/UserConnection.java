@@ -4,6 +4,8 @@ import java.sql.*;
 import quizsite.MyDBInfo;
 import java.util.*;
 
+import Quiz.Question;
+
 import users.*;
 import quizsite.DatabaseConnection;
 
@@ -34,6 +36,13 @@ public class UserConnection {
 			while(rs.next()) {
 				quizzestaken.add(new QuizTaken(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("id"),rs.getString("datetaken"),rs.getInt("score"),rs.getInt("time")));
 			}
+			//want array list to be sorted by most recent
+			Collections.sort(quizzestaken, new Comparator<QuizTaken>() {
+				@Override public int compare(QuizTaken q1, QuizTaken q2) {
+					return Integer.parseInt((q2.datetaken.split(" ")[0])) - Integer.parseInt(q1.datetaken.split(" ")[0]); // Descending
+				}
+
+			});
 			
 			return quizzestaken;
 			
@@ -74,6 +83,13 @@ public class UserConnection {
 			while(rs.next()) {
 				achievements.add(new Achievement(rs.getInt("type"),rs.getInt("userid"),rs.getString("dateachieved")));
 			}
+			//sort by most recent
+			Collections.sort(achievements, new Comparator<Achievement>() {
+				@Override public int compare(Achievement q1, Achievement q2) {
+					return Integer.parseInt((q2.dateachieved.split(" ")[0])) - Integer.parseInt(q1.dateachieved.split(" ")[0]); // Descending
+				}
+
+			});
 			
 			return achievements;
 		} else if (field.equals("quizzesmade")){
@@ -87,6 +103,14 @@ public class UserConnection {
 			while(rs.next()) {
 				quizzesmade.add(new QuizMade(rs.getInt("authorid"),rs.getInt("id"),rs.getString("datemade")));
 			}
+			
+			Collections.sort(quizzesmade, new Comparator<QuizMade>() {
+				@Override public int compare(QuizMade q1, QuizMade q2) {
+					return Integer.parseInt((q2.date.split(" ")[0])) - Integer.parseInt(q1.date.split(" ")[0]); // Descending
+				}
+
+			});
+			
 			
 			return quizzesmade;
 			

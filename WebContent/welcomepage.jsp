@@ -26,43 +26,70 @@
 	out.println("<h1>Welcome "+user.firstname+"!</h1>");
 	
 	out.println("<h2> Quiz Info </h2>");
-	//quizzes taken info
+	//quizzes taken table
 	out.println("<p> Quizzes Taken: "+user.quizzestaken.size()+ "</p>");
-	out.println("<ul type = \"circle\">");
-	if (user.numtaken > 0){
+	String[] colNames = new String[]{"Quiz Name","Date Taken","Score","Time"};
+	String[][] takenData = new String[user.quizzestaken.size()][colNames.length];
+
+	if (user.quizzestaken.size() > 0){
 		for(int i = 0; i < user.quizzestaken.size(); i++){
 			Integer id = user.quizzestaken.get(i).quizid;
 			String quizname = Quiz.getName(id,dc);
-			out.println("<li> Quiz Name: <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>    " + user.quizzestaken.get(i).toString()+ "</li>");
+			takenData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
+			takenData[i][1] = FormatDateTime.getUserDateTime(user.quizzestaken.get(i).datetaken)[0];
+			takenData[i][2] = user.quizzestaken.get(i).score.toString();
+			takenData[i][3] = String.valueOf(user.quizzestaken.get(i).time);
+
 		}
 	}
-	out.println("</ul>");
+	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(takenData,colNames));
 	
-	//quizzes made info
+	//quizzes made table
 	out.println("<p> Quizzes Made: " + user.quizzesmade.size() + "</p>");
+	//create new quiz
 	out.println("<form method=\"get\" action=\"CreateQuizServlet\">");
 	out.println("<p><input type=\"submit\" value=\"Create New Quiz\" /></p>");
 	out.println("</form>");
-	out.println("<ul type = \"circle\">");
+	//out.println("<ul type = \"circle\">");
 	out.println("<form method=\"get\" action=\"QuizHomepageServlet\">");
+	
+	String[] columnNames = new String[]{"Quiz Name","Date Made"};
+	String[][] madeData = new String[user.quizzesmade.size()][columnNames.length];
+	
+	
 	if (user.quizzesmade.size() > 0){
 		for(int i = 0; i < user.quizzesmade.size(); i++){
 			Integer id = user.quizzesmade.get(i).quizid;
 			String quizname = Quiz.getName(id,dc);
 			//out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
-			out.println("<li> Quiz Name: <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>    " + user.quizzesmade.get(i).toString()+ "</li>");
+			//out.println("<li> Quiz Name: <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>    " + user.quizzesmade.get(i).toString()+ "</li>");
+			madeData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
+			madeData[i][1] = FormatDateTime.getUserDateTime(user.quizzesmade.get(i).date)[0];
 		}
 	}
 	out.println("</form>");
-	out.println("</ul>");
+	//out.println("</ul>");
+	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(madeData,columnNames));
+
 	
-	//achievements info
+	
+	//achievements table
 	out.println("<p> Achievements: " + user.achievements.size() + "</p>");
 	out.println("<ul type = \"circle\">");
+	
+	String[] cNames = new String[]{"Name","Description","Date Achieved"};
+	String[][] achieveData = new String[user.achievements.size()][cNames.length];
+	
+	ArrayList<AchievementType> achievementtypes = (ArrayList<AchievementType>) sc.getAttribute("achievementtypes");
+	
 	for(int i = 0; i < user.achievements.size(); i++){
-		out.println("<li>"+user.achievements.get(i).toString()+"</li>");
+		achieveData[i][0] = achievementtypes.get(user.achievements.get(i).type).name;
+		achieveData[i][1] = achievementtypes.get(user.achievements.get(i).type).description;
+		achieveData[i][2] = FormatDateTime.getUserDateTime(user.achievements.get(i).dateachieved)[0];            
 	}
-	out.println("</ul>");
+	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achieveData,cNames));
+
+	
 	
 	//messages
 	out.println("<h2> Messages </h2>");
