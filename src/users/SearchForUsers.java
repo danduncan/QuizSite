@@ -26,6 +26,8 @@ public class SearchForUsers {
 	 */
 	public static ResultSet basicSearch(quizsite.DatabaseConnection dc, String searchQuery) {
 		String query = buildBasicQuery(searchQuery);
+		System.out.println("\tSearchForUsers.basicSearch(): Input query = \"" + searchQuery + "\";");
+		System.out.println("\tSearchForUsers.basicSearch(): Database query = \"" + query + "\";");
 		return dc.executeQuery(query);
 	}
 	
