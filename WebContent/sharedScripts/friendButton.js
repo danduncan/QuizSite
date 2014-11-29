@@ -21,11 +21,21 @@ function sendFriendRequest(friendButton)
 }
 
 function processFriendRequestResponse(friendButton) {
-
-	friendButton.style.background='#71AB57';
-	friendButton.value='Friend Requested';
-	friendButton.style.boxShadow='none';
-	friendButton.disabled = true;
-	friendButton.style.border='1px solid gray';
+	status = requestObj.responseText;
+	
+	// Response status is 0 for success, nonzero for failure
+	if (status == 0) {
+		friendButton.style.background='#71AB57';
+		friendButton.value='Friend Requested';
+		friendButton.style.boxShadow='none';
+		friendButton.disabled = true;
+		friendButton.style.border='1px solid gray';
+	} else {
+		friendButton.style.background='#AB7157';
+		friendButton.value='Request Failed';
+		friendButton.style.boxShadow='none';
+		friendButton.disabled = true;
+		friendButton.style.border='1px solid gray';
+	}
 }
 
