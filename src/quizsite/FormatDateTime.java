@@ -19,7 +19,7 @@ public class FormatDateTime {
 
 	private static final String DATESYSTEMPATTERN = "yyyyMMdd";
 	private static final String TIMESYSTEMPATTERN = "hhmmss";
-	
+	private static final Integer NUMBERDAYSRECENT = 5;
 	
 	// Given a timestamp formatted as "yyyyMMdd hhmmss", get the user-friendly version as a String[] array
 	// Note that if the input is empty or null, null is returned
@@ -219,5 +219,17 @@ public class FormatDateTime {
 		System.out.println("Current system timestamp: \"" + getCurrentSystemDateTime() + "\"");
 		
 		
+	}
+	//checks whether or not a given date is recent
+	public static boolean isRecent(String DateTime){
+		//get the date to test
+		Integer Date = Integer.parseInt(DateTime.split(" ")[0]);
+		Integer currDate = Integer.parseInt(getCurrentSystemDate());
+		
+		if(currDate - Date < NUMBERDAYSRECENT){
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

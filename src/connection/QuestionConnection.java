@@ -38,7 +38,7 @@ public class QuestionConnection {
 			for (int i = 0; i < questiontypes.size(); i++){
 				String type = questiontypes.get(i).tableName;
 				query = "SELECT * FROM "+type +" WHERE (quizid = "+ID+")";
-				System.out.print(query);
+				//System.out.print(query);
 
 				//get all quiz questions from each question type table
 				ResultSet rs = db.executeQuery(query);

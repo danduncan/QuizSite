@@ -1,7 +1,16 @@
 package users;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import Quiz.Quiz;
+
+import connection.UserConnection;
+
 import quizsite.DatabaseConnection;
 import quizsite.FormatDateTime;
+import quizsite.MyDBInfo;
 
 public class Friend {
 	public Integer friend1;
@@ -34,6 +43,60 @@ public class Friend {
 	public void insertToDB(DatabaseConnection dc){
 		String insert = "INSERT INTO friends VALUES("+friend1+","+friend2+",\""+datefriended+"\",\""+groupname+"\")";
 		dc.executeUpdate(insert);
+	}
+	//get friend activity for user
+	public static ArrayList<String> getFriendActivity(User user, DatabaseConnection dc, ArrayList<AchievementType> at) throws SQLException{
+		ArrayList<String> activity = new ArrayList<String>();
+		
+		//get users friendsIDs
+		String query = "SELECT friend1,friend2 FROM "+MyDBInfo.FRIENDSTABLE+"";
+		ResultSet rs = dc.executeQuery(query);
+		ArrayList<Integer> friendIDs = new ArrayList<Integer>();
+
+		while(rs.next()){
+			Integer ID1 = rs.getInt("friend1");
+			Integer ID2 = rs.getInt("friend2");
+			
+			if(!friendIDs.contains(ID1)){
+				friendIDs.add(ID1);
+			}
+			if(!friendIDs.contains(ID2)){
+				friendIDs.add(ID2);
+			}
+		
+		}
+		
+		for (int i = 0; i < friendIDs.size(); i++ ){
+			User friend = new User(friendIDs.get(i),new UserConnection(dc));
+			//search for recent activity
+			//quiz made
+			for(int j = 0; j < friend.quizzesmade.size(); j++){
+				if (FormatDateTime.isRecent(friend.quizzesmade.get(j).date)){
+					Integer id = friend.quizzesmade.get(j).quizid;
+					String quizname = Quiz.getName(id,dc);
+					activity.add("<a href=\"profile.jsp?userid="+friend.id+"\">"+ friend.username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>");
+				}
+			}
+			//quiz taken
+			for(int j = 0; j < friend.quizzestaken.size(); j++){
+				if (FormatDateTime.isRecent(friend.quizzestaken.get(j).datetaken)){
+					Integer id = friend.quizzestaken.get(j).quizid;
+					String quizname = Quiz.getName(id,dc);
+					activity.add("<a href=\"profile.jsp?userid="+user.id+"\">"+ friend.username+"</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a> and got a score of "+friend.quizzestaken.get(j).score+"!");
+				}
+			}
+			
+			//Achievement
+			for(int j = 0; j < friend.achievements.size(); j++){
+				if (FormatDateTime.isRecent(friend.achievements.get(j).dateachieved)){
+					activity.add("<a href=\"profile.jsp?userid="+user.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name);
+				}
+			}
+			
+			
+		}
+		
+		return activity;
 	}
 	
 }

@@ -61,7 +61,7 @@ public class User {
 		friends = (ArrayList<Friend>) userconnection.getAttribute(MyDBInfo.FRIENDSTABLE, id);
 		achievements = (ArrayList<Achievement>) userconnection.getAttribute(MyDBInfo.ACHIEVEMENTSTABLE, id);
 		messages = (ArrayList<Message>) userconnection.getAttribute(MyDBInfo.MESSAGESTABLE, id);
-		System.out.println("user successfully retrieved");
+		//System.out.println("user successfully retrieved");
 		
 	}
 	//method to set users attributes

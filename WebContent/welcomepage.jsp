@@ -30,16 +30,17 @@
 	out.println("<p> Quizzes Taken: "+user.quizzestaken.size()+ "</p>");
 	String[] colNames = new String[]{"Quiz Name","Date Taken","Score","Time"};
 	String[][] takenData = new String[user.quizzestaken.size()][colNames.length];
-
+	out.println("<p>Recently Taken Quizzes</p>");
 	if (user.quizzestaken.size() > 0){
 		for(int i = 0; i < user.quizzestaken.size(); i++){
-			Integer id = user.quizzestaken.get(i).quizid;
-			String quizname = Quiz.getName(id,dc);
-			takenData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
-			takenData[i][1] = FormatDateTime.getUserDateTime(user.quizzestaken.get(i).datetaken)[0];
-			takenData[i][2] = user.quizzestaken.get(i).score.toString();
-			takenData[i][3] = String.valueOf(user.quizzestaken.get(i).time);
-
+			if(FormatDateTime.isRecent(user.quizzestaken.get(i).datetaken)){
+				Integer id = user.quizzestaken.get(i).quizid;
+				String quizname = Quiz.getName(id,dc);
+				takenData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
+				takenData[i][1] = FormatDateTime.getUserDateTime(user.quizzestaken.get(i).datetaken)[0];
+				takenData[i][2] = user.quizzestaken.get(i).score.toString();
+				takenData[i][3] = String.valueOf(user.quizzestaken.get(i).time);
+			}
 		}
 	}
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(takenData,colNames));
@@ -52,6 +53,7 @@
 	out.println("</form>");
 	//out.println("<ul type = \"circle\">");
 	out.println("<form method=\"get\" action=\"QuizHomepageServlet\">");
+	out.println("<p>Recently Created Quizzes</p>");
 	
 	String[] columnNames = new String[]{"Quiz Name","Date Made"};
 	String[][] madeData = new String[user.quizzesmade.size()][columnNames.length];
@@ -59,12 +61,14 @@
 	
 	if (user.quizzesmade.size() > 0){
 		for(int i = 0; i < user.quizzesmade.size(); i++){
-			Integer id = user.quizzesmade.get(i).quizid;
-			String quizname = Quiz.getName(id,dc);
-			//out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
-			//out.println("<li> Quiz Name: <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>    " + user.quizzesmade.get(i).toString()+ "</li>");
-			madeData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
-			madeData[i][1] = FormatDateTime.getUserDateTime(user.quizzesmade.get(i).date)[0];
+			if(FormatDateTime.isRecent(user.quizzesmade.get(i).date)){
+				Integer id = user.quizzesmade.get(i).quizid;
+				String quizname = Quiz.getName(id,dc);
+				//out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
+				//out.println("<li> Quiz Name: <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>    " + user.quizzesmade.get(i).toString()+ "</li>");
+				madeData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
+				madeData[i][1] = FormatDateTime.getUserDateTime(user.quizzesmade.get(i).date)[0];
+			}
 		}
 	}
 	out.println("</form>");
@@ -126,6 +130,9 @@
 </body>
 
 <h2> Friends </h2>
+<form method ="post" action = "users.jsp">
+<input type = "submit" name = "Find Friends" value = "Find Friends">
+</form>
 <%	int countFriendReq = 0;
 	ArrayList<Integer> messageNum = new ArrayList<Integer>();
 	ArrayList<Integer> newFriendID = new ArrayList<Integer>();
@@ -151,7 +158,18 @@
 		out.println("</li>");	
 	
 	}
-	out.println("</ul>"); %>
+	out.println("</ul>"); 
+	
+	
+	out.println("<h3> Friend Activity </h3>");
+	ArrayList<String> activity = Friend.getFriendActivity(user,dc,achievementtypes);
+	out.println("<ul type = \"circle\">");
+	for (int i = 0; i <activity.size(); i++){
+		out.println("<li>"+activity.get(i)+"</li>");
+	}
+	out.println("</ul>");
+	%>
+
 
 
 </html>
