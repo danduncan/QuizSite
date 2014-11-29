@@ -61,3 +61,118 @@
 	color: #0000AA;
 	font-size: 18px;
 }
+
+.userprofilethumbnail {
+	width: 100%
+	max-width: 800px;
+	overflow: auto;
+	text-align: left;
+	
+	margin-top: 15px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	margin-right: auto;
+	
+	padding-top: 0px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 0px;
+	
+	border-bottom: 1px solid lightgrey;
+}
+
+.profilepicturecontainer {
+	width: 130px;
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	overflow: hidden;
+	display: inline-block;
+}
+
+.profilepicturethumbnail {
+	height: 130px;
+	width: auto;
+	max-width: 130px;
+	min-width: 60px;
+	border: 1px solid black;
+}
+
+.profilethumbnailinfo {
+	width: 40%;
+	height: 130px;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.profilethumbnailname {
+	font-size: 26px;
+	font-weight: bold;
+	display: block;
+	margin: 0px;
+	padding: 0px;
+}
+
+.profilethumnbnailname a {
+	color: black;
+	text-decoration: none;
+}
+
+.profilethumbnailname a:link {
+	color: black;
+	text-decoration: none;
+}
+
+.profilethumbnailname a:hover {
+	text-decoration: underline;
+}
+
+.profilethumbnailstats {
+	margin-top: 14px;
+	font-size: 18px;
+}
+
+.profilethumbnailstats span {
+	display: block;
+	vertical-align: bottom;
+	margin: 0px;
+	padding: 0px;
+}
+
+.profilethumbnailbuttons {
+	width: 160px;
+	height: 130px;
+	display: inline-block;
+	vertical-align: top;
+	horizontal-align: right;
+	margin: 0px;
+	padding: 0px;
+}
+
+.profilethumbnailbutton {
+	display: block;
+	text-align: center;
+	horizontal-align: right;
+
+	width: 140px;
+	overflow: hidden;
+
+	margin-bottom: 10px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-left: 3px;
+	padding-right: 3px;
+
+	background-color: #3B5998;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 16px;
+	outline: none;
+}
+
+.profilethumbnailpseudobutton {
+	color: black;
+	background-color: #EEEEEE;
+	box-shadow: none;
+	border: 1px solid grey;
+}

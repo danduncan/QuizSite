@@ -26,19 +26,23 @@
 				<a href="users.jsp" >Advanced Search</a>
 			</div>
 		</div>
+		
+		
 
 		<%
 			// Get user's original search query in the query string
 			String query = request.getParameter(searchParam);
 			if (query != null && !query.isEmpty()) {
-				out.println("User query = \"" + query + "\";");
+				//out.println("User query = \"" + query + "\";");
 				quizsite.DatabaseConnection dc = (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection");
 				if (dc != null) {
 					ResultSet rs = users.SearchForUsers.basicSearch(dc,query);
-					out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
+					//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
+					out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
 				}
 			}
 		%>
+
 	</div>
 
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>

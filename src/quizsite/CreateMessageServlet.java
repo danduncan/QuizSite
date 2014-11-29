@@ -51,7 +51,7 @@ public class CreateMessageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Get requests are invalid. Forward client to homepage.
 		// TODO Add address of homepage
-		String homePage = "";
+		String homePage = "/QuizSite/home.jsp";
 		RequestDispatcher dispatch = request.getRequestDispatcher(homePage);
 		dispatch.forward(request, response);
 	}

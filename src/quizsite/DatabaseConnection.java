@@ -99,5 +99,41 @@ public class DatabaseConnection {
 
 		return true;
 	}
+	
+	// Execute simultaneous queries
+	/**
+	 * This is slower than executeQuery, but it is necessary if you ever want to have two or more ResultSets simultaneously
+	 */
+	public ResultSet executeSimultaneousQuery(String query) {
+		ResultSet rs = null;
+		Statement stmtNew = null;
+		
+		try {
+			// Open connection to database
+			Connection conNew = DriverManager.getConnection( "jdbc:mysql://" + server, account ,password);
+			stmtNew = conNew.createStatement();
+			stmtNew.executeQuery("USE " + database);						
+		} catch (SQLException e) {
+			System.out.println("DatabaseConnection.executeSimultaenousQuery(): SQLException encountered");
+			e.printStackTrace();
+			System.exit(0);
+			return null;
+		} catch (Exception e) {
+			System.out.println("DatabaseConnection.executeSimultaenousQuery(): General Exception encountered");
+			e.printStackTrace();
+			return null;
+		}
+		if(stmtNew == null) return null;
+		
+		try {
+			rs = stmtNew.executeQuery(query);
+		} catch (SQLException e) {
+			System.out.println("Exception: Invalid query: \"" + query + "\"");
+			return rs;
+		}
+
+		// Result data received. Now process rs into a table and store in the table ivar
+		return rs;
+	}
 
 }

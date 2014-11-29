@@ -16,7 +16,8 @@
 <% 
 	ServletContext sc = getServletContext();
 	//DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
-	int receiverid = (Integer) request.getSession().getAttribute("receiverid");
+	Integer receiverid = (Integer) request.getSession().getAttribute("receiverid");
+	if (receiverid == null) receiverid = Integer.parseInt(request.getParameter("receiverid"));
 	String username = request.getParameter("receiverUsername");
 	
    	if (receiverid == -1){
