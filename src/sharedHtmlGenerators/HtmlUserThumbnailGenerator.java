@@ -228,7 +228,7 @@ public class HtmlUserThumbnailGenerator {
 			sb.append("\t\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 			sb.append("\t\t</form>" + ls);
 		} else if (friends == KNOTFRIENDS) {
-			String buttonId = "addFriendButtonId" + userid;
+			String buttonId = "addFriendButtonId-" + userid;
 			sb.append("\t\t<input onclick=\"sendFriendRequest(this)\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 		}
 		
