@@ -108,7 +108,7 @@ public class HtmlUserThumbnailGenerator {
 		if (currentUserId == userId) return KSELF;
 		// Query the database to see if these two users are friends
 		String query = "SELECT * FROM friends WHERE friend1 = " + currentUserId + " AND friend2 = " + userId + " LIMIT 1;";
-		System.out.println("HtmlUserThumbnailGenerator.friends(): Query = \"" + query + "\"");
+		//System.out.println("HtmlUserThumbnailGenerator.friends(): Query = \"" + query + "\"");
 		ResultSet rsFriends = null;
 		rsFriends = dc.executeSimultaneousQuery(query);
 		
@@ -229,7 +229,7 @@ public class HtmlUserThumbnailGenerator {
 			sb.append("\t\t</form>" + ls);
 		} else if (friends == KNOTFRIENDS) {
 			String buttonId = "addFriendButtonId" + userid;
-			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			sb.append("\t\t<input onclick=\"sendFriendRequest(this)\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 		}
 		
 		if (friends != KSELF && friends != KNOTLOGGEDIN) {
@@ -277,7 +277,8 @@ public class HtmlUserThumbnailGenerator {
 		}
 		
 		sb.append("</div>" + ls);
-		System.out.println(sb.toString());
+		sb.append("<script src=\"/QuizSite/sharedScripts/friendButton.js\"></script>" + ls);
+		//System.out.println(sb.toString());
 		return sb.toString();
 	}
 }
