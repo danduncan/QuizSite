@@ -44,6 +44,7 @@ public class AddFriendServlet extends HttpServlet {
 		System.out.println("AddFriendServlet called");
 		String buttonId = request.getParameter("buttonid");
 		String receiverid = request.getParameter("receiverid");
+		String userid = request.getParameter("userid");
 		if (buttonId!= null) {
 			System.out.println("\tbuttonid = " + buttonId);
 		} else {
@@ -54,6 +55,12 @@ public class AddFriendServlet extends HttpServlet {
 		} else {
 			System.out.println("\treceiverid is null");
 		}
+		if (userid!= null) {
+			System.out.println("\tuserid = " + userid);
+		} else {
+			System.out.println("\tuserid is null");
+		}
+		
 		
 		return;
 	}

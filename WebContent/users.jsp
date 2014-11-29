@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		
-		
+		<script>useridjs = <%= ((Integer) session.getAttribute("userid")).toString() %></script>	
 
 		<%
 			// Get user's original search query in the query string
@@ -44,7 +44,7 @@
 		%>
 
 	</div>
-
+	
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
