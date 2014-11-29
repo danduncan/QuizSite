@@ -27,6 +27,7 @@ public class HtmlUserThumbnailGenerator {
 	public static final String classProfileButtons = "profilethumbnailbuttons";
 	public static final String classProfileButton = "profilethumbnailbutton";
 	public static final String classProfilePseudoButton = "profilethumbnailpseudobutton";
+	public static final String classProfileLoginButton = "profilethumbnailloginbutton";
 
 	// ResultSet column names
 	public static final String colUserId = "id";
@@ -215,14 +216,22 @@ public class HtmlUserThumbnailGenerator {
 		if (friends == KFRIENDS) {
 			buttonClass = buttonClass + " " + classProfilePseudoButton;
 			buttonText = labelAlreadyFriends;
+			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		} else if (friends == KSELF) {
 			buttonClass = buttonClass + " " + classProfilePseudoButton;
 			buttonText = labelSelf;
+			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		} else if (friends == KNOTLOGGEDIN) {
-			buttonClass = buttonClass + " " + classProfilePseudoButton;
+			buttonClass = buttonClass + " " + classProfileLoginButton;
 			buttonText = labelLogIn;
+			sb.append("\t\t<form action=\"signin.jsp\">" + ls);
+			sb.append("\t\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+			sb.append("\t\t</form>" + ls);
+		} else if (friends == KNOTFRIENDS) {
+			String buttonId = "addFriendButtonId" + userid;
+			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 		}
-		sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+		
 		if (friends != KSELF && friends != KNOTLOGGEDIN) {
 			// Add a "Send Message" button
 			sb.append("\t\t<form method=\"POST\" action=\"" + sendMessageUrl + "\">" + ls);
