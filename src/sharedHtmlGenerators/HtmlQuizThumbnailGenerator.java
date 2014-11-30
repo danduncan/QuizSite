@@ -75,9 +75,7 @@ public class HtmlQuizThumbnailGenerator {
 		Integer numTaken = null;
 		try {
 			// Populate all fields
-			System.out.println("\tAccessing " + colQuizId);
 			quizId = rs.getInt(colQuizId);
-			System.out.println("\tAccessing " + colAuthorId);
 			authorId = rs.getInt(colAuthorId);
 			username = rs.getString(colUsername);
 			dateMade = rs.getString(colDateMade);
@@ -96,7 +94,7 @@ public class HtmlQuizThumbnailGenerator {
 		
 		// Return empty string if any required fields are empty
 		if (username.isEmpty() || quizName.isEmpty()) return "";
-		if (quizId < 1 || authorId < 1) {
+		if (quizId < 0 || authorId < 1) {
 			System.out.println("HtmlQuizThumbnailGenerator.getHtml(): Error: Got quizid=" + quizId + " and authorId = " + authorId + ". IDs must be >= 1");
 			return "";
 		}
