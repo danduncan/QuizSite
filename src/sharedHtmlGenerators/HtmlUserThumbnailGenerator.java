@@ -300,15 +300,23 @@ public class HtmlUserThumbnailGenerator {
 	 * Given a ResultSet, convert all its entries into one big set of user profile thumbnails
 	 */
 	public static String getHtml(ResultSet rs, DatabaseConnection dc, HttpSession session) {
+		if (rs == null || dc == null || session == null) return "";
+
+		StringBuilder sb = new StringBuilder("");
+		String ls = System.getProperty("line.separator");
+		sb.append("<div class=\"" + classSearchResults + "\">" + ls);
+
+		// Check if rs is empty
 		try {
-			if (!rs.first()) return "";
+			if (!rs.first()) {
+				sb.append("<div class=\"noSearchResults\">No results found :(</div>" + ls);
+				sb.append("</div>" + ls);
+				return sb.toString();
+			}
 		} catch (SQLException e) {
 			return "";
 		}
 		
-		StringBuilder sb = new StringBuilder("");
-		String ls = System.getProperty("line.separator");
-		sb.append("<div class=\"" + classSearchResults + "\">" + ls);
 		
 		try {
 			rs.beforeFirst();
