@@ -5,7 +5,7 @@
 <html>
 <head>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedpagehead.html") %>
-<link href="/QuizSite/stylesheets/users.css" 
+<link href="/QuizSite/stylesheets/users-advanced.css" 
 	type="text/css" 
 	rel="stylesheet" 
 	id="signinStylesheet" />
@@ -23,7 +23,7 @@
 			</form>
 
 			<div class="advancedsearchlink" >
-				<a href="users-advanced.jsp" >Advanced Search</a>
+				<a href="users.jsp" >Basic Search</a>
 			</div>
 		</div>
 		
