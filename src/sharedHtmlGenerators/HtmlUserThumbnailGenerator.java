@@ -272,8 +272,8 @@ public class HtmlUserThumbnailGenerator {
 			String buttonId = "confirmFriendButtonId-" + userid;
 			String onClickStr = "confirmFriendRequest(this)";
 			// Once ConfirmFriendServlet is running, this line becomes uncommented and the next line gets commented
-			//sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
-			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			//sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 		} else if (friends == KPENDING) {
 			buttonClass = classPendingBtn;
 			buttonText = labelPending;

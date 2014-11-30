@@ -56,8 +56,8 @@ public class ConfirmFriendServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ConfirmFriendServlet called");
-		printInputs(request);
+		//System.out.println("ConfirmFriendServlet called");
+		//printInputs(request);
 
 		// Validate inputs
 		String senderidStr = request.getParameter("senderid");
@@ -87,11 +87,11 @@ public class ConfirmFriendServlet extends HttpServlet {
 
 		// Send the request
 		if (confirmFriendRequest(userId,senderId,dc)) {
-			System.out.println("\t\tFriend confirmation successful!");
+			//System.out.println("\t\tConfirmFriendServlet: Confirmation successful!");
 			setResponse(response,KSUCCESS);
 			return;
 		} else {
-			System.out.println("\t\tFriend confirmation failed during database update");
+			System.out.println("\t\tConfirmFriendServlet: Confirmation failed during database update");
 			setResponse(response,KFAILURE);
 			return;
 		}
@@ -174,7 +174,7 @@ public class ConfirmFriendServlet extends HttpServlet {
 	// Send the friend request. Returns true on success
 	private boolean confirmFriendRequest(Integer userid, Integer senderid, DatabaseConnection dc) {
 		// Populate all fields
-		String timestamp = FormatDateTime.getCurrentSystemDateTime();
+		String timestamp = "\"" + FormatDateTime.getCurrentSystemDateTime() + "\"";
 		String group = "null";
 		
 		updateDatabase(userid,senderid,timestamp,group,dc);
@@ -184,8 +184,10 @@ public class ConfirmFriendServlet extends HttpServlet {
 	
 	private void updateDatabase(Integer userid, Integer senderid, String timestamp, String group, DatabaseConnection dc) {
 		// Build queries to create friendship
-		String update1 = "INSERT INTO " + friendsTable + "VALUES (" + userid + "," + senderid + ",\"" + timestamp + "\",\"" + group + "\");";
-		String update2 = "INSERT INTO " + friendsTable + "VALUES (" + senderid + "," + userid + ",\"" + timestamp + "\",\"" + group + "\");";
+		String update1 = "INSERT INTO " + friendsTable + " VALUES (" + userid + "," + senderid + "," + timestamp + "," + group + ");";
+		//System.out.println("ConfirmFriendServlet: Adding friendship with query1 = \"" + update1 + "\"");
+		String update2 = "INSERT INTO " + friendsTable + " VALUES (" + senderid + "," + userid + "," + timestamp + "," + group + ");";
+		//System.out.println("ConfirmFriendServlet: Adding friendship with query2 = \"" + update1 + "\"");
 		
 		// Build query to delete friend request
 		String update3 = "DELETE FROM " + messagesTable + " WHERE senderid = " + senderid + " AND receiverid = " + userid + " AND type = " + friendRequestType + ";";
