@@ -50,8 +50,8 @@
 				quizsite.DatabaseConnection dc = (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection");
 				if (dc != null) {
 					ResultSet rs = Quiz.SearchForQuizzes.basicSearch(dc,query);
-					out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
-					//out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
+					//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
+					out.println(sharedHtmlGenerators.HtmlQuizThumbnailGenerator.getHtml(rs));
 				}
 			}
 		%>
