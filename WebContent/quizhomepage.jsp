@@ -9,7 +9,7 @@
 <title>Quiz Home Page</title>
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"),session) %>
 	
 	<%!
 	public String printStats(double num, int possiblePoints){
