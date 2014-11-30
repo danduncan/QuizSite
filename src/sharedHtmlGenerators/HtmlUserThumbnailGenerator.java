@@ -25,9 +25,14 @@ public class HtmlUserThumbnailGenerator {
 	public static final String classProfileName = "profilethumbnailname";
 	public static final String classProfileStats = "profilethumbnailstats";
 	public static final String classProfileButtons = "profilethumbnailbuttons";
-	public static final String classProfileButton = "profilethumbnailbutton";
-	public static final String classProfilePseudoButton = "profilethumbnailpseudobutton";
-	public static final String classProfileLoginButton = "profilethumbnailloginbutton";
+	
+	// Button classnames
+	public static final String classAddFriendBtn = "addFriendBtn";
+	public static final String classAlreadyFriendsBtn = "alreadyFriendsBtn";
+	public static final String classSelfBtn = "selfBtn";
+	public static final String classLoginBtn = "loginBtn";
+	public static final String classPendingBtn = "pendingBtn";
+	public static final String classConfirmBtn = "confirmBtn";
 
 	// ResultSet column names
 	public static final String colUserId = "id";
@@ -49,6 +54,8 @@ public class HtmlUserThumbnailGenerator {
 	public static final String labelAlreadyFriends = "Friends";
 	public static final String labelSelf = "This Is You";
 	public static final String labelLogIn = "Log In First";
+	public static final String labelPending = "Request Pending";
+	public static final String labelConfirm = "Confirm Request";
 	public static final String labelSendMessage = "Send a Message";
 	
 	// URL's for button actions
@@ -59,6 +66,8 @@ public class HtmlUserThumbnailGenerator {
 	private static final int KFRIENDS = 1;
 	private static final int KSELF = 2; 
 	private static final int KNOTLOGGEDIN = 3;
+	private static final int KPENDING = 4; // User already has a pending request to this receiver
+	private static final int KCONFIRM = 5; // User has already received a request from the receiver
 	
 	
 	public HtmlUserThumbnailGenerator() {
@@ -108,14 +117,38 @@ public class HtmlUserThumbnailGenerator {
 		if (currentUserId == userId) return KSELF;
 		// Query the database to see if these two users are friends
 		String query = "SELECT * FROM friends WHERE friend1 = " + currentUserId + " AND friend2 = " + userId + " LIMIT 1;";
-		//System.out.println("HtmlUserThumbnailGenerator.friends(): Query = \"" + query + "\"");
 		ResultSet rsFriends = null;
 		rsFriends = dc.executeSimultaneousQuery(query);
+		if (rsFriends == null) return KNOTFRIENDS;
 		
 		// If ResultSet contains at least one entry, they are friends
 		try {
 			if(rsFriends.first()) return KFRIENDS;
-		} catch (SQLException ignored) {};
+		} catch (SQLException e) { return KNOTFRIENDS;}
+		
+		// Now, check to see if the user has already sent a friend request to the receiver
+		String query2 = "SELECT * FROM messages WHERE senderid = " + currentUserId + " AND receiverid = " + userId + " AND type = 0 LIMIT 1;";
+		ResultSet rsRequests = null;
+		rsRequests = dc.executeSimultaneousQuery(query2);
+		if (rsRequests == null) return KNOTFRIENDS;
+		
+		// If ResultSet contains at least one entry, there is a request pending
+		try {
+			if(rsRequests.first()) return KPENDING;
+		} catch (SQLException e) { return KNOTFRIENDS;}
+
+		// Now, check to see if the user has already received a friend request from the receiver
+		String query3 = "SELECT * FROM messages WHERE receiverid = " + currentUserId + " AND senderid = " + userId + " AND type = 0 LIMIT 1;";
+		rsRequests = null;
+		rsRequests = dc.executeSimultaneousQuery(query3);
+		if (rsRequests == null) return KNOTFRIENDS;
+
+		// If ResultSet contains at least one entry, there is a request pending
+		try {
+			if(rsRequests.first()) return KCONFIRM;
+		} catch (SQLException e) { return KNOTFRIENDS;}
+		
+		// User is logged in, not friends with receiver, and no requests have been sent to or from the receiver
 		return KNOTFRIENDS;
 	}
 	
@@ -210,26 +243,36 @@ public class HtmlUserThumbnailGenerator {
 		sb.append("\t</div>" + ls);
 		
 		// Add buttons to the profile based on friend status of the users
+		String buttonClass = "";
+		String buttonText = "";
 		sb.append("\t<div class=\"" + classProfileButtons + "\">" + ls);
-		String buttonClass = classProfileButton;
-		String buttonText = labelAddFriend;
 		if (friends == KFRIENDS) {
-			buttonClass = buttonClass + " " + classProfilePseudoButton;
+			buttonClass = classAlreadyFriendsBtn;
 			buttonText = labelAlreadyFriends;
 			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		} else if (friends == KSELF) {
-			buttonClass = buttonClass + " " + classProfilePseudoButton;
+			buttonClass = classSelfBtn;
 			buttonText = labelSelf;
 			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		} else if (friends == KNOTLOGGEDIN) {
-			buttonClass = buttonClass + " " + classProfileLoginButton;
+			buttonClass = classLoginBtn;
 			buttonText = labelLogIn;
 			sb.append("\t\t<form action=\"signin.jsp\">" + ls);
 			sb.append("\t\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 			sb.append("\t\t</form>" + ls);
 		} else if (friends == KNOTFRIENDS) {
+			buttonClass = classAddFriendBtn;
+			buttonText = labelAddFriend;
 			String buttonId = "addFriendButtonId-" + userid;
 			sb.append("\t\t<input onclick=\"sendFriendRequest(this)\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+		} else if (friends == KPENDING) {
+			buttonClass = classPendingBtn;
+			buttonText = labelPending;
+			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+		} else if (friends == KCONFIRM) {
+			buttonClass = classConfirmBtn;
+			buttonText = labelConfirm;
+			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		}
 		
 		if (friends != KSELF && friends != KNOTLOGGEDIN) {
@@ -237,7 +280,7 @@ public class HtmlUserThumbnailGenerator {
 			sb.append("\t\t<form method=\"POST\" action=\"" + sendMessageUrl + "\">" + ls);
 			sb.append("\t\t\t<input type=\"hidden\" name=\"receiverid\" value=\"" + userid + "\" />" + ls);
 			sb.append("\t\t\t<input type=\"hidden\" name=\"receiverUsername\" value=\"" + username + "\" />" + ls);
-			sb.append("\t\t\t<input class=\"" + classProfileButton + "\" type=\"submit\" value=\"" + labelSendMessage + "\" />" + ls);
+			sb.append("\t\t\t<input class=\"" + "msgBtn" + "\" type=\"submit\" value=\"" + labelSendMessage + "\" />" + ls);
 			sb.append("\t\t</form>" + ls);
 		}
 		sb.append("\t</div>" + ls);

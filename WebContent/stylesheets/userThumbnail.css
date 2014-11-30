@@ -91,7 +91,7 @@
 	padding: 0px;
 }
 
-.profilethumbnailbutton {
+.profilethumbnailbuttons input {
 	display: block;
 	text-align: center;
 	horizontal-align: right;
@@ -105,21 +105,50 @@
 	padding-left: 3px;
 	padding-right: 3px;
 
-	background-color: #3B5998;
-	color: #FFFFFF;
 	font-weight: bold;
 	font-size: 16px;
 	outline: none;
+	
+	background-color: #3B5998;
+	color: #FFFFFF;
 }
 
-.profilethumbnailpseudobutton {
+.profilethumbnailbuttons .addFriendBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
+}
+
+.profilethumbnailbuttons .alreadyFriendsBtn {
 	color: black;
 	background-color: #EEEEEE;
 	box-shadow: none;
 	border: 1px solid grey;
 }
 
-.profilethumbnailloginbutton {
+.profilethumbnailbuttons .selfBtn {
+	color: black;
+	background-color: #EEEEEE;
+	box-shadow: none;
+	border: 1px solid grey;
+}
+
+.profilethumbnailbuttons .pendingBtn {
+	color: black;
+	background-color: #EEEEEE;
+	box-shadow: none;
+	border: 1px solid grey;
+}
+
+.profilethumbnailbuttons .confirmBtn {
+	background-color: #71AB57;
+}
+
+.profilethumbnailbuttons .loginBtn {
 	color: black;
 	background-color: #DFDC55;
+}
+
+.profilethumbnailbuttons .msgBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
 }
