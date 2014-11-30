@@ -62,3 +62,44 @@
 	font-size: 18px;
 }
 
+.advancedSearchForm .criteriaSelect {
+	font-weight: bold;
+	margin-top: 10px;
+	display: block;
+}
+
+.advancedSearchForm select {
+	position: relative;
+	top: -3px;
+}
+
+.advancedSearchForm .searchInputs {
+	display: block;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.advancedSearchForm .searchBlock {
+	display: inline-block;
+	width: auto;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+.advancedSearchForm .leftSearchBlock {
+	padding-right: 40px;
+}
+
+.advancedSearchForm .searchLabel {
+	display: block;
+}
+
+.advancedSearchForm .searchField {
+	font-size: 24px;
+	display: block;
+	width: 252px;
+}
+
+.advancedSearchForm .longSearchField {
+	width: 365px;
+}

@@ -5,7 +5,7 @@
 <html>
 <head>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedpagehead.html") %>
-<link href="/QuizSite/stylesheets/users-advanced.css" 
+<link href="/QuizSite/stylesheets/users.css" 
 	type="text/css" 
 	rel="stylesheet" 
 	id="signinStylesheet" />
@@ -16,10 +16,29 @@
 	<div class="mainBody">
 		<div class="searchFrame">
 			<div class="searchinstructions" >Search for Users</div>
-			<form method="get" action="users.jsp" >
-				<span class="searchlabel" >Enter your search criteria: </span>
-					<input type="text" name="<% out.print(searchParam); %>" class="searchtextbox" >
-					<input type="submit" value="Search" class="searchbutton" />
+			<form class="advancedSearchForm" method="get" action="users-advanced.jsp" >
+				<span class="criteriaSelect" >Match <select><option value="any">any</option><option value="all">all</option></select> of the following criteria:</span>
+				
+				<div class="searchInputs">
+					<div class="searchBlock leftSearchBlock">
+						<span class="searchlabel">First Name:</span>
+						<input type="text" name="firstName" class="searchField" />
+					</div>
+					<div class="searchBlock">
+						<span class="searchlabel">Last Name:</span>
+						<input type="text" name="lastName" class="searchField" />
+					</div>
+					<div class="searchBlock leftSearchBlock">
+						<span class="searchlabel">Username:</span>
+						<input type="text" name="username" class="searchField" />
+					</div>
+					<div class="searchBlock">
+						<span class="searchlabel">Email:</span>
+						<input type="text" name="email" class="searchField longSearchField" />
+					</div>
+					
+				</div>	
+				<input type="submit" value="Advanced Search" class="searchbutton" />
 			</form>
 
 			<div class="advancedsearchlink" >
