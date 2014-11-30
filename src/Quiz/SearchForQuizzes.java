@@ -57,7 +57,8 @@ public class SearchForQuizzes {
 				sb.append(" OR ");
 			}
 			sb.append(colQuizName + " LIKE \"%" + querySplit[i] + "%\" OR ");
-			sb.append(colQuizDescription + " LIKE \"%" + querySplit[i] + "%\"");
+			sb.append(colQuizDescription + " LIKE \"%" + querySplit[i] + "%\" OR ");
+			sb.append(colUsername + " LIKE \"%" + querySplit[i] + "%\"");
 		}
 		String criteria = sb.toString();
 		if(criteria.isEmpty()) return "";
