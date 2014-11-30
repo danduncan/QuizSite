@@ -121,9 +121,10 @@ public class HtmlQuizThumbnailGenerator {
 		sb.append("<div class =\"" + classQuizThumbnail + "\">" + ls);
 		
 		// Add the quiz name
-		sb.append("\t<div class=\"" + classQuizName + "\">" + ls);
-		sb.append("\t\t<a href=\"" + quizURL + "?" + quizQueryString + "=" + quizId + "\">" + quizName + "</a>" + ls);
-		sb.append("\t</div>" + ls);
+		String thisQuizUrl = quizURL + "?" + quizQueryString + "=" + quizId;
+		sb.append("\t<a href=\"" + thisQuizUrl + "\">" + ls);
+		sb.append("\t\t<div class=\"" + classQuizName + "\">" + quizName + "</div>" + ls);
+		sb.append("\t</a>" + ls);
 		
 		// Add the quiz stats
 		sb.append("\t<div class=\"" + classStats + "\">" + ls);
