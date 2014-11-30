@@ -27,8 +27,15 @@
 			</div>
 		</div>
 		
-		<script>useridjs = <%= ((Integer) session.getAttribute("userid")).toString() %></script>	
-
+		<%
+			Integer uid = (Integer) session.getAttribute("userid");
+			if (uid != null) {
+				out.println("<script>useridjs = " + uid + "</script>");
+			} else {
+				out.println("<script>useridjs = -1</script>");
+			}
+		%>
+		
 		<%
 			// Get user's original search query in the query string
 			String query = request.getParameter(searchParam);

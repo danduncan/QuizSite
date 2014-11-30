@@ -21,7 +21,13 @@ private static final long serialVersionUID = 1L;
 	
 	// Constants for success or failure of friend request
 	public static final Integer KSUCCESS = 0;
-	public static final Integer KFAILURE = 1;
+	public static final Integer KFAILURE = 1; // General failure
+	public static final Integer KFRIENDS = 2; // Sender and receiver are already friends
+	public static final Integer KNOTLOGGEDIN = 3; // User is not logged in
+	public static final Integer KPENDING = 4; // User has already sent a request and it is still pending
+	public static final Integer KCONFIRM = 5; // Receiver has sent a request. Confirm it
+	public static final Integer KSELF = 6; // Somehow, the user tried to add himself
+	
 	public static final String friendResponseField = "friendRequestStatusCode";
 	
 	// Constants for DatabaseConnection
@@ -78,9 +84,10 @@ private static final long serialVersionUID = 1L;
 		}
 		
 		// Check permissions
-		if (!canAddFriend(userId,receiverId,dc)) {
-			System.out.println("AddFriendServlet.doPost(): Friend request failed due to friend permissions");
-			setResponse(response,KFAILURE);
+		Integer canAdd = canAddFriend(userId,receiverId,dc);
+		if (canAdd != KSUCCESS) {
+			System.out.println("AddFriendServlet.doPost(): Friend request failed due to friend permissions, error code " + canAdd + ".");
+			setResponse(response,canAdd);
 			return;
 		}
 
@@ -88,11 +95,13 @@ private static final long serialVersionUID = 1L;
 		// Send the request
 		if (sendFriendRequest(userId,receiverId,session,dc,sc)) {
 			System.out.println("\t\tFriend addition successful!");
-			response.addIntHeader(friendResponseField,KSUCCESS);
+			//response.addIntHeader(friendResponseField,KSUCCESS);
+			setResponse(response,KSUCCESS);
 			return;
 		} else {
 			System.out.println("\t\tFriend addition failed during database update");
-			response.addIntHeader(friendResponseField,KFAILURE);
+			//response.addIntHeader(friendResponseField,KFAILURE);
+			setResponse(response,KFAILURE);
 			return;
 		}
 	}
@@ -129,17 +138,17 @@ private static final long serialVersionUID = 1L;
 	}
 
 	// Verify the user is allowed to add the receiver 
-	private static boolean canAddFriend(Integer userId, Integer receiverId, DatabaseConnection dc) {
+	private static Integer canAddFriend(Integer userId, Integer receiverId, DatabaseConnection dc) {
 		// Validate inputs
 		if(userId == null || receiverId == null || userId < 1 || receiverId < 1 || dc == null) {
 			System.out.println("\tAddFriendServlet.canAddFriend(): Failed due to bad inputs");
-			return false;
+			return KFAILURE;
 		}
 
 		// Verify user isn;t adding himself
 		if(userId == receiverId) {
 			System.out.println("\tAddFriendServlet.canAddFriend(): Failed because userid = receiverid");			
-			return false;
+			return KSELF;
 		}
 
 		// Verify the two aren't already friends
@@ -149,16 +158,16 @@ private static final long serialVersionUID = 1L;
 			ResultSet rs = dc.executeQuery(query1);
 			if (rs.first()) {
 				System.out.println("\tAddFriendServlet.canAddFriend(): Failed. You are already friends");
-				return false;
+				return KFRIENDS;
 			}
 			rs = dc.executeQuery(query2);
 			if (rs.first()) {
 				System.out.println("\tAddFriendServlet.canAddFriend(): Failed. You are already friends");
-				return false;
+				return KFRIENDS;
 			} 
 		} catch (SQLException e) {
 			System.out.println("\tAddFriendServlet.canAddFriend(): Failed. SQLException");
-			return false;
+			return KFAILURE;
 		}
 
 		// Check that no friend requests have been sent before
@@ -167,21 +176,21 @@ private static final long serialVersionUID = 1L;
 		try {
 			ResultSet rs = dc.executeQuery(query3);
 			if (rs.first()) {
-				System.out.println("\tAddFriendServlet.canAddFriend(): Failed. Request already exists");
-				return false;
+				System.out.println("\tAddFriendServlet.canAddFriend(): Failed. Request already pending");
+				return KPENDING;
 			}
 			rs = dc.executeQuery(query4);
 			if (rs.first()) {
-				System.out.println("\tAddFriendServlet.canAddFriend(): Failed. Request already exists");
-				return false;
+				System.out.println("\tAddFriendServlet.canAddFriend(): Failed. Request already received from this person");
+				return KCONFIRM;
 			}
 		} catch (SQLException e) {
 			System.out.println("\tAddFriendServlet.canAddFriend(): Failed. SQLException");
-			return false;
+			return KFAILURE;
 		}
 
 		// User is not adding himself. User is not already friends with receiver. The user and the receiver have not previously sent each other a friend request.
-		return true;		
+		return KSUCCESS;		
 	}
 
 	// Send the friend request. Returns true on success
