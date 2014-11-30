@@ -77,3 +77,65 @@ function processFriendRequestResponse(friendButton) {
 	
 }
 
+function confirmFriendRequest(confirmButton)
+{
+	buttonid = confirmButton.id;
+	senderidArr = buttonid.split('-');
+	senderid = senderidArr[1];
+	query = "buttonid=" + buttonid + "&senderid=" + senderid + "&userid=" + useridjs;
+
+	requestObj = new XMLHttpRequest();
+	requestObj.addEventListener("load",function anonfcn() { processConfirmResponse(confirmButton); },null);
+	requestObj.open("POST","http://localhost:8080/QuizSite/ConfirmFriendServlet",true);
+	requestObj.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
+	requestObj.send(query);
+}
+
+function processConfirmResponse(confirmButton) {
+	statusStr = requestObj.responseText;
+	
+	KSUCCESS = "0";
+	KFAILURE = "1";
+	KFRIENDS = "2";
+	KNOTLOGGEDIN = "3";
+	KNOTPENDING = "4";
+	KSELF = "5";
+	
+	// Response status is 0 for success, nonzero for failure
+	switch(statusStr) {
+		case KSUCCESS:
+			confirmButton.className = "alreadyFriendsBtn";
+			confirmButton.value = "Friends Confirmed";
+			confirmButton.disabled = true;
+			break;
+		case KFRIENDS:
+			confirmButton.className = "alreadyFriendsBtn";
+			confirmButton.value = "Friends";
+			confirmButton.disabled = true;
+			break;
+		case KNOTLOGGEDIN:
+			confirmButton.className = "loginBtn";
+			confirmButton.value = "Log In First";
+			confirmButton.onclick = "window.location='/QuizSite/signin.jsp';";
+			break;
+		case KNOTPENDING:
+			confirmButton.className = "addFriendBtn";
+			confirmButton.value = "Add Friend";
+			confirmButton.onclick = "sendFriendRequest(this)";
+			break;
+		case KSELF:
+			confirmButton.className = "selfBtn";
+			confirmButton.value = "This Is You";
+			confirmButton.disabled = true;
+			break;
+		case KFAILURE:
+			confirmButton.className = "errorBtn";
+			confirmButton.value = "Database Error";
+			confirmButton.disabled = true;
+			break;
+		default:
+			confirmButton.className = "errorBtn";
+			confirmButton.value = "Server Error";
+			confirmButton.disabled = true;
+	}
+}
