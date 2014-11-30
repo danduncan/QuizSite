@@ -73,22 +73,22 @@ public class SearchForUsers {
 		}
 		
 		// Sanitize all inputs or create dummies for null inputs
-		if (username == null) {
+		if (username == null || username.isEmpty()) {
 			username = "";
 		} else {
 			username = quizsite.FormatString.sanitizeString(username,quizsite.FormatString.NAMELEGALCHARS);
 		}
-		if (firstname == null) {
+		if (firstname == null || firstname.isEmpty()) {
 			firstname = "";
 		} else {
 			firstname = quizsite.FormatString.sanitizeString(firstname,quizsite.FormatString.NAMELEGALCHARS);
 		}
-		if (lastname == null) {
+		if (lastname == null || lastname.isEmpty()) {
 			lastname = "";
 		} else {
 			lastname = quizsite.FormatString.sanitizeString(lastname,quizsite.FormatString.NAMELEGALCHARS);
 		}
-		if (email == null) {
+		if (email == null || email.isEmpty()) {
 			email = "";
 		} else {
 			email = quizsite.FormatString.sanitizeString(email,quizsite.FormatString.EMAILLEGALCHARS);

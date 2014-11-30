@@ -12,29 +12,28 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
-	<% String searchParam = "search"; %>
 	<div class="mainBody">
 		<div class="searchFrame">
 			<div class="searchinstructions" >Search for Users</div>
 			<form class="advancedSearchForm" method="get" action="users-advanced.jsp" >
-				<span class="criteriaSelect" >Match <select><option value="any">any</option><option value="all">all</option></select> of the following criteria:</span>
+				<span class="criteriaSelect" >Match <select name="criterionSearch" id="criterionDropdown" ><option value="any">any</option><option value="all">all</option></select> of the following criteria:</span>
 				
 				<div class="searchInputs">
 					<div class="searchBlock leftSearchBlock">
 						<span class="searchlabel">First Name</span>
-						<input type="text" name="firstName" class="searchField" />
+						<input type="text" name="firstNameSearch" id="firstNameTextBox" class="searchField" value="" />
 					</div>
 					<div class="searchBlock">
 						<span class="searchlabel">Last Name</span>
-						<input type="text" name="lastName" class="searchField" />
+						<input type="text" name="lastNameSearch" id="lastNameTextBox" class="searchField" value="" />
 					</div>
 					<div class="searchBlock leftSearchBlock">
 						<span class="searchlabel">Username</span>
-						<input type="text" name="username" class="searchField" />
+						<input type="text" name="usernameSearch" id="usernameTextBox" class="searchField" value="" />
 					</div>
 					<div class="searchBlock">
 						<span class="searchlabel">Email</span>
-						<input type="text" name="email" class="searchField longSearchField" />
+						<input type="text" name="emailSearch" id="emailTextBox" class="searchField longSearchField" value="" />
 					</div>
 					
 				</div>	
@@ -57,14 +56,40 @@
 		
 		<%
 			// Get user's original search query in the query string
-			String query = request.getParameter(searchParam);
-			if (query != null && !query.isEmpty()) {
-				//out.println("User query = \"" + query + "\";");
+			String criterionQuery = request.getParameter("criterionSearch");
+			String firstNameQuery = request.getParameter("firstNameSearch");
+			String lastNameQuery = request.getParameter("lastNameSearch");
+			String usernameQuery = request.getParameter("usernameSearch");
+			String emailQuery = request.getParameter("emailSearch");
+			if (criterionQuery == null) criterionQuery = "any";
+			if (!criterionQuery.equals("any") && !criterionQuery.equals("all")) criterionQuery = "any";
+			if (firstNameQuery == null) firstNameQuery= "";
+			if (lastNameQuery == null) lastNameQuery= "";
+			if (usernameQuery == null) usernameQuery= "";
+			if (emailQuery == null) emailQuery= "";
+			
+			// Autopopulate the text fields
+			out.println("<pre><script>");
+			out.println("document.getElementById('criterionDropdown').value = \"" + criterionQuery + "\";");
+			out.println("document.getElementById('firstNameTextBox').value = \"" + firstNameQuery + "\";");
+			out.println("document.getElementById('lastNameTextBox').value = \"" + lastNameQuery + "\";");
+			out.println("document.getElementById('usernameTextBox').value = \"" + usernameQuery + "\";");
+			out.println("document.getElementById('emailTextBox').value = \"" + emailQuery + "\";");
+			out.println("</script></pre>");
+			
+			// Get search results for this query
+			if (!firstNameQuery.isEmpty() || !lastNameQuery.isEmpty() || !usernameQuery.isEmpty() || !emailQuery.isEmpty()) {
+				// User has entered at least one search term
+				boolean andTerms = false;
+				if (criterionQuery.equals("all")) andTerms = true;
+				
+				// Search for the user's parameters
 				quizsite.DatabaseConnection dc = (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection");
 				if (dc != null) {
-					ResultSet rs = users.SearchForUsers.basicSearch(dc,query);
-					//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
-					out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
+					ResultSet rs = users.SearchForUsers.advancedSearch(dc,usernameQuery,firstNameQuery,lastNameQuery,emailQuery,andTerms);
+					if (rs != null) {
+						out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
+					}
 				}
 			}
 		%>
