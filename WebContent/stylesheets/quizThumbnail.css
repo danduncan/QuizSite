@@ -7,15 +7,17 @@
 	margin-top: 15px;
 	margin-bottom: 30px;
 	margin-left: 5px;
-	margin-right: auto;
+	margin-right: 0px;
 	
 	padding-top: 0px;
 	padding-bottom: 0px;
 	padding-left: 0px;
 	padding-right: 0px;
 	
-	border: 1px solid lightgrey;
+	border: none;
 	background-color: #E5F4F3;
+	box-shadow: 3px 5px 5px #AAAAAA;
+	border-radius: 15px;
 }
 
 .quizthumbnail > a {
@@ -48,7 +50,7 @@
 	height: 110px;
 	display: inline-block;
 	vertical-align: top;
-	margin-left: 5px;
+	margin-left: 10px;
 	font-size: 16px;
 	font-weight: normal;
 }

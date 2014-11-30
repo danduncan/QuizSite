@@ -135,7 +135,7 @@ public class HtmlQuizThumbnailGenerator {
 		
 		// Add the quiz description
 		sb.append("\t<div class=\"" + classQuizDescription + "\">" + ls);
-		sb.append("\t\t" + description + ls);
+		sb.append("\t\t<strong><em>Description:&nbsp&nbsp&nbsp</em></strong>" + description + ls);
 		sb.append("\t</div>" + ls);
 		
 		// Close out the thumbnail
