@@ -13,6 +13,11 @@ public class SearchForQuizzes {
 	public static final String emailLegalChars = "a-zA-Z0-9@. -";
 	private static final String userTable = quizsite.MyDBInfo.USERTABLE;
 	private static final String quizTable = quizsite.MyDBInfo.QUIZZESTABLE;
+	private static final String colNames = quizTable + ".id AS quizid," + quizTable + ".authorid," + userTable + ".username," + quizTable + ".datemade," +
+			  quizTable + ".name," + quizTable + ".description," + quizTable + ".practicemode," + quizTable + ".numquestions," +
+			  quizTable + ".numtaken";
+	private static final String tableName = "(" + userTable + " INNER JOIN " + quizTable + " ON " + userTable + ".id=" + quizTable + ".authorid)";
+	private static final String baseQuery = "SELECT " + colNames + " FROM " + tableName;
 
 	public SearchForQuizzes() {
 	}
@@ -38,18 +43,11 @@ public class SearchForQuizzes {
 		
 		// Sanitize the user query
 		searchQuery = quizsite.FormatString.sanitizeString(searchQuery,quizsite.FormatString.ALLLEGALCHARS);
-		
-		
-		// Construct query
-		String colNames = quizTable + ".id AS quizid," + quizTable + ".authorid," + userTable + ".username," + quizTable + ".datemade," +
-						  quizTable + ".name," + quizTable + ".description," + quizTable + ".practicemode," + quizTable + ".numquestions," +
-						  quizTable + ".numtaken";
-		String tableName = "(" + userTable + " INNER JOIN " + quizTable + " ON " + userTable + ".id=" + quizTable + ".authorid)";
-		String baseQuery = "SELECT " + colNames + " FROM " + tableName;
 
 		// Separate the query into one-word substrings
 		String[] querySplit = searchQuery.split("\\s+");
 
+		// Construct query
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < querySplit.length; i++) {
 			if(querySplit[i] == null || querySplit[i].isEmpty()) continue;
@@ -65,6 +63,97 @@ public class SearchForQuizzes {
 		
 		return baseQuery + " WHERE " + sb.toString() + " ORDER BY numtaken DESC;";
 	}
+	
+	/**
+	 * Given strings for quizName, username, and/or quizDescription, find all matches
+	 * Note: null's or empty strings may be provided for any field you do not wish to search
+	 * If andTerms == false, search for term1 OR term2 OR term3 ...
+	 * If andTerms == true, search for term1 AND term2 AND term3 ...
+	 */
+	public static ResultSet advancedSearch(quizsite.DatabaseConnection dc, String quizName, String username, String quizDescription, boolean andTerms) {
+		if(dc==null) return null;
+		String query = buildAdvancedQuery(quizName,username,quizDescription,andTerms);
+		if(query == null || query.isEmpty()) return null;
+		ResultSet rs = dc.executeQuery(query);
+		return rs;
+	}
+	
+	/**
+	 * Given the strings for search criteria, construct a search query
+	 * @param username
+	 * @param firstname
+	 * @param lastname
+	 * @param email
+	 * @return
+	 */
+	protected static String buildAdvancedQuery(String quizName, String username, String quizDescription, boolean andTerms) {	
+		// Check that at least one input was provided
+		if (quizName==null && username==null && quizDescription==null) {
+			return null;
+		}
+		
+		// Sanitize all inputs or create dummies for null inputs
+		if (username == null || username.isEmpty()) {
+			username = "";
+		} else {
+			username = quizsite.FormatString.sanitizeString(username,quizsite.FormatString.NAMELEGALCHARS);
+		}
+		if (quizName == null || quizName.isEmpty()) {
+			quizName = "";
+		} else {
+			quizName = quizsite.FormatString.sanitizeString(quizName,quizsite.FormatString.ALLLEGALCHARS);
+		}
+		if (quizDescription == null || quizDescription.isEmpty()) {
+			quizDescription = "";
+		} else {
+			quizDescription = quizsite.FormatString.sanitizeString(quizDescription,quizsite.FormatString.ALLLEGALCHARS);
+		}
+		
+		// Check that at least one input was valid
+		if (username.isEmpty() && quizName.isEmpty() && quizDescription.isEmpty()) {
+			return null;
+		}
+		
+		String strBw = "";
+		// Check whether we are ANDing or ORing
+		if (andTerms) {
+			strBw = "AND";
+		}
+		else {
+			strBw = "OR";
+		}
+		strBw = " " + strBw + " ";
+		
+		// Build the query from the sanitized inputs
+		StringBuilder sb = new StringBuilder();
+		sb.append(baseQuery + " WHERE ");
+		boolean one = false; // Tracks whether OR's need to be added
+		if(!quizName.isEmpty()) {
+			one = true;
+			sb.append(colQuizName + " LIKE \"%" + quizName.trim() + "%\"");
+		}
+		if(!username.isEmpty()) {
+			if (one) {
+				sb.append(strBw);
+			}
+			one = true;
+			sb.append(colUsername + " LIKE \"%" + username.trim() + "%\"");
+		}
+
+		if(!quizDescription.isEmpty()) {
+			if(one) {
+				sb.append(strBw);
+			}
+			one = true;
+			sb.append(colQuizDescription + " LIKE \"%" + quizDescription.trim() + "%\"");
+		}
+		sb.append(" ORDER BY numtaken DESC;");
+		
+		// Return the completed query
+		return sb.toString();
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

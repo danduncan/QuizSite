@@ -23,7 +23,7 @@
 			</form>
 
 			<div class="advancedsearchlink" >
-				<a href="quizSearch.jsp" >Advanced Search</a>
+				<a href="quizSearch-advanced.jsp" >Advanced Search</a>
 			</div>
 		</div>
 		
