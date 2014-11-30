@@ -28,8 +28,8 @@ public class SearchForQuizzes {
 	 */
 	public static ResultSet basicSearch(quizsite.DatabaseConnection dc, String searchQuery) {
 		String query = buildBasicQuery(searchQuery);
-		System.out.println("\tSearchForQuizzes.basicSearch(): Input query = \"" + searchQuery + "\";");
-		System.out.println("\tSearchForQuizzes.basicSearch(): Database query = \"" + query + "\";");
+		//System.out.println("\tSearchForQuizzes.basicSearch(): Input query = \"" + searchQuery + "\";");
+		//System.out.println("\tSearchForQuizzes.basicSearch(): Database query = \"" + query + "\";");
 		return dc.executeQuery(query);
 	}
 	
