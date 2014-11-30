@@ -1,5 +1,5 @@
 .mainBody {
-	width: 800px;
+	width: 700px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -14,8 +14,8 @@
 	margin-right: auto;
 	margin-top: 40px;
 	margin-bottom: 50px;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 20px;
+	padding-right: 0px;
 	padding-bottom: 15px;
 	padding-top: 0px;
 }
@@ -24,7 +24,7 @@
 	font-size: 44px;
 	font-weight: bold;
 	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 15px;
 }
 
 .searchlabel {
@@ -35,7 +35,7 @@
 .searchtextbox {
 	display: block;
 	font-size: 24px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	width: 95%;
 }
 
@@ -50,7 +50,7 @@
 .advancedsearchlink {
 	width: 95%;
 	text-align: right;
-	padding-bottom: 0px;
+	padding-bottom: 5px;
 	margin-bottom: -10px;
 	margin-right: 0px;
 	padding-right: 0px;
