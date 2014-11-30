@@ -110,6 +110,7 @@ public class HtmlUserThumbnailGenerator {
 			userId = rs.getInt(colUserId);
 		} catch (SQLException e) {
 			// If column label is invalid
+			System.out.println("HtmlUserThumbnailGenerator.checkIfFriends(): Invalid column access");
 			return KNOTFRIENDS;
 		}
 		
@@ -124,7 +125,12 @@ public class HtmlUserThumbnailGenerator {
 		// If ResultSet contains at least one entry, they are friends
 		try {
 			if(rsFriends.first()) return KFRIENDS;
-		} catch (SQLException e) { return KNOTFRIENDS;}
+			rsFriends.close();
+		} catch (SQLException e) { 
+			System.out.println("HtmlUserThumbnailGenerator.checkIfFriends(): Database error checking for KFRIENDS");
+			return KNOTFRIENDS;
+		} 
+		
 		
 		// Now, check to see if the user has already sent a friend request to the receiver
 		String query2 = "SELECT * FROM messages WHERE senderid = " + currentUserId + " AND receiverid = " + userId + " AND type = 0 LIMIT 1;";
@@ -135,18 +141,25 @@ public class HtmlUserThumbnailGenerator {
 		// If ResultSet contains at least one entry, there is a request pending
 		try {
 			if(rsRequests.first()) return KPENDING;
-		} catch (SQLException e) { return KNOTFRIENDS;}
+			rsRequests.close();
+		} catch (SQLException e) { 
+			System.out.println("HtmlUserThumbnailGenerator.checkIfFriends(): Database error checking for KPENDING");
+			return KNOTFRIENDS;
+		}
 
 		// Now, check to see if the user has already received a friend request from the receiver
 		String query3 = "SELECT * FROM messages WHERE receiverid = " + currentUserId + " AND senderid = " + userId + " AND type = 0 LIMIT 1;";
-		rsRequests = null;
-		rsRequests = dc.executeSimultaneousQuery(query3);
-		if (rsRequests == null) return KNOTFRIENDS;
+		ResultSet rsRequests2 = dc.executeSimultaneousQuery(query3);
+		if (rsRequests2 == null) return KNOTFRIENDS;
 
 		// If ResultSet contains at least one entry, there is a request pending
 		try {
-			if(rsRequests.first()) return KCONFIRM;
-		} catch (SQLException e) { return KNOTFRIENDS;}
+			if(rsRequests2.first()) return KCONFIRM;
+			rsRequests2.close();
+		} catch (SQLException e) { 
+			System.out.println("HtmlUserThumbnailGenerator.checkIfFriends(): Database error checking for KCONFIRM");
+			return KNOTFRIENDS;
+		}
 		
 		// User is logged in, not friends with receiver, and no requests have been sent to or from the receiver
 		return KNOTFRIENDS;

@@ -19,6 +19,7 @@ public class DatabaseConnection {
 	private Connection con; 
 	private Statement stmt;
 	
+	
 	public DatabaseConnection() {
 		this.openConnection();
 	}
@@ -110,17 +111,14 @@ public class DatabaseConnection {
 		
 		try {
 			// Open connection to database
-			Connection conNew = DriverManager.getConnection( "jdbc:mysql://" + server, account ,password);
-			stmtNew = conNew.createStatement();
+			//Connection conNew = DriverManager.getConnection( "jdbc:mysql://" + server, account ,password);
+			stmtNew = con.createStatement();
 			stmtNew.executeQuery("USE " + database);						
 		} catch (SQLException e) {
-			System.out.println("DatabaseConnection.executeSimultaenousQuery(): SQLException encountered");
-			e.printStackTrace();
-			System.exit(0);
+			System.out.println("DatabaseConnection.executeSimultaneousQuery() SQLException: Too many active connections. Don't forget to call rs.close() as soon as you are done with a simultaneous ResultSet");
 			return null;
 		} catch (Exception e) {
 			System.out.println("DatabaseConnection.executeSimultaenousQuery(): General Exception encountered");
-			e.printStackTrace();
 			return null;
 		}
 		if(stmtNew == null) return null;
