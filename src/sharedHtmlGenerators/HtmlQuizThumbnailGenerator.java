@@ -13,8 +13,8 @@ public class HtmlQuizThumbnailGenerator {
 	// Strings for generating the link to a user's profile
 	public static final String profileURL = "/QuizSite/profile.jsp";
 	public static final String profileQueryString = "id";
-	public static final String quizURL = "/QuizSite/quiz.jsp";
-	public static final String quizQueryString = "id";
+	public static final String quizURL = "/QuizSite/QuizHomepageServlet";
+	public static final String quizQueryString = "quizid";
 	
 	// Strings of class names in the HTML
 	public static final String classSearchResults = "quizsearchresults";
