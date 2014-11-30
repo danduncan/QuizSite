@@ -148,6 +148,14 @@
 	background-color: #DFDC55;
 }
 
+.profilethumbnailbuttons .successfulRequestBtn {
+	background-color: #71AB57;
+}
+
+.profilethumbnailbuttons .errorBtn {
+	background-color: #FBB1B7;
+}
+
 .profilethumbnailbuttons .msgBtn {
 	background-color: #3B5998;
 	color: #FFFFFF;

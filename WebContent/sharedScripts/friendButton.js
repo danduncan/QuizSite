@@ -21,21 +21,59 @@ function sendFriendRequest(friendButton)
 }
 
 function processFriendRequestResponse(friendButton) {
-	status = requestObj.responseText;
+	statusStr = requestObj.responseText;
+	
+	KSUCCESS = "0";
+	KFAILURE = "1";
+	KFRIENDS = "2";
+	KNOTLOGGEDIN = "3";
+	KPENDING = "4";
+	KCONFIRM = "5";
+	KSELF = "6";
 	
 	// Response status is 0 for success, nonzero for failure
-	if (status == 0) {
-		friendButton.style.background='#71AB57';
-		friendButton.value='Friend Requested';
-		friendButton.style.boxShadow='none';
-		friendButton.disabled = true;
-		friendButton.style.border='1px solid gray';
-	} else {
-		friendButton.style.background='#AB7157';
-		friendButton.value='Request Failed';
-		friendButton.style.boxShadow='none';
-		friendButton.disabled = true;
-		friendButton.style.border='1px solid gray';
+	switch(statusStr) {
+		case KSUCCESS:
+			friendButton.className = "successfulRequestBtn";
+			friendButton.value = "Friend Requested";
+			friendButton.disabled = true;
+			break;
+		case KFRIENDS:
+			friendButton.className = "alreadyFriendsBtn";
+			friendButton.value = "Friends";
+			friendButton.disabled = true;
+			break;
+		case KNOTLOGGEDIN:
+			friendButton.className = "loginBtn";
+			friendButton.value = "Log In First";
+			friendButton.onclick = "window.location='/QuizSite/signin.jsp';";
+			break;
+		case KPENDING:
+			friendButton.className = "pendingBtn";
+			friendButton.value = "Request Pending";
+			friendButton.disabled = true;
+			break;
+		case KCONFIRM:
+			friendButton.className = "confirmBtn";
+			friendButton.value = "Confirm Request";
+			friendButton.disabled = true;
+			break;
+		case KSELF:
+			friendButton.className = "selfBtn";
+			friendButton.value = "This Is You";
+			friendButton.disabled = true;
+			break;
+		case KFAILURE:
+			friendButton.className = "errorBtn";
+			friendButton.value = "Database Error";
+			friendButton.disabled = true;
+			break;
+		default:
+			friendButton.className = "errorBtn";
+			friendButton.value = "Server Error";
+			friendButton.disabled = true;
 	}
+	
+	
 }
 
