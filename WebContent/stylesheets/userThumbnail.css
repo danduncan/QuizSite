@@ -17,6 +17,10 @@
 	border-bottom: 1px solid lightgrey;
 }
 
+.userprofilethumbnail > a {
+	text-decoration: none;
+}
+
 .profilepicturecontainer {
 	width: 130px;
 	margin: 0px;
@@ -40,6 +44,7 @@
 	height: 130px;
 	display: inline-block;
 	vertical-align: top;
+	margin-left: 10px;
 }
 
 .profilethumbnailname {
