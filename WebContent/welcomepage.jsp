@@ -126,7 +126,6 @@
 <input name="type" type="hidden" value= "2" />
 </form>
 
-<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 
 <h2> Friends </h2>
@@ -170,6 +169,7 @@
 	out.println("</ul>");
 	%>
 
+<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 
 
 </html>
