@@ -47,7 +47,6 @@
 			out.println("</script>");
 			
 			if (query != null && !query.isEmpty()) {
-				//out.println("User query = \"" + query + "\";");
 				quizsite.DatabaseConnection dc = (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection");
 				if (dc != null) {
 					ResultSet rs = Quiz.SearchForQuizzes.basicSearch(dc,query);
