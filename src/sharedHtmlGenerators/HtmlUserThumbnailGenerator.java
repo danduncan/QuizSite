@@ -264,14 +264,19 @@ public class HtmlUserThumbnailGenerator {
 			buttonClass = classAddFriendBtn;
 			buttonText = labelAddFriend;
 			String buttonId = "addFriendButtonId-" + userid;
-			sb.append("\t\t<input onclick=\"sendFriendRequest(this)\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
-		} else if (friends == KPENDING) {
-			buttonClass = classPendingBtn;
-			buttonText = labelPending;
-			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+			String onClickStr = "sendFriendRequest(this)";
+			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 		} else if (friends == KCONFIRM) {
 			buttonClass = classConfirmBtn;
 			buttonText = labelConfirm;
+			String buttonId = "confirmFriendButtonId-" + userid;
+			String onClickStr = "confirmFriendRequest(this)";
+			// Once ConfirmFriendServlet is running, this line becomes uncommented and the next line gets commented
+			//sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+		} else if (friends == KPENDING) {
+			buttonClass = classPendingBtn;
+			buttonText = labelPending;
 			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		}
 		
