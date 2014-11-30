@@ -18,7 +18,7 @@
 			<div class="searchinstructions" >Search for Quizzes</div>
 			<form method="get" action="quizSearch.jsp" >
 				<span class="searchlabel" >Search quiz names, descriptions, and author usernames: </span>
-					<input type="text" name="<% out.print(searchParam); %>" class="searchtextbox" >
+					<input type="text" name="<% out.print(searchParam); %>" id="basicSearchTextBox" class="searchtextbox" >
 					<input type="submit" value="Search" class="searchbutton" />
 			</form>
 
@@ -39,6 +39,13 @@
 		<%
 			// Get user's original search query in the query string
 			String query = request.getParameter(searchParam);
+			if (query == null) query = "";
+			
+			// Autopopulate the text box
+			out.println("<script>");
+			out.println("document.getElementById('basicSearchTextBox').value=\"" + query + "\";");
+			out.println("</script>");
+			
 			if (query != null && !query.isEmpty()) {
 				//out.println("User query = \"" + query + "\";");
 				quizsite.DatabaseConnection dc = (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection");

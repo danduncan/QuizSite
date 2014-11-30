@@ -63,7 +63,7 @@ public class SearchForQuizzes {
 		String criteria = sb.toString();
 		if(criteria.isEmpty()) return "";
 		
-		return baseQuery + " WHERE " + sb.toString() + ";";
+		return baseQuery + " WHERE " + sb.toString() + " ORDER BY numtaken DESC;";
 	}
 	
 	public static void main(String[] args) {
