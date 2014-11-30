@@ -21,19 +21,19 @@
 				
 				<div class="searchInputs">
 					<div class="searchBlock leftSearchBlock">
-						<span class="searchlabel">First Name:</span>
+						<span class="searchlabel">First Name</span>
 						<input type="text" name="firstName" class="searchField" />
 					</div>
 					<div class="searchBlock">
-						<span class="searchlabel">Last Name:</span>
+						<span class="searchlabel">Last Name</span>
 						<input type="text" name="lastName" class="searchField" />
 					</div>
 					<div class="searchBlock leftSearchBlock">
-						<span class="searchlabel">Username:</span>
+						<span class="searchlabel">Username</span>
 						<input type="text" name="username" class="searchField" />
 					</div>
 					<div class="searchBlock">
-						<span class="searchlabel">Email:</span>
+						<span class="searchlabel">Email</span>
 						<input type="text" name="email" class="searchField longSearchField" />
 					</div>
 					

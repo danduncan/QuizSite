@@ -64,6 +64,7 @@
 
 .advancedSearchForm .criteriaSelect {
 	font-weight: bold;
+	font-size: 16px;
 	margin-top: 10px;
 	display: block;
 }
@@ -90,8 +91,9 @@
 	padding-right: 40px;
 }
 
-.advancedSearchForm .searchLabel {
+.advancedSearchForm .searchlabel {
 	display: block;
+	padding-left: 2px;
 }
 
 .advancedSearchForm .searchField {
