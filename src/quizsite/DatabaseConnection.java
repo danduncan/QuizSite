@@ -19,6 +19,13 @@ public class DatabaseConnection {
 	private Connection con; 
 	private Statement stmt;
 	
+	// SQL Exception error codes
+	private static final Integer SQL_NoDatabaseSelected = 1046;
+	private static final Integer SQL_InvalidTable = 1146;
+	private static final Integer SQL_InvalidColumn = 1054;
+	private static final Integer SQL_GeneralSyntaxError = 1064; // Many other error codes for specific syntax errors
+	private static final Integer SQL_ConnectionFailed = null; // Don't know this number yet
+	
 	
 	public DatabaseConnection() {
 		this.openConnection();
@@ -37,18 +44,15 @@ public class DatabaseConnection {
 			stmt.executeQuery("USE " + database);
 						
 		} catch (SQLException e) {
-			System.out.println("openConnection(): SQLException encountered");
-			e.printStackTrace();
-			System.exit(0);
+			printException(e,null);
+			//System.exit(0);
 			return;
 		} catch (ClassNotFoundException e) {
-			System.out.println("openConnection(): ClassNotFoundException encountered");
-			System.exit(0);
-			e.printStackTrace();
+			System.out.println("DataBaseConnect.openConnection(): ClassNotFound Exception encountered");
+			//System.exit(0);
 			return;
 		} catch (Exception e) {
-			System.out.println("openConnection(): General Exception encountered");
-			e.printStackTrace();
+			System.out.println("DataBaseConnect.openConnection(): General Exception encountered");
 			return;
 		}
 	}
@@ -58,9 +62,30 @@ public class DatabaseConnection {
 	 */
 	public void closeConnection() {
 		try {
+			stmt.close();
 			con.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			printException(e,null);
+		}
+	}
+	
+	/**
+	 * Restart a database connection
+	 */
+	public void restartConnection() {
+		closeConnection();
+		openConnection();
+	}
+	
+	/**
+	 * Display a SQL error message
+	 */
+	private static void printException(SQLException e, String query) {
+		e.printStackTrace();
+		String err = "\tDatabaseConnection: SQLException (error code " + e.getErrorCode() + "): \"" + e.getMessage() + "\";";
+		System.out.println(err);
+		if (query != null && !query.isEmpty()) {
+			System.out.println("\t\tQuery: \"" + query +"\";");
 		}
 	}
 
@@ -75,7 +100,7 @@ public class DatabaseConnection {
 		try {
 			rs = stmt.executeQuery(query);
 		} catch (SQLException e) {
-			System.out.println("Exception: Invalid query: \"" + query + "\"");
+			printException(e, query);
 			return rs;
 		}
 
@@ -93,8 +118,7 @@ public class DatabaseConnection {
 		try {
 			stmt.executeUpdate(update);
 		} catch (SQLException e) {
-			System.out.println("Exception: Invalid update: \"" + update + "\"");
-			e.printStackTrace();
+			printException(e, update);
 			return false;
 		}
 
@@ -116,6 +140,7 @@ public class DatabaseConnection {
 			stmtNew.executeQuery("USE " + database);						
 		} catch (SQLException e) {
 			System.out.println("DatabaseConnection.executeSimultaneousQuery() SQLException: Too many active connections. Don't forget to call rs.close() as soon as you are done with a simultaneous ResultSet");
+			printException(e,null);
 			return null;
 		} catch (Exception e) {
 			System.out.println("DatabaseConnection.executeSimultaenousQuery(): General Exception encountered");
@@ -126,7 +151,7 @@ public class DatabaseConnection {
 		try {
 			rs = stmtNew.executeQuery(query);
 		} catch (SQLException e) {
-			System.out.println("Exception: Invalid query: \"" + query + "\"");
+			printException(e, query);
 			return rs;
 		}
 
