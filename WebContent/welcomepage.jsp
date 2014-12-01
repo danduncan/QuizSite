@@ -30,10 +30,11 @@
 	out.println("<p> Quizzes Taken: "+user.quizzestaken.size()+ "</p>");
 	String[] colNames = new String[]{"Quiz Name","Date Taken","Score","Time"};
 	String[][] takenData = new String[user.quizzestaken.size()][colNames.length];
-	out.println("<p>Recently Taken Quizzes</p>");
+	int numRecentTaken = 0;
 	if (user.quizzestaken.size() > 0){
 		for(int i = 0; i < user.quizzestaken.size(); i++){
 			if(FormatDateTime.isRecent(user.quizzestaken.get(i).datetaken)){
+				numRecentTaken++;
 				Integer id = user.quizzestaken.get(i).quizid;
 				String quizname = Quiz.getName(id,dc);
 				takenData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
@@ -43,7 +44,12 @@
 			}
 		}
 	}
-	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(takenData,colNames));
+	if (numRecentTaken > 0){
+		out.println("<p>Recently Taken Quizzes</p>");
+		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(takenData,colNames));
+	} else {
+		out.println("<p>No Recently Taken Quizzes");
+	}
 	
 	//quizzes made table
 	out.println("<p> Quizzes Made: " + user.quizzesmade.size() + "</p>");
@@ -53,15 +59,15 @@
 	out.println("</form>");
 	//out.println("<ul type = \"circle\">");
 	out.println("<form method=\"get\" action=\"QuizHomepageServlet\">");
-	out.println("<p>Recently Created Quizzes</p>");
 	
 	String[] columnNames = new String[]{"Quiz Name","Date Made"};
 	String[][] madeData = new String[user.quizzesmade.size()][columnNames.length];
 	
-	
+	int numRecentMade = 0;
 	if (user.quizzesmade.size() > 0){
 		for(int i = 0; i < user.quizzesmade.size(); i++){
 			if(FormatDateTime.isRecent(user.quizzesmade.get(i).date)){
+				numRecentMade++;
 				Integer id = user.quizzesmade.get(i).quizid;
 				String quizname = Quiz.getName(id,dc);
 				//out.println("<li>"+user.quizzesmade.get(i).toString()+"<button name =\"quizid\" type=\"submit\" value=\""+id+"\"> "+id+" </button></li>");
@@ -73,8 +79,13 @@
 	}
 	out.println("</form>");
 	//out.println("</ul>");
-	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(madeData,columnNames));
-
+	
+	if (numRecentMade > 0){
+		out.println("<p>Recently Created Quizzes</p>");
+		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(madeData,columnNames));
+	} else {
+		out.println("<p>No Recently Created Quizzes</p>");
+	}
 	
 	
 	//achievements table
@@ -89,8 +100,9 @@
 		achieveData[i][1] = achievementtypes.get(user.achievements.get(i).type).description;
 		achieveData[i][2] = FormatDateTime.getUserDateTime(user.achievements.get(i).dateachieved)[0];            
 	}
+	if (user.achievements.size() > 0){
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achieveData,cNames));
-
+	}
 	
 	
 	//messages
@@ -162,11 +174,16 @@
 	
 	out.println("<h3> Friend Activity </h3>");
 	ArrayList<String> activity = Friend.getFriendActivity(user,dc,achievementtypes);
-	out.println("<ul type = \"circle\">");
-	for (int i = 0; i <activity.size(); i++){
-		out.println("<li>"+activity.get(i)+"</li>");
+	if ( activity.size() > 0){
+		out.println("<ul type = \"circle\">");
+		for (int i = 0; i <activity.size(); i++){
+			out.println("<li>"+activity.get(i)+"</li>");
+		}
+		out.println("</ul>");
+	} else {
+		out.println("<p>No Recent Friend Activity <p>");
 	}
-	out.println("</ul>");
+	
 	%>
 
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
