@@ -24,13 +24,12 @@
 	font-size: 16px;
 	font-weight: bold;
 	display: block;
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .logintextbox {
 	display: block;
 	font-size: 24px;
-	margin-bottom: 10px;
 	width: 95%;
 }
 
@@ -68,4 +67,11 @@
 .createaccountlink a {
 	color: #0000AA;
 	font-size: 18px;
+}
+
+.errorMsg {
+	font-size: 14px;
+	color: #FF0000;
+	display: none;
+	margin-left: 5px;
 }

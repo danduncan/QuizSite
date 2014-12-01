@@ -11,6 +11,7 @@
 <%
 	session.setAttribute("username", null);
 	session.setAttribute("userid", null);
+	session.setAttribute("user",null);
 %>
 
 <jsp:forward page="/home.jsp" />
