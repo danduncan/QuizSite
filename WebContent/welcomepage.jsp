@@ -25,6 +25,14 @@
 <% 
 	out.println("<h1>Welcome "+user.firstname+"!</h1>");
 	
+	//get popular quizzes
+	int limit = 10;
+	out.println("<h2>Most Popular Quizzes </h2>");
+	String[][] popularQuizzes = Quiz.getPopularQuizzes(dc,10);
+	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(popularQuizzes));
+	
+	
+	//User's Info
 	out.println("<h2> Quiz Info </h2>");
 	//quizzes taken table
 	out.println("<p> Quizzes Taken: "+user.quizzestaken.size()+ "</p>");

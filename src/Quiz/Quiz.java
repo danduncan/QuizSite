@@ -147,4 +147,24 @@ public class Quiz {
 
 		return fieldvalue;
 	}
+	//get list of popular quizzes (# returned is limited by parameter limit)
+	public static String[][] getPopularQuizzes(DatabaseConnection dc, Integer limit) throws SQLException{
+		String query =  "SELECT id,name,description,numtaken,numquestions  FROM quizzes ORDER BY numtaken DESC LIMIT " + limit;
+		ResultSet rs = dc.executeQuery(query);
+
+		String[][] results = new String[limit+1][4];
+		String[] names = {"Quiz Name", "Description","# Questions","# Times Taken"};
+		results[0] = names;
+		
+		int rownum = 1;
+		while (rs.next()){
+			results[rownum][0] = "<a href=\"QuizHomepageServlet?quizid="+rs.getInt("id")+"\">"+ rs.getString("name")+"</a>";	
+			results[rownum][1] = rs.getString("description");
+			results[rownum][2] = rs.getString("numquestions");
+			results[rownum][3] = rs.getString("numtaken");
+			rownum++;
+		}
+	
+		return results;
+	}	
 }
