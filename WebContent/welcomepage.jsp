@@ -28,12 +28,17 @@
 	//get popular quizzes
 	int limit = 10;
 	out.println("<h2>Most Popular Quizzes </h2>");
-	String[][] popularQuizzes = Quiz.getPopularQuizzes(dc,10);
+	String[][] popularQuizzes = Quiz.getPopularQuizzes(dc,limit);
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(popularQuizzes));
 	
+	//get recent quizzes
+	out.println("<h2>Recently Created Quizzes </h2>");
+	String[][] recentQuizzes = Quiz.getRecentQuizzes(dc,limit);
+	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(recentQuizzes));
+
 	
 	//User's Info
-	out.println("<h2> Quiz Info </h2>");
+	out.println("<h2> My Quiz Info </h2>");
 	//quizzes taken table
 	out.println("<p> Quizzes Taken: "+user.quizzestaken.size()+ "</p>");
 	String[] colNames = new String[]{"Quiz Name","Date Taken","Score","Time"};
