@@ -36,10 +36,10 @@
 				<span class="errorMsg" id="noPwd">You must provide a password</span>
 				<span class="errorMsg" id="pwdInvalidChars">Password may only contain [0-9a-zA-Z !@#$%^&*()_=+:;,.?-]</span>
 		</form>
+			<span class="errorMsg errorMsgTall" id="wrongPwd">Username or password incorrect. Please try again</span>
+			<span class="errorMsg errorMsgTall" id="qwizardError">Error: Qwizard is unavailable right now. Please try again in a few minutes</span>
 			<input type="submit" onclick="validate()" value="Sign In" class="loginbutton" />
-			<span class="errorMsg" id="wrongPwd">Error: Username or password incorrect. Please try again</span>
-			<span class="errorMsg" id="qwizardError">Error: Qwizard is unavailable right now. Please try again in a few minutes</span>
-
+			
 		<div class="createaccountlink" >
 			<a href="createprofile.jsp" >Create Account</a>
 		</div>

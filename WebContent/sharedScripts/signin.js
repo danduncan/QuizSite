@@ -1,5 +1,5 @@
 /**
- * 
+ * signin.js
  */
 
 // Get the ID's of all the text boxes
@@ -73,7 +73,7 @@ function getResponseAndSubmit() {
 			hideError(qwizardError);
 			document.getElementById("signinform").submit();
 			break;
-		case KTAKEN:
+		case KFAILURE:
 			showError(wrongPwd);
 			hideError(qwizardError);
 			break;
@@ -84,12 +84,12 @@ function getResponseAndSubmit() {
 	}
 }
 
-function checkUsernameAndSubmit() {
+function checkCredentialsAndSubmit() {
 	query = 'username=' + usernameBox.value + '&password=' + pwdBox.value;
-	checkUsernameServlettURL = "/QuizSite/CheckUsernameServlet";
+	checkLoginCredentialsServletURL = "/QuizSite/CheckLoginCredentialsServlet";
 	requestObj = new XMLHttpRequest();
 	requestObj.addEventListener("load",function anonfcn() { getResponseAndSubmit(); },null);
-	requestObj.open("POST",checkUsernameServlettURL,true); // True makes the request asynchronous
+	requestObj.open("POST",checkLoginCredentialsServletURL,true); // True makes the request asynchronous
 	requestObj.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
 	requestObj.send(query);
 }
@@ -97,7 +97,7 @@ function checkUsernameAndSubmit() {
 function validate() {
 	err = validateInputFormatting();
 	if (!err) {
-		document.getElementById("signinform").submit();
-		//checkUsernameAndSubmit();
+		//document.getElementById("signinform").submit();
+		checkCredentialsAndSubmit();
 	}
 }
