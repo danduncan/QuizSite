@@ -27,6 +27,7 @@ import users.User;
 @WebServlet("/CreateServlet")
 public class CreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	String defaultProfilePic = MyDBInfo.DEFAULTPROFILEPIC;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -61,7 +62,9 @@ public class CreateServlet extends HttpServlet {
 			String firstname = request.getParameter("firstname");
 			String lastname = request.getParameter("lastname");
 			String email = request.getParameter("email");
-			String profpic = request.getParameter("profilepicture");
+			String profpic = request.getParameter("profilepic");
+			if (profpic == null || profpic.isEmpty()) profpic = defaultProfilePic;
+			
 			
 			//todo need next userid, hashed password
 			User user = new User(new UserConnection(dc));
@@ -72,17 +75,23 @@ public class CreateServlet extends HttpServlet {
 			user.email = email;
 			user.profilepicture = profpic;
 			//randomly choose id
-			Random generator = new Random(); 
-			int i = generator.nextInt(1000) + 1;
+			SiteManager sm = (SiteManager) getServletContext().getAttribute("SiteManager");
+			int i = -1;
+			if (sm == null) {			
+				System.out.println("CreateServlet: No SiteManager found in the servlet context for popNextUserID()");
+				Random generator = new Random(); 
+				i = generator.nextInt(100000) + 1;
+			} else {
+				i = sm.popNextUserID();
+			}
 			user.id = i;
 			user.numcreated = 0;
 			user.numtaken = 0;
 			user.numtakenpractice = 0;
 			user.highscores = 0;
 			user.numfriends = 0;
-			Date date = new Date();
-			DateFormat df = new SimpleDateFormat("yyyyMMdd");
-			user.datejoined = df.format(date);
+			user.datejoined = FormatDateTime.getCurrentSystemDateTime();
+			user.usertype = "free";
 			//create inserts into database as opposed to updates it
 			user.create = true;
 			user.updateUserDatabase();

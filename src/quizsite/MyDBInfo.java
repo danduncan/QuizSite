@@ -37,6 +37,8 @@ public class MyDBInfo {
 	public static final String QUESTIONCATEGORIESTABLE = "questionCategories";
 	public static final String IPADDRESSTABLE = "ipAddresses";
 	
+	// URL of default profile picture
+	public static final String DEFAULTPROFILEPIC = "/QuizSite/qwizard_images/profile_picture_default_full.png";
 	
 	
 }

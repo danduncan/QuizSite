@@ -23,6 +23,8 @@
 .loginlabel {
 	font-size: 16px;
 	font-weight: bold;
+	display: block;
+	margin-top: 10px;
 }
 
 .logintextbox {
@@ -32,12 +34,25 @@
 	width: 95%;
 }
 
+.shortloginbox {
+	display: inline-block;
+	width: 45%;
+	margin-right: 10px;
+}
+
+.loginFrame .spacer {
+	margin: 0px;
+	padding: px;
+	margin-top: 30px;
+}
+
 .loginbutton {
 	background-color: #DFDC55;
 	color: #333333;
 	font-size: 18px;
 	font-weight: bold;
 	outline: none;
+	margin-top: 10px;
 }
 
 .createaccountlink {

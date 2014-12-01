@@ -27,11 +27,29 @@
 	<div class="loginFrame">
 		<div class="logininstructions" >Create Account</div>
 		<form method="post" action="CreateServlet" >
-			<span class="loginlabel" >Enter your desired username: </span>
-				<input type="text" name="username" class="logintextbox" >
-			<span class="loginlabel" >Enter your password: </span>
-				<input type="password" name="password" class="logintextbox" > 
-				<input type="submit" value="Register" class="loginbutton" />
+
+			<span class="loginlabel" >Username </span>
+				<input type="text" name="username" class="logintextbox" value="" />
+				
+			<span class="loginlabel" >Name</span>
+				<input type="text" name="firstname" class="logintextbox shortloginbox" placeholder="First" value="" />
+				<input type="text" name="lastname" class="logintextbox shortloginbox" placeholder="Last" value="" />
+			
+			<span class="loginlabel" >Email</span>
+				<input type="text" name="email" class="logintextbox" value="" />
+			
+			<span class="loginlabel" >Profile Picture URL (optional)</span>
+				<input type="text" name="profilepic" class="logintextbox" value="" />
+			
+			<div class="spacer"> </div>
+
+			<span class="loginlabel" >Password </span>
+				<input type="password" name="password" class="logintextbox" value="" > 
+
+			<span class="loginlabel" >Confirm password</span>
+				<input type="password" name="confirmpassword" class="logintextbox" value="" > 
+
+				<input type="submit" value="Register" class="loginbutton" value="" />
 		</form>
 	</div>
 
