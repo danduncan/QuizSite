@@ -211,7 +211,7 @@ private static final long serialVersionUID = 1L;
 
 		// Update the user and return success
 		users.User user = (users.User) session.getAttribute("user");		
-		user.messages.add(msg);
+		if (user != null) user.messages.add(msg);
 		return true;
 	}
 	

@@ -12,7 +12,6 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
-	
 	<div class="mainBody">
 		<div class="bigFrame">
 			<h1>About Qwizard and the Qwizard Team</h1>
@@ -176,6 +175,7 @@
 								<li>Thumbnail view of quiz pages</li>
 							</ul></li>
 						<li>Users who do not select a profile picture are automatically given a default image</li>
+						<li>Thumbnail view of quizzes very gracefully handles long quiz descriptions</li>
 						<li>Javascript/AJAX used to smoothly handle many common website functions in the background:
 							<ul>
 								<li>Sending friend requests</li>
@@ -205,7 +205,7 @@
 			</ul>
 		</div>
 		<div class="bigFrame">
-			<h1>Recommended features and extensions not yet implemented</h1>
+			<h1>Recommended features and extensions not implemented</h1>
 			<ul>
 				<li>User achievements displayed via badges <span>(needs to be done)</span></li>
 				<li>Achievement badges displayed on user profiles <span>(needs to be done)</span></li>

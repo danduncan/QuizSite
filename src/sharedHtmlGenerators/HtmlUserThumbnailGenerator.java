@@ -353,7 +353,7 @@ public class HtmlUserThumbnailGenerator {
 		}
 		
 		sb.append("</div>" + ls);
-		sb.append("<script src=\"/QuizSite/sharedScripts/friendButton.js\"></script>" + ls);
+		//sb.append("<script src=\"/QuizSite/sharedScripts/friendButton.js\"></script>" + ls);
 		//System.out.println(sb.toString());
 		return sb.toString();
 	}
