@@ -28,6 +28,7 @@ public class sharedHeaderGenerator {
 			session.setAttribute("userid",userid);
 		}
 		
+		StringBuilder sb = new StringBuilder();
 		if (username != null && !username.equals("") && userid != null && userid > 0) {
 			String firstName = username;
 			if (usr != null && usr.firstname != null && !usr.firstname.isEmpty()) {
@@ -37,11 +38,13 @@ public class sharedHeaderGenerator {
 			} else if (session.getAttribute("firstname") != null) {
 				firstName = (String) session.getAttribute("firstname");
 			}
-			
-			return getSignedInHeader(rootPath,firstName,userid) + ls + sharedHtmlGenerator.getHTML(rootPath + localPath + fileNewMessage);
+			sb.append(getSignedInHeader(rootPath,firstName,userid));
+			sb.append("<script> useridjs = " + userid.toString() + "; </script>");
 		} else {
-			return getPublicHeader(rootPath) + ls + sharedHtmlGenerator.getHTML(rootPath + localPath + fileNewMessage);
+			sb.append(getPublicHeader(rootPath));
 		}
+		sb.append(ls + sharedHtmlGenerator.getHTML(rootPath + localPath + fileNewMessage));
+		return sb.toString();
 	}
 	
 	private static String getSignedInHeader(String rootPath, String username, Integer userid) {

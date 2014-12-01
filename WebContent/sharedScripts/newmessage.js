@@ -107,7 +107,14 @@ function validateUsernameFormatting() {
 function validateInputFormatting() {
 	err1 = validateUsernameFormatting();
 	err2 = setMessage(noContent,newMsgBody.value == "");
-	return (err1 || err2);
+	err = (err1 || err2);
+	
+	// Get sender ID
+	if (typeof useridjs == 'undefined' || useridjs == null || useridjs < 1) {
+		err = true;
+	}
+	
+	return err;
 }
 
 function getUsernameUrlFormat(username) {
@@ -170,8 +177,8 @@ function submitMessage() {
 	subject = newMsgSubject.value;
 	body = newMsgBody.value;
 	type = newMsgType.value;
-	query = 'username=' + username + '&subject=' + subject + '&body=' + body + '&type=' + type;
-	checkUsernameServletURL = "/QuizSite/SendAjaxMessageServlet";
+	query = 'username=' + username + '&subject=' + subject + '&body=' + body + '&type=' + type + "&senderid=" + useridjs;
+	checkUsernameServletURL = "/QuizSite/SendMessageAjaxServlet";
 	requestObj = new XMLHttpRequest();
 	requestObj.addEventListener("load",function anonfcn() { getAjaxMsgResponse(); },null);
 	requestObj.open("POST",checkUsernameServletURL,true); // True makes the request asynchronous
@@ -192,7 +199,7 @@ function sendMessage() {
 		return;
 	}
 	
-	//submitMessage();
+	submitMessage();
 }
 
 function resetMessageForm() {
