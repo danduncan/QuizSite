@@ -15,7 +15,7 @@
 	
 	<div class="mainBody">
 		<div class="bigFrame">
-			<h1>About the Qwizard Team</h1>
+			<h1>About Qwizard and the Qwizard Team</h1>
 			
 			<ul>
 			<li>3 person team:
@@ -23,6 +23,7 @@
 				<li>Matt Wilson</li> 
 				<li>Dan Duncan</li></ul></li>
 			<li>All three of us are EE grad students</li>
+			<li>Qwizard consists of nearly 9,000 lines of code</li>
 			</ul>
 		</div>
 		<div class="bigFrame">
