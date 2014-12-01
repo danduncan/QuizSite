@@ -45,8 +45,9 @@ public class FriendRequestServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String act = request.getParameter("friendreq");
-		Integer messageNum = Integer.parseInt(request.getParameter("messageNum"));
-		Integer friendID = Integer.parseInt(request.getParameter("friendID"));
+		String[] IDs = request.getParameter("msg_friendIDs").split(",");
+		Integer messageNum = Integer.parseInt(IDs[0]);
+		Integer friendID = Integer.parseInt(IDs[1]);
 		ServletContext sc = request.getServletContext();
 		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 		

@@ -35,8 +35,12 @@
 	out.println("<h2>Recently Created Quizzes </h2>");
 	String[][] recentQuizzes = Quiz.getRecentQuizzes(dc,limit);
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(recentQuizzes));
-
+	%>
 	
+	<form method ="post" action = "quizSearch.jsp">
+	<input type = "submit" name = "Find Quizzes" value = "Find Quizzes">
+	</form>
+	<% 
 	//User's Info
 	out.println("<h2> My Quiz Info </h2>");
 	//quizzes taken table
@@ -173,12 +177,10 @@
 	out.println("<p> You have " + countFriendReq + " new Friend Requests</p>");
 	out.println("<ul type = \"circle\">");
 	for(int i = 0; i < newFriendReq.size(); i++){
-		out.println("<li> From: <a href=\"profile.jsp?userID="+newFriendID.get(i)+"\">"+ user.userconnection.getAttribute("username",newFriendID.get(i))+"</a> On: "+newFriendReq.get(i).datesent);
+		out.println("<li> From: <a href=\"profile.jsp?userID="+newFriendID.get(i)+"\">"+ user.userconnection.getAttribute("username",newFriendID.get(i))+"</a> On: "+FormatDateTime.getUserDate(newFriendReq.get(i).datesent));
 		out.println("<form method=\"post\" action=\"FriendRequestServlet\">");
 		out.println("<input type=\"submit\" name = \"friendreq\" value = \"accept\"/>   <input type=\"submit\" name = \"friendreq\" value = \"decline\">");
-		out.println("<input type=\"hidden\" name = \"friendID\" value = \""+newFriendID.get(i)+"\"");
-		out.println("<input type=\"hidden\" name = \"messageNum\" value = \""+messageNum.get(i)+"\"");
-		out.println("</form>");
+		out.println("<input type=\"hidden\" name = \"msg_friendIDs\" value = \""+messageNum.get(i)+","+newFriendID.get(i)+"\"");		out.println("</form>");
 		out.println("</li>");	
 	
 	}

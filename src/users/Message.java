@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.jsp.JspWriter;
 
 import quizsite.DatabaseConnection;
+import quizsite.FormatDateTime;
 import quizsite.MyDBInfo;
 
 public class Message {
@@ -33,7 +34,7 @@ public class Message {
 		body = Body;
 	}
 	public String toString(){
-		return "  Sent: " + datesent + "  Type: " + type + " Subject: " + subject;
+		return "  Sent: " + FormatDateTime.getUserDate(datesent) + "  Type: " + type + " Subject: " + subject;
 	}
 	public void printtoJSP(PrintWriter out) throws IOException{
 		out.println("<p>Date: "+datesent+"</p>");

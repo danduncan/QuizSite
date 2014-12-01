@@ -23,7 +23,7 @@
 	if (messageNum != -1){
 		Message msg = user.messages.get(messageNum);
 		out.println("<p>From: "+user.userconnection.getAttribute("username",msg.senderid)+"</p>");
-		out.println("<p>Date: "+msg.datesent+"</p>");
+		out.println("<p>Date: "+FormatDateTime.getUserDate(msg.datesent)+"</p>");
 		out.println("<p>Subject: "+msg.subject+"</p>");
 		out.println("<p>Body: "+msg.body+"</p>");
 		
@@ -44,7 +44,7 @@
 		for (int i = 0; i < user.messages.size(); i++){
 			Message msg = user.messages.get(i);
 			//determine new messsages
-			if (msg.opened == false && msg.receiverid == user.id){
+			if (msg.opened == false && msg.receiverid == user.id && msg.type == 2){
 				count++;
 				newMessages.add(msg);
 				//update new messages to read			
@@ -52,10 +52,10 @@
 				msg.updateRead(dc);
 				
 			//received messages	
-			} else if(msg.receiverid == user.id){
+			} else if(msg.receiverid == user.id && msg.type == 2){
 				receivedMessages.add(msg);
 			//sent messages
-			} else if (msg.senderid == user.id){
+			} else if (msg.senderid == user.id && msg.type == 2){
 				sentMessages.add(msg);
 			}
 		}
