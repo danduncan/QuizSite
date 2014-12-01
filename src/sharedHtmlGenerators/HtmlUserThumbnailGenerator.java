@@ -115,7 +115,10 @@ public class HtmlUserThumbnailGenerator {
 		}
 		
 		// Check if this user is viewing himself
-		if (currentUserId == userId) return KSELF;
+		if (currentUserId.equals(userId)) {
+			return KSELF;
+		} 
+		
 		// Query the database to see if these two users are friends
 		String query = "SELECT * FROM friends WHERE friend1 = " + currentUserId + " AND friend2 = " + userId + " LIMIT 1;";
 		ResultSet rsFriends = null;

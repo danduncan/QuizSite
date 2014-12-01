@@ -11,11 +11,32 @@ public class sharedHeaderGenerator {
 	}
 	
 	public static String getHTML(String rootPath, HttpSession session) {
-		String username = (String) session.getAttribute("username");
-		Integer userid = (Integer) session.getAttribute("userid");
+		users.User usr = (users.User) session.getAttribute("user");
 		
-		if (username != null && !username.equals("") && userid != null && userid >= 0) {
-			return getSignedInHeader(rootPath,username,userid);
+		String username = null;
+		Integer userid = null;
+		
+		if (usr == null) {
+			username = (String) session.getAttribute("username");
+			userid = (Integer) session.getAttribute("userid");
+		} else if (usr.username != null && !usr.username.isEmpty() && usr.id != null && usr.id > 0) {
+			username = usr.username;
+			userid = usr.id;
+			session.setAttribute("username",username);
+			session.setAttribute("userid",userid);
+		}
+		
+		if (username != null && !username.equals("") && userid != null && userid > 0) {
+			String firstName = username;
+			if (usr != null && usr.firstname != null && !usr.firstname.isEmpty()) {
+				firstName = usr.firstname;
+			} else if (session.getAttribute("firstName") != null) {
+				firstName = (String) session.getAttribute("firstName");
+			} else if (session.getAttribute("firstname") != null) {
+				firstName = (String) session.getAttribute("firstname");
+			}
+			
+			return getSignedInHeader(rootPath,firstName,userid);
 		} else {
 			return getPublicHeader(rootPath);
 		}
