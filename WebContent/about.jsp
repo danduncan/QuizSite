@@ -160,10 +160,29 @@
 						<li>Compare the user's score with those of other users</li>
 						<li>Compare the user's score with those of their friends</li>
 					</ul></li>
-				<li>Thumbnail view of quiz pages</li>
-				<li>Thumbnail view of user profiles</li>
-				<li>Users without a profile picture get a default image</li>
-				<li>Website is formatted to be attractive and presentable</li>
+				<li>Website attractive and presentable
+					<ul>
+						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
+						<li>Standard header and footer present on every page</li>
+						<li>Header and footer feature useful links, including links customized to the user</li>
+						<li>Scripts used to uniformly generate well-formatted website components
+							<ul>
+								<li>All website tables</li>
+								<li>User search results</li>
+								<li>Quiz search results</li>
+								<li>Thumbnail view of user profiles</li>
+								<li>Thumbnail view of quiz pages</li>
+							</ul></li>
+						<li>Users who do not select a profile picture are automatically given a default image</li>
+						<li>Javascript/AJAX used to smoothly handle many common website functions in the background:
+							<ul>
+								<li>Sending friend requests</li>
+								<li>Confirming friend requests</li>
+								<li>Validating user input on sign-in page</li>
+								<li>Validating user input on Create Account page</li>
+							</ul></li>
+					</ul>
+					</li>
 				<li>Website pages feature robust error handling
 					<ul>
 						<li>Sign in page uses Javascript for error checking</li>
