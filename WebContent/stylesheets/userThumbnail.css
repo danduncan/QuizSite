@@ -34,7 +34,6 @@
 .profilepicturethumbnail {
 	height: 130px;
 	width: auto;
-	max-width: 130px;
 	min-width: 60px;
 	border: none;
 }
