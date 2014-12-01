@@ -26,13 +26,19 @@
 	
 	<div class="loginFrame">
 		<div class="logininstructions" >Sign In</div>
-		<form method="post" action="LoginServlet" >
+		<form method="post" action="LoginServlet" id="signinform">
 			<span class="loginlabel" >Enter your username: </span>
-				<input type="text" name="username" class="logintextbox" >
+				<input type="text" name="username" class="logintextbox" id="usernameBox" >
+				<span class="errorMsg" id="noUsername">You must provide a username</span>
+				<span class="errorMsg" id="usernameInvalidChars">Username may only contain letters, numbers, and periods</span>
 			<span class="loginlabel" >Enter your password: </span>
-				<input type="password" name="password" class="logintextbox" > 
-				<input type="submit" value="Sign In" class="loginbutton" />
+				<input type="password" name="password" class="logintextbox" id="pwdBox" >
+				<span class="errorMsg" id="noPwd">You must provide a password</span>
+				<span class="errorMsg" id="pwdInvalidChars">Password may only contain [0-9a-zA-Z !@#$%^&*()_=+:;,.?-]</span>
 		</form>
+			<input type="submit" onclick="validate()" value="Sign In" class="loginbutton" />
+			<span class="errorMsg" id="wrongPwd">Error: Username or password incorrect. Please try again</span>
+			<span class="errorMsg" id="qwizardError">Error: Qwizard is unavailable right now. Please try again in a few minutes</span>
 
 		<div class="createaccountlink" >
 			<a href="createprofile.jsp" >Create Account</a>
@@ -40,6 +46,7 @@
 
 	</div>
 	
+	<%= "<script src=\"/QuizSite/sharedScripts/signin.js\"></script>" %>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
