@@ -1,0 +1,55 @@
+
+.mainBody {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.bigFrame {
+	border: 2px solid;
+	border-radius: 25px;
+	background-color: #DDDDDD;
+	font-color: black;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 15px;
+	padding-top: 0px;
+}
+
+h1 {
+	font-size: 40px;
+	font-weight: bold;
+	padding-top: 10px;
+	padding-bottom: 0px;
+	margin-bottom: 10px;
+}
+
+h2 {
+	font-size: 30px
+}
+
+h1,h2,ul {
+	margin-left: 30px;
+}
+
+ul.checklist {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	margin-left: 25px;
+}
+
+ul.checklist > li {
+	background: url('/QuizSite/qwizard_images/check-mark.gif') no-repeat left top;
+	background-size: 35px 35px;
+	padding-left: 44px;
+	padding-top: 9px;
+}
+
+ul.checklist span {
+	color: red;
+}
