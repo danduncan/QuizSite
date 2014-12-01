@@ -81,6 +81,7 @@ public class SendMessageAjaxServlet extends HttpServlet {
 			setResponse(response,KERROR);
 			return;
 		}
+		System.out.println("SendMessageAjax: Username string received: " + username);
 		
 		// Autopopulate null subject and body
 		Integer msgType = Integer.parseInt(type);
@@ -93,7 +94,8 @@ public class SendMessageAjaxServlet extends HttpServlet {
 		if (body == null) body = "";
 		
 		// Parse usernames
-		String delimiter = "\\+";
+		//String delimiter = "\\+"; // For + sign delimiter
+		String delimiter = "\\s+";
 		String[] usernames = username.split(delimiter);
 		
 		// Get array of userid's corresponding to each username
@@ -101,12 +103,21 @@ public class SendMessageAjaxServlet extends HttpServlet {
 		// An id of -2 means there was a SQL exception
 		Integer[] ids = getUserIDs(usernames,dc);
 		
+		StringBuilder sbt = new StringBuilder();
+		sbt.append("All userids[] = { ");
+		for (int i = 0; i < ids.length; i++) {
+			sbt.append(ids[i] + " ");
+		}
+		sbt.append("}");
+		System.out.println(sbt.toString());
+		
 		// Check for errors 
 		if (ids[0] <= -2) {
 			setResponse(response,KERROR);
 			return;
 		} else if (ids[0] < 1) {
 			setResponse(response,KDOESNOTEXIST);
+			return;
 		}
 		
 		// User(s) exist. Create message for each user
