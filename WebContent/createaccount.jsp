@@ -63,6 +63,7 @@
 				
 			</form>
 			<input onclick="validateInputs()" type="submit" value="Register" class="loginbutton" value="" />
+			<span class="errorMsg" id="qwizardError">Error: Qwizard is unavailable right now. Please try again in a few minutes</span>
 	</div>
 
 	<%= "<script src=\"/QuizSite/sharedScripts/createaccount.js\"></script>" %>

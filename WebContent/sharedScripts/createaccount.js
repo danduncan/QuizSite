@@ -24,6 +24,7 @@ noPwd = document.getElementById('noPwd');
 pwdLength = document.getElementById('pwdLength');
 pwdMatch = document.getElementById('pwdMatch');
 pwdInvalidChars = document.getElementById('pwdInvalidChars');
+qwizardError = document.getElementById("qwizardError");
 
 // Function to hide all error messages
 function hideAllErrors() {
@@ -96,27 +97,42 @@ function validateInputFormatting() {
 	return err;
 }
 
-function checkUsername() {
+function getResponseAndSubmit() {
+	statusStr = requestObj.responseText;
+	KAVAILABLE = "0";
+	KTAKEN = "1";
+	KERROR = "2";
+	
+	switch(statusStr) {
+		case KAVAILABLE:
+			hideError(usernameTaken);
+			hideError(qwizardError);
+			document.getElementById("createform").submit();
+			break;
+		case KTAKEN:
+			showError(usernameTaken);
+			hideError(qwizardError);
+			break;
+		case KERROR:
+			hideError(usernameTaken);
+			showError(qwizardError);
+			break;		
+	}
+}
+
+function checkUsernameAndSubmit() {
 	query = 'username=' + usernameBox.value;
-	checkUsernameServlettURL = "";
+	checkUsernameServlettURL = "/QuizSite/CheckUsernameServlet";
 	requestObj = new XMLHttpRequest();
-	requestObj.addEventListener("load",getUsernameResponse,null);
+	requestObj.addEventListener("load",function anonfcn() { getResponseAndSubmit(); },null);
 	requestObj.open("POST",checkUsernameServlettURL,true); // True makes the request asynchronous
 	requestObj.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
 	requestObj.send(query);
 }
 
-function getUsernameResponse() {
-	
-}
-
 function validateInputs() {
 	err1 = validateInputFormatting();
 	if (!err) {
-		//err2 = true;
-		//err2 = checkUsername();
-		if (!err2) {
-			document.getElementById("createform").submit();
-		}
+		checkUsernameAndSubmit();
 	}
 }
