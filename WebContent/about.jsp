@@ -49,15 +49,15 @@
 					<li>Users have logins and passwords</li>
 					<li>Passwords are encrypted</li>
 					<li>Users can add friends</li>
-					<li>Users can delete friends<span> (Is this done?)</span></li>
-					<li>Users have viewable profiles<span> (Is this done?)</span></li>
+					<li>Users can delete friends<span> (Not yet implemented)</span></li>
+					<li>Users have viewable profiles<span> (Not yet implemented)</span></li>
 					<li>Users can search for other users</li>
 				</ul></li>
 			<li>All message requirements
 				<ul>
 					<li>Friend request</li>
-					<li>Challenge <span>(This needs to be added to the quiz profile page)</span></li>
-					<li>Note <span>(Full implementation for sending messages not yet done)</span></li>
+					<li>Challenge <span>(Goes on quiz profile page))</span></li>
+					<li>Note</li>
 				</ul></li>
 			</ul>
 			<h2>Required pages:</h2>
@@ -84,7 +84,7 @@
 							</ul></li>
 						<li>Limit number of entries in all lists to number that looks good on website</li>
 					</ul></li>
-				<li>Quiz summary page <span>(How much of this is left to be implemented?)</span>
+				<li>Quiz summary page <span>(almost done)</span>
 					<ul>
 						<li>Quiz name</li>
 						<li>Quiz creator</li>
@@ -114,10 +114,10 @@
 		<div class="bigFrame">
 			<h1>Recommended Features and Extensions for Three-Person Team</h1>
 			<ul class="checklist">
-				<li>Quiz practice mode <span>(Is this done?)</span></li>
+				<li>Quiz practice mode <span>(not yet implemented)</span></li>
 				<li>Quizzes track performance of users</li> 
 				<li>Quizzes track high scores</li>
-				<li>Quiz pages display top scores<span> (Is this done?)</span></li>
+				<li>Quiz pages display top scores<span> (not yet implemented)</span></li>
 				<li>Optional question types
 					<ul>
 						<li>Multi-answer questions</li>
@@ -139,7 +139,7 @@
 								<li>Prolific author - the user created five quizzes</li>
 								<li>Prodigious author - the user created ten quizzes</li>
 								<li>Quiz Machine - the user took ten quizzes</li>
-								<li>Practice Makes Perfect - the user took a quiz in practice mode <span>(Does practice mode work yet?)</span></li>
+								<li>Practice Makes Perfect - the user took a quiz in practice mode <span>(not yet implemented)</span></li>
 							</ul></li>
 					</ul>
 				
