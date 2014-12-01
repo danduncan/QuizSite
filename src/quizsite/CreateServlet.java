@@ -69,7 +69,7 @@ public class CreateServlet extends HttpServlet {
 			//todo need next userid, hashed password
 			User user = new User(new UserConnection(dc));
 			user.username = name;
-			user.password = pswd;
+			user.password = HashPassword.getHash(pswd);
 			user.firstname = firstname;
 			user.lastname = lastname;
 			user.email = email;
