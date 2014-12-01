@@ -161,11 +161,12 @@
 						<li>Compare the user's score with those of other users</li>
 						<li>Compare the user's score with those of their friends</li>
 					</ul></li>
-				<li>Website attractive and presentable
+				<li>Website is attractive and presentable
 					<ul>
 						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
 						<li>Standard header and footer present on every page</li>
 						<li>Header and footer feature useful links, including links customized to the user</li>
+						<li>Qwizard logo included in header and as icon in window title</li>
 						<li>Scripts used to uniformly generate well-formatted website components
 							<ul>
 								<li>All website tables</li>

@@ -6,6 +6,8 @@ public class sharedHeaderGenerator {
 	private static String localPath = "/sharedHTML/";
 	private static String filePublic = "sharedheaderpublic.html";
 	private static String fileSignedIn = "sharedHeadersignedin.html";
+	private static String fileNewMessage = "sharedNewMessage.html";
+	private static final String ls = System.getProperty("line.separator");
 	
 	public sharedHeaderGenerator() {
 	}
@@ -36,9 +38,9 @@ public class sharedHeaderGenerator {
 				firstName = (String) session.getAttribute("firstname");
 			}
 			
-			return getSignedInHeader(rootPath,firstName,userid);
+			return getSignedInHeader(rootPath,firstName,userid) + ls + sharedHtmlGenerator.getHTML(rootPath + localPath + fileNewMessage);
 		} else {
-			return getPublicHeader(rootPath);
+			return getPublicHeader(rootPath) + ls + sharedHtmlGenerator.getHTML(rootPath + localPath + fileNewMessage);
 		}
 	}
 	

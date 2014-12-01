@@ -1,0 +1,189 @@
+.newMessageMasterContainer {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+}
+
+.newMessageMasterContainer .newMessageBackground {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 151;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	margin: 0px;
+	padding: 0px;
+	opacity: 0.2;
+}
+
+.newMessageMasterContainer .newMessage {
+	opacity: 1.0;
+	z-index: 152;
+	background-color: #FFFFFF;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: 400px;
+	max-width: 550px;
+	padding: 0px;
+	font-size: 16px;
+	border: 1px solid darkgrey;
+	box-shadow: 8px 8px 5px #666666;
+	position: fixed;
+	margin: 150px auto;
+	left: 0;
+	right: 0;
+	border-radius: 5px;
+}
+
+.newMessageMasterContainer .headerLine {
+	margin-right: 0px;
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid lightgrey;
+	display: block;
+}
+
+.newMessageMasterContainer .headerLineBottom {
+	border-bottom: none;
+}
+
+.newMessageMasterContainer div.headerLine label {
+	color: grey;
+	border: none;
+	margin: 0px;
+	margin-right: 5px;
+	padding: 0px;
+	float:left;
+
+}
+
+.newMessageMasterContainer div.headerLine span{
+    display: block;
+    overflow: hidden;
+}
+
+.newMessageMasterContainer div.headerLine input {
+	margin: 0px;
+	padding: 0px;
+	width: 99%;
+	border: none;
+	outline: none;
+	font-size: 16px;
+}
+
+
+.newMessageMasterContainer .bodyContainer {
+	width: 100%;
+	margin: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	padding: 0px;
+	overflow: hidden;
+	border-top: 1px solid gray;
+}
+
+.newMessageMasterContainer .bodyInput {
+	width: 99%;
+	margin: 0px;
+	padding-top: 3px;
+	padding-bottom: 5px;
+	padding-left: 3px;
+	padding-right: 2px;
+	resize: none;
+	min-height: 60px;
+	border: none;
+	outline: none;
+	font-size: 15px;
+}
+
+.newMessageMasterContainer input:read-only, .newMessageMasterContainer textarea:read-only {
+	color: #888888;
+}
+
+
+.newMessageMasterContainer .buttonContainer {
+	border-top: 1px solid lightgrey;
+
+}
+
+.newMessageMasterContainer .msgButton {
+	float: right;
+	width: 100px;
+	font-size: 16px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	margin-right: 5px;
+	background-color: #3B5998;
+	color: #FFFFFF;
+	font-weight: bold;
+	outline: none;
+	border-radius: 7px;
+}
+
+.newMessageMasterContainer .msgButton:hover {
+	background-color: #4260A0;
+}
+.newMessageMasterContainer .msgButton:active {
+	background-color: #4A68A8;
+}
+
+
+.newMessageMasterContainer .sendButton {
+
+}
+
+.newMessageMasterContainer .cancelButton {
+
+}
+
+.newMessageMasterContainer .closeButton {
+	background-color: #EEEEEE;
+	color: #333333;
+}
+
+.newMessageMasterContainer .closeButton:hover {
+	background-color: #E9E9E9;
+}
+
+.newMessageMasterContainer .closeButton:active {
+	background-color: #EAEAEA;
+}
+
+.newMessageMasterContainer .msgButton:disabled {
+	background-color: #5B7998;
+}
+
+.newMessageMasterContainer .closeButton:disabled {
+	background-color: #EEEEEE;
+	color: #999999;
+}
+
+.newMessageMasterContainer .errorMsg {
+	font-size: 18px;
+	color: red;
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	width: 45%;
+	display: none;
+}
+
+.newMessageMasterContainer .successMsg {
+	color: #777777;
+	font-weight: bold;
+	margin-left: 15px;
+}
+
+#closeMsgBtn {
+	display: none;
+}
+

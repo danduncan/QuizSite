@@ -21,6 +21,7 @@
 			<a class="sharedheaderrightpanellink sharedheaderrightsignup" id="sharedheaderlink4" href="/QuizSite/home.jsp">Logout</a>
 		</div>
 	</div>
+	
 	<script>
 		var link1 = document.getElementById("sharedheaderlink1"); var link2 = document.getElementById("sharedheaderlink2");
 		var link3 = document.getElementById("sharedheaderlink3"); var link4 = document.getElementById("sharedheaderlink4");
@@ -42,4 +43,34 @@
 			alert("Values were non-null");
 		}
 	</script>
+</div>
+
+<div class="newMessageMasterContainer" id="newMessageMasterContainer">
+	<div class="newMessageBackground"> </div>
+	<div class="newMessage">
+		<div class="headerLine">
+			<label for="newMsgUsername">To:</label>
+			<span><input class="headerInput" type="text" value="" id="newMsgUsername" name="username" placeholder="Username(s)" /></span>
+		</div>
+		<div class="headerLine headerLineBottom">
+			<label for="newMsgSubject">Subject:</label>
+			<span><input class="headerInput" type="text" value="" id="newMsgSubject" name="subject" /></span>
+		</div>
+		<div class="bodyContainer">
+			<textarea class="bodyInput" value="" id="newMsgBody" name="body" /></textarea>
+		</div>
+		<input type="hidden" name="msgType" value="2" id="newMsgType" />
+		<div class="buttonContainer">
+			<input type="submit" id="sendMsgBtn" class="msgButton sendButton" value="Send" onclick="sendMessage()" />
+			<input type="submit" id="cancelMsgBtn" class="msgButton closeButton" value="Cancel" onclick="closeMessage()" />
+			<input type="submit" id="closeMsgBtn" class="msgButton closeButton" value="Close" onclick="closeMessage()" />
+			<div class="errorMsg" id="noUsername">Error: Please specify a user</div>
+			<div class="errorMsg" id="invalidUsername">Error: Illegal username(s). Remember to separate multiple usernames with a space</div>
+			<div class="errorMsg" id="userDoesNotExist">Error: One or more users do not exist. Message not sent.</div>
+			<div class="errorMsg" id="noContent">Error: Message cannot be empty</div>
+			<div class="errorMsg" id="qwizardError">Server Error: Please Try Again</div>
+			<div class="errorMsg successMsg" id="msgSuccess">Message sent successfully!</div>
+		</div>
+	</div>
+	<script src="/QuizSite/sharedScripts/newmessage.js"></script>
 </div>

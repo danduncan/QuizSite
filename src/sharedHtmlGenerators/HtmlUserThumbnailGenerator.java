@@ -14,6 +14,7 @@ public class HtmlUserThumbnailGenerator {
 	public static final String profileURL = "/QuizSite/profile.jsp";
 	public static final String profileQueryString = "id";
 	public static final String sendMessageUrl = "sendmessage.jsp";
+	public static final String sendMessageFcnHandle = "displayMessage";
 	
 	
 	// Strings of class names in the HTML
@@ -298,11 +299,14 @@ public class HtmlUserThumbnailGenerator {
 		
 		if (friends != KSELF && friends != KNOTLOGGEDIN) {
 			// Add a "Send Message" button
-			sb.append("\t\t<form method=\"POST\" action=\"" + sendMessageUrl + "\">" + ls);
-			sb.append("\t\t\t<input type=\"hidden\" name=\"receiverid\" value=\"" + userid + "\" />" + ls);
-			sb.append("\t\t\t<input type=\"hidden\" name=\"receiverUsername\" value=\"" + username + "\" />" + ls);
-			sb.append("\t\t\t<input class=\"" + "msgBtn" + "\" type=\"submit\" value=\"" + labelSendMessage + "\" />" + ls);
-			sb.append("\t\t</form>" + ls);
+			//sb.append("\t\t<form method=\"POST\" action=\"" + sendMessageUrl + "\">" + ls);
+			//sb.append("\t\t\t<input type=\"hidden\" name=\"receiverid\" value=\"" + userid + "\" />" + ls);
+			//sb.append("\t\t\t<input type=\"hidden\" name=\"receiverUsername\" value=\"" + username + "\" />" + ls);
+			String msgFcn = sendMessageFcnHandle + "('" + username + "')";
+			//String msgFcn = sendMessageFcnHandle + "()";
+			
+			sb.append("\t\t\t<input class=\"" + "msgBtn" + "\" type=\"submit\" value=\"" + labelSendMessage + "\" onclick=\"" + msgFcn + "\" />" + ls);
+			//sb.append("\t\t</form>" + ls);
 		}
 		sb.append("\t</div>" + ls);
 		
