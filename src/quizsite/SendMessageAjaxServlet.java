@@ -45,7 +45,7 @@ public class SendMessageAjaxServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("SendMessageAjaxServlet called");
+		//System.out.println("SendMessageAjaxServlet called");
 		// Get all message parameters
 		
 		// Get the sender
@@ -81,7 +81,7 @@ public class SendMessageAjaxServlet extends HttpServlet {
 			setResponse(response,KERROR);
 			return;
 		}
-		System.out.println("SendMessageAjax: Username string received: " + username);
+		//System.out.println("SendMessageAjax: Username string received: " + username);
 		
 		// Autopopulate null subject and body
 		Integer msgType = Integer.parseInt(type);
@@ -95,7 +95,7 @@ public class SendMessageAjaxServlet extends HttpServlet {
 		
 		// Parse usernames
 		//String delimiter = "\\+"; // For + sign delimiter
-		String delimiter = "\\s+";
+		String delimiter = "\\s+"; // Parse on whitespace
 		String[] usernames = username.split(delimiter);
 		
 		// Get array of userid's corresponding to each username
@@ -103,13 +103,13 @@ public class SendMessageAjaxServlet extends HttpServlet {
 		// An id of -2 means there was a SQL exception
 		Integer[] ids = getUserIDs(usernames,dc);
 		
-		StringBuilder sbt = new StringBuilder();
-		sbt.append("All userids[] = { ");
-		for (int i = 0; i < ids.length; i++) {
-			sbt.append(ids[i] + " ");
-		}
-		sbt.append("}");
-		System.out.println(sbt.toString());
+//		StringBuilder sbt = new StringBuilder();
+//		sbt.append("All userids[] = { ");
+//		for (int i = 0; i < ids.length; i++) {
+//			sbt.append(ids[i] + " ");
+//		}
+//		sbt.append("}");
+//		System.out.println(sbt.toString());
 		
 		// Check for errors 
 		if (ids[0] <= -2) {
@@ -169,7 +169,7 @@ public class SendMessageAjaxServlet extends HttpServlet {
 	private static Integer getUserID(String username, DatabaseConnection dc) {
 		if (username == null || username.isEmpty()) return -1;
 		String query = "SELECT id FROM " + userTable + " WHERE username=\"" + username + "\" LIMIT 1";
-		System.out.println("SendMsgAjax query= \"" + query + "\"");
+		//System.out.println("SendMsgAjax query= \"" + query + "\"");
 		ResultSet rs = dc.executeQuery(query);
 		try {
 			if(rs.first()) {
@@ -194,7 +194,7 @@ public class SendMessageAjaxServlet extends HttpServlet {
 		sb.append(msg.opened + ", " + msg.replied + ", ");
 		sb.append("\""+msg.subject + "\", \"" + msg.body + "\");");
 		dc.executeUpdate(sb.toString());
-		System.out.println("SendMessageAjax - Updating table with new message:");
-		System.out.println("\t" + sb.toString());
+		//System.out.println("SendMessageAjax - Updating table with new message:");
+		//System.out.println("\t" + sb.toString());
 	}
 }

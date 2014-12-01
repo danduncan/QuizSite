@@ -6,6 +6,7 @@
 	height: 100%;
 	margin: 0px;
 	padding: 0px;
+	display: none;
 }
 
 .newMessageMasterContainer .newMessageBackground {
@@ -35,7 +36,7 @@
 	border: 1px solid darkgrey;
 	box-shadow: 8px 8px 5px #666666;
 	position: fixed;
-	margin: 150px auto;
+	margin: 200px auto;
 	left: 0;
 	right: 0;
 	border-radius: 5px;

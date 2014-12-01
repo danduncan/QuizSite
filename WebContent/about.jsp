@@ -23,7 +23,7 @@
 				<li>Matt Wilson</li> 
 				<li>Dan Duncan</li></ul></li>
 			<li>All three of us are EE grad students</li>
-			<li>Qwizard consists of nearly 9,000 lines of code</li>
+			<li>Qwizard consists of over 100 source code files and nearly 9,500 lines of code</li>
 			</ul>
 		</div>
 		<div class="bigFrame">
@@ -182,9 +182,16 @@
 								<li>Confirming friend requests</li>
 								<li>Validating user input on sign-in page</li>
 								<li>Validating user input on Create Account page</li>
+								<li>Sending messages to other users</li>
 							</ul></li>
-					</ul>
-					</li>
+					</ul></li>
+				<li>Messaging system is robust and user-friendly
+					<ul>
+						<li>Messages sent via pop-up window using AJAX, making for smoother user experience</li>
+						<li>Group messages can also be sent via the AJAX interface
+							<ul><li>To send a group message, just type in the usernames of the recipient, each name separated by a space</li></ul>
+						</li>
+					</ul></li>
 				<li>Website pages feature robust error handling
 					<ul>
 						<li>Sign in page uses Javascript for error checking</li>
@@ -192,7 +199,8 @@
 						<li>User inputs throughout website are sanitized to prevent SQL injection</li>
 						<li>Malformed inputs and URL's are handled gracefully
 							<ul><li>e.g. when a signed-in user visits the sign in page, they are forwarded on to the homepage</li></ul>
-						</li></ul>
+						</li>
+						<li>Messaging interface uses Javascript for instantaneous error checking</li></ul>
 				<li>Catchy name for website</li>
 			</ul>
 		</div>
