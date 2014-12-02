@@ -23,7 +23,8 @@
 
 .profilepicturecontainer {
 	width: 130px;
-	margin: 5px 0px;
+	margin: 0px;
+	margin-bottom: 15px;
 	padding: 0px;
 	border: 1px solid black;
 	overflow: hidden;
