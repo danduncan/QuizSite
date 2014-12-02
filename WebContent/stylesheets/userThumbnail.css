@@ -37,6 +37,8 @@
 	width: auto;
 	min-width: 60px;
 	border: none;
+	object-position: 50% 50%;
+	object-fit: cover;
 }
 
 div.tinyAchievements {

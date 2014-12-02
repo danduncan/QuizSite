@@ -151,6 +151,12 @@
 					</ul></li>
 				<li>Achievements
 					<ul>
+						<li>Badges corresponding to all major achievement types</li>
+						<li>Achievements page lists all possible achievements</li>
+						<li>Achievements display on user profile</li>
+						<li>Achievements display on profile thumbnails
+							<ul><li>Floating captions give the achievement name and timestamp</li>
+							</ul></li>
 						<li>System tracks six major kind of user achievement:
 							<ul>
 								<li>Amateur author - the user created a quiz</li>
@@ -201,6 +207,8 @@
 								<li>Thumbnail view of quiz pages</li>
 							</ul></li>
 						<li>Users who do not select a profile picture are automatically given a default image</li>
+						<li>Achievements all have corresponding badges</li>
+						<li>Achievement thumbnails display helpful floating captions when the user hovers over them </li>
 						<li>Thumbnail view of quizzes very gracefully handles long quiz descriptions</li>
 						<li>Javascript/AJAX used to smoothly handle many common website functions in the background:
 							<ul>

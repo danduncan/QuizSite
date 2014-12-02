@@ -31,7 +31,7 @@ function displayBadgeCaption(image,show) {
 		
 	
 	
-	topCo = rect.bottom + 4 + "px";
+	topCo = rect.bottom + 6 + "px";
 	leftCo = rect.left - 2 + "px";
 	//console.log("Top is: " + topCo);
 	//console.log("Left is: " + leftCo);
