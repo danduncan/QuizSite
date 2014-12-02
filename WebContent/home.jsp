@@ -14,7 +14,7 @@
 	id="homeStylesheet" />
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<%
 		String username = (String) session.getAttribute("username");	
 		Integer userid = (Integer) session.getAttribute("userid");

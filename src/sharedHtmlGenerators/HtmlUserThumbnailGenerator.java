@@ -11,8 +11,8 @@ import quizsite.DatabaseConnection;
 
 public class HtmlUserThumbnailGenerator {
 	// Strings for generating the link to a user's profile
-	public static final String profileURL = "/QuizSite/profile.jsp";
-	public static final String profileQueryString = "id";
+	public static final String profileURL = "/QuizSite/user";
+	public static final String profileQueryString = "userid";
 	public static final String sendMessageUrl = "sendmessage.jsp";
 	public static final String sendMessageFcnHandle = "displayMessage";
 	
@@ -47,7 +47,7 @@ public class HtmlUserThumbnailGenerator {
 	public static final String colDateJoined = "datejoined";
 	
 	// Text to include in labels and buttons
-	public static final String labelAchievements = "Achievements: ";
+	public static final String labelAchievements = "Recent Achievements: ";
 	public static final String labelDate = "Member since: ";
 	public static final String labelCreated = "Quizzes created: ";
 	public static final String labelTaken = "Quizzes taken: ";
@@ -252,7 +252,7 @@ public class HtmlUserThumbnailGenerator {
 		sb.append("\t\t\t<a href=\"" + profileURL + "?" + profileQueryString + "=" + userid + "\">" + fullName + "</a>" + ls);
 		sb.append("\t\t</div>" + ls);
 		sb.append("\t\t<div class=\"" + classProfileStats + "\">" + ls);
-		sb.append("\t\t\t<span>" + labelAchievements + "</span>" + ls);
+		sb.append("\t\t\t<span>" + labelAchievements + getAchievements(userid,dc) + "</span>" + ls);
 		sb.append("\t\t\t<span>" + labelDate + dateJoined + "</span>" + ls);
 		sb.append("\t\t\t<span>" + labelCreated + quizzesCreated + "</span>" + ls);
 		sb.append("\t\t\t<span>" + labelTaken + quizzesTaken + "</span>" + ls);
@@ -266,7 +266,15 @@ public class HtmlUserThumbnailGenerator {
 		if (friends == KFRIENDS) {
 			buttonClass = classAlreadyFriendsBtn;
 			buttonText = labelAlreadyFriends;
-			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+			//sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+			
+			// Delete Friend button (uncomment the last line if you want to add it)
+			buttonClass = "deleteFriendBtn";
+			buttonText = "Delete Friend";
+			String buttonId = "deleteFriendButtonId-" + userid;
+			String onClickStr = "deleteFriend(this)";
+			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+
 		} else if (friends == KSELF) {
 			buttonClass = classSelfBtn;
 			buttonText = labelSelf;
@@ -278,24 +286,42 @@ public class HtmlUserThumbnailGenerator {
 			sb.append("\t\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 			sb.append("\t\t</form>" + ls);
 		} else if (friends == KNOTFRIENDS) {
+			// Add Friend button
 			buttonClass = classAddFriendBtn;
 			buttonText = labelAddFriend;
 			String buttonId = "addFriendButtonId-" + userid;
 			String onClickStr = "sendFriendRequest(this)";
 			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			
 		} else if (friends == KCONFIRM) {
+			// Add a Confirm Request button
 			buttonClass = classConfirmBtn;
 			buttonText = labelConfirm;
 			String buttonId = "confirmFriendButtonId-" + userid;
 			String onClickStr = "confirmFriendRequest(this)";
-			// Once ConfirmFriendServlet is running, this line becomes uncommented and the next line gets commented
 			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
-			//sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			
+			// Add a deny request button
+			buttonClass = "denyBtn";
+			buttonText = "Deny Request";
+			buttonId = "denyFriendButtonId-" + userid;
+			onClickStr = "denyFriendRequest(this)";
+			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			
+			
 		} else if (friends == KPENDING) {
 			buttonClass = classPendingBtn;
 			buttonText = labelPending;
 			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		}
+		
+		// Delete Friend button on every thumbnail (testing only, uncomment the last line if you want to add it)
+		buttonClass = "deleteFriendBtn";
+		buttonText = "Delete Friend";
+		String buttonId = "deleteFriendButtonId-" + userid;
+		String onClickStr = "deleteFriend(this)";
+		//sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+
 		
 		if (friends != KSELF && friends != KNOTLOGGEDIN) {
 			// Add a "Send Message" button
@@ -356,5 +382,12 @@ public class HtmlUserThumbnailGenerator {
 		//sb.append("<script src=\"/QuizSite/sharedScripts/friendButton.js\"></script>" + ls);
 		//System.out.println(sb.toString());
 		return sb.toString();
+	}
+
+	private static String getAchievements(Integer userid, DatabaseConnection dc) {
+		String query = "SELECT id,name,icon,dateachieved from achievements INNER JOIN achievementTypes ON (type=id) where userid=" + userid + " ORDER BY dateachieved DESC LIMIT 12;";
+		ResultSet rs = null;
+		rs = dc.executeSimultaneousQuery(query);
+		return HtmlAchievementThumbnailGenerator.getHtml(rs);
 	}
 }

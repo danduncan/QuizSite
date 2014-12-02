@@ -24,6 +24,7 @@
 .profilepicturecontainer {
 	width: 130px;
 	margin: 0px;
+	margin-bottom: 15px;
 	padding: 0px;
 	border: 1px solid black;
 	overflow: hidden;
@@ -36,6 +37,29 @@
 	width: auto;
 	min-width: 60px;
 	border: none;
+	object-position: 50% 50%;
+	object-fit: cover;
+}
+
+div.tinyAchievements {
+	width: 100%;
+	display: inline-block;	
+	height: 20px;
+	margin: 0px 0px 4px 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+div.tinyAchievements span {
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.tinyAchievements .nanoBadge {
+	height: 15px;
+	width: auto;
+	
 }
 
 .profilethumbnailinfo {
@@ -117,6 +141,12 @@
 	color: #FFFFFF;
 }
 
+.profilethumbnailbuttons .deleteFriendBtn {
+	background-color: #FBB1B7;
+	background-color: #FFE0E6;
+	color: black;
+}
+
 .profilethumbnailbuttons .alreadyFriendsBtn {
 	color: black;
 	background-color: #EEEEEE;
@@ -142,6 +172,12 @@
 	background-color: #71AB57;
 }
 
+.profilethumbnailbuttons .denyBtn {
+	background-color: #EEEEEE;
+	color: black;
+	margin-top: -8px;
+}
+
 .profilethumbnailbuttons .loginBtn {
 	color: black;
 	background-color: #DFDC55;
@@ -149,6 +185,13 @@
 
 .profilethumbnailbuttons .successfulRequestBtn {
 	background-color: #71AB57;
+}
+
+.profilethumbnailbuttons .successfulDeleteBtn {
+	background-color: #EEEEEE;
+	color: black;
+	box-shadow: none;
+	border: 1px solid grey;
 }
 
 .profilethumbnailbuttons .errorBtn {

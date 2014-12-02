@@ -11,7 +11,7 @@
 	id="signinStylesheet" />
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<div class="mainBody">
 		<div class="searchFrame">
 			<div class="searchinstructions" >Search for Users</div>

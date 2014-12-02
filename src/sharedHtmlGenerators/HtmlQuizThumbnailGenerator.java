@@ -10,9 +10,9 @@ import java.sql.ResultSetMetaData;
 import quizsite.DatabaseConnection;
 
 public class HtmlQuizThumbnailGenerator {
-	// Strings for generating the link to a user's profile
-	public static final String profileURL = "/QuizSite/profile.jsp";
-	public static final String profileQueryString = "id";
+	// Strings for generating the link to a user's profile and a quiz's profile
+	public static final String profileURL = "/QuizSite/user";
+	public static final String profileQueryString = "userid";
 	public static final String quizURL = "/QuizSite/QuizHomepageServlet";
 	public static final String quizQueryString = "quizid";
 	

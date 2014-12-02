@@ -13,7 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 <% 
 	User user = (User) session.getAttribute("user");
 	ServletContext sc = getServletContext();

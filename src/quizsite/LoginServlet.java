@@ -67,10 +67,10 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("failedAttempts", failedAttempts);
 			session.setAttribute("userid",null);
 			session.setAttribute("username",null);
+			session.setAttribute("user",null);
 			
-			// Forward user to the try-again page
-			// TODO Need address for try-again page/servlet
-			String tryAgainPage = "tryagain.jsp";
+			// Forward user to the sign-in page to try again
+			String tryAgainPage = "signin.jsp";
 			RequestDispatcher dispatch = request.getRequestDispatcher(tryAgainPage);
 			dispatch.forward(request, response);
 		} else {
