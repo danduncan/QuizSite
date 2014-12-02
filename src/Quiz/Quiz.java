@@ -20,6 +20,7 @@ import quizsite.FormatDateTime;
 import connection.QuizConnection;
 
 public class Quiz {
+	public static final int charLimit = 75; 
 	public Integer id;
 	public Integer authorid;
 	public String datemade;
@@ -159,7 +160,7 @@ public class Quiz {
 		int rownum = 1;
 		while (rs.next()){
 			results[rownum][0] = "<a href=\"QuizHomepageServlet?quizid="+rs.getInt("id")+"\">"+ rs.getString("name")+"</a>";	
-			results[rownum][1] = rs.getString("description");
+			results[rownum][1] = trimDescription(rs.getString("description"));
 			results[rownum][2] = rs.getString("numquestions");
 			results[rownum][3] = rs.getString("numtaken");
 			rownum++;
@@ -179,12 +180,21 @@ public class Quiz {
 		int rownum = 1;
 		while (rs.next()){
 			results[rownum][0] = "<a href=\"QuizHomepageServlet?quizid="+rs.getInt("id")+"\">"+ rs.getString("name")+"</a>";	
-			results[rownum][1] = rs.getString("description");
+			results[rownum][1] = trimDescription(rs.getString("description"));
+
 			results[rownum][2] = rs.getString("numquestions");
 			results[rownum][3] = FormatDateTime.getUserDate(rs.getString("datemade"));
 			rownum++;
 		}
 	
 		return results;
-	}	
+	}
+	public static String trimDescription(String description){
+		if (description.length() > charLimit){
+			return description.substring(0,charLimit);
+		} else {
+			return description;
+		}
+		
+	}
 }
