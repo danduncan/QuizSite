@@ -162,6 +162,13 @@
 	background-color: #71AB57;
 }
 
+.profilethumbnailbuttons .successfulDeleteBtn {
+	background-color: #EEEEEE;
+	color: black;
+	box-shadow: none;
+	border: 1px solid grey;
+}
+
 .profilethumbnailbuttons .errorBtn {
 	background-color: #FBB1B7;
 }

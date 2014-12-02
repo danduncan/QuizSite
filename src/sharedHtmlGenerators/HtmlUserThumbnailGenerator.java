@@ -267,6 +267,14 @@ public class HtmlUserThumbnailGenerator {
 			buttonClass = classAlreadyFriendsBtn;
 			buttonText = labelAlreadyFriends;
 			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+			
+			// Delete Friend button (uncomment the last line if you want to add it)
+			buttonClass = "deleteFriendBtn";
+			buttonText = "Delete Friend";
+			String buttonId = "deleteFriendButtonId-" + userid;
+			String onClickStr = "deleteFriend(this)";
+			//sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+
 		} else if (friends == KSELF) {
 			buttonClass = classSelfBtn;
 			buttonText = labelSelf;
@@ -283,13 +291,6 @@ public class HtmlUserThumbnailGenerator {
 			buttonText = labelAddFriend;
 			String buttonId = "addFriendButtonId-" + userid;
 			String onClickStr = "sendFriendRequest(this)";
-			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
-			
-			// Delete Friend button
-			buttonClass = "deleteFriendBtn";
-			buttonText = "Delete Friend";
-			buttonId = "deleteFriendButtonId-" + userid;
-			onClickStr = "deleteFriend(this)";
 			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 			
 		} else if (friends == KCONFIRM) {
@@ -313,6 +314,14 @@ public class HtmlUserThumbnailGenerator {
 			buttonText = labelPending;
 			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		}
+		
+		// Delete Friend button (uncomment the last line if you want to add it)
+		buttonClass = "deleteFriendBtn";
+		buttonText = "Delete Friend";
+		String buttonId = "deleteFriendButtonId-" + userid;
+		String onClickStr = "deleteFriend(this)";
+		sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+
 		
 		if (friends != KSELF && friends != KNOTLOGGEDIN) {
 			// Add a "Send Message" button

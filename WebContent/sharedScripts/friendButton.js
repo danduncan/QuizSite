@@ -106,7 +106,7 @@ function processDeleteFriendResponse(friendButton) {
 	// Response status is 0 for success, nonzero for failure
 	switch(statusStr) {
 		case KSUCCESS:
-			friendButton.className = "successfulRequestBtn";
+			friendButton.className = "successfulDeleteBtn";
 			friendButton.value = "Friend Deleted";
 			friendButton.disabled = true;
 			break;
