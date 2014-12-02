@@ -41,7 +41,7 @@ public class CreateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doPost(request,response);
 	}
 
 	/**
@@ -74,10 +74,10 @@ public class CreateServlet extends HttpServlet {
 			user.lastname = lastname;
 			user.email = email;
 			user.profilepicture = profpic;
-			//randomly choose id
 			SiteManager sm = (SiteManager) getServletContext().getAttribute("SiteManager");
 			int i = -1;
 			if (sm == null) {			
+				//randomly choose id
 				System.out.println("CreateServlet: No SiteManager found in the servlet context for popNextUserID()");
 				Random generator = new Random(); 
 				i = generator.nextInt(100000) + 1;
@@ -97,6 +97,8 @@ public class CreateServlet extends HttpServlet {
 			user.updateUserDatabase();
 			
 			session.setAttribute("user", user);
+			session.setAttribute("username",name);
+			session.setAttribute("userid",i);
 			
 			RequestDispatcher dispatch = 
 				request.getRequestDispatcher("welcomepage.jsp");
@@ -105,7 +107,7 @@ public class CreateServlet extends HttpServlet {
 			
 		} else {
 			RequestDispatcher dispatch = 
-				request.getRequestDispatcher("nameinuse.jsp");
+				request.getRequestDispatcher("createaccount.jsp");
 				dispatch.forward(request, response);
 		}
 		
@@ -115,7 +117,7 @@ public class CreateServlet extends HttpServlet {
 	private boolean openUsername(String name, DatabaseConnection dc){
 		ResultSet rs = dc.executeQuery("SELECT username FROM users WHERE ( username = \""+ name + "\")");		
 		try {
-			while(rs.next()){
+			if(rs.first()){
 				return false;
 			}
 		} catch (SQLException e) {
