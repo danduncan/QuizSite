@@ -21,6 +21,7 @@ noUsername = document.getElementById("noUsername");
 invalidUsername = document.getElementById("invalidUsername");
 userDoesNotExist = document.getElementById("userDoesNotExist");
 noContent = document.getElementById("noContent");
+notLoggedIn = document.getElementById("msgNotLoggedIn");
 qwizardError = document.getElementById("qwizardError");
 
 // Get the success message
@@ -68,6 +69,20 @@ function enableMessageButtons(boolEnable) {
 	closeMsgBtn.disabled = !boolEnable;
 }
 
+//Toggle the two button configurations
+//True -> compose configuration, False -> close configuration
+function buttonConfig(compose) {
+	if (compose) {
+		sendMsgBtn.style.display = 'block';
+		cancelMsgBtn.style.display = 'block';
+		closeMsgBtn.style.display = 'none';
+	} else {
+		sendMsgBtn.style.display = 'none';
+		cancelMsgBtn.style.display = 'none';
+		closeMsgBtn.style.display = 'block';
+	}
+}
+
 function validateUsernameFormatting() {
 	// This function validates multiple comma-delimited usernames
 	// Returns true if an invalid username was found
@@ -75,7 +90,10 @@ function validateUsernameFormatting() {
 
 	// Check if no username was specified
 	err = setMessage(noUsername,username == "");
-	if (err) return true;
+	if (err) {
+		hideMessage(invalidUsername);
+		return true;
+	}
 
 	// Username was specified. Check that it is correctly formatted
 	delimiter = ' ';
@@ -101,6 +119,7 @@ function validateUsernameFormatting() {
 	}
 
 	// No errors found
+	hideMessage(invalidUsername);
 	return false;
 }
 
@@ -112,6 +131,8 @@ function validateInputFormatting() {
 	// Get sender ID
 	if (typeof useridjs == 'undefined' || useridjs == null || useridjs < 1) {
 		err = true;
+		buttonConfig(false);
+		showMessage(notLoggedIn);
 	}
 	
 	return err;
@@ -122,21 +143,6 @@ function getUsernameUrlFormat(username) {
 	username = username.replace(/\s{2,}/g, ' '); // Replace multiple whitespaces with a single one
 	username = username.replace(/ /g, '+'); // Replace all whitespaces with a + sign
 	return username;
-}
-
-
-// Toggle the two button configurations
-// True -> compose configuration, False -> close configuration
-function buttonConfig(compose) {
-	if (compose) {
-		sendMsgBtn.style.display = 'block';
-		cancelMsgBtn.style.display = 'block';
-		closeMsgBtn.style.display = 'none';
-	} else {
-		sendMsgBtn.style.display = 'none';
-		cancelMsgBtn.style.display = 'none';
-		closeMsgBtn.style.display = 'block';
-	}
 }
 
 function getAjaxMsgResponse() {

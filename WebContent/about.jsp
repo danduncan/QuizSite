@@ -22,7 +22,7 @@
 				<li>Matt Wilson</li> 
 				<li>Dan Duncan</li></ul></li>
 			<li>All three of us are EE grad students</li>
-			<li>Qwizard consists of over 100 source code files and nearly 9,500 lines of code</li>
+			<li>Qwizard consists of over 100 source code files and 9,700 lines of code</li>
 			</ul>
 		</div>
 		<div class="bigFrame">
@@ -102,10 +102,8 @@
 						<li>Quiz profile page needs to handle a user trying to access a quiz that does not exist (e.g. forward them to the homepage)</li>
 						<li>User profile page needs to handle a user trying to access a user that does not exist (e.g. forward them to the homepage)</li>
 					</ul></li>
-				<li>User sessions allow multiple users to visit site simultaneously</li>
+				<li>Use of sessions allows multiple users to visit site simultaneously</li>
 					
-						
-						
 			</ul>
 		</div>
 		
@@ -163,6 +161,7 @@
 				<li>Website is attractive and presentable
 					<ul>
 						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
+						<li>GET, POST, and AJAX requests are all used depending on which is the most intuitive for a particular action</li>
 						<li>Standard header and footer present on every page</li>
 						<li>Header and footer feature useful links, including links customized to the user</li>
 						<li>Qwizard logo included in header and as icon in window title</li>
