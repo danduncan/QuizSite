@@ -46,7 +46,7 @@ public class CheckLoginCredentialsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		System.out.println("CheckLoginCredentialsServlet: username=" + username + " and password=" + password);
+		//System.out.println("CheckLoginCredentialsServlet: username=" + username + " and password=" + password);
 		
 		ServletContext sc = getServletContext();
 		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
@@ -58,7 +58,7 @@ public class CheckLoginCredentialsServlet extends HttpServlet {
 		
 		Integer status = checkCredentials(username,password,dc);
 		setResponse(response,status);
-		System.out.println("CheckLoginCredentialsServlet: Status code: " + status);
+		//System.out.println("CheckLoginCredentialsServlet: Status code: " + status);
 		return;
 	}
 
@@ -75,16 +75,16 @@ public class CheckLoginCredentialsServlet extends HttpServlet {
 		if (username == null || username.isEmpty() || password == null || password.isEmpty() || dc == null) return KERROR;
 		password = HashPassword.getHash(password);
 		String query = "SELECT username FROM " + table + " WHERE username=\"" + username + "\" AND password=\"" + password + "\" LIMIT 1;";
-		System.out.println(query);
+		//System.out.println(query);
 		ResultSet rs = dc.executeQuery(query);
 		try {
 			if (rs.first()) {
 				// rs contains results. This means the credentials were valid
-				System.out.println("CheckLoginCredentialsServlet: Correct credentials");
+				//System.out.println("CheckLoginCredentialsServlet: Correct credentials");
 				return KSUCCESS;
 			} else {
 				// rs is empty. The credentials are invalid
-				System.out.println("CheckLoginCredentialsServlet: Incorrect credentials");
+				//System.out.println("CheckLoginCredentialsServlet: Incorrect credentials");
 				return KFAILURE;
 			}
 		} catch (SQLException e) {
