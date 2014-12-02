@@ -19,7 +19,10 @@
 		String username = (String) session.getAttribute("username");	
 		Integer userid = (Integer) session.getAttribute("userid");
 		if (username != null && !username.equals("") && userid != null && userid >= 0) {
-			out.println("<h1>You are signed in, " + username + "!");
+			//forward to unsuccessful send
+			RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
+			dispatch.forward(request, response);
+			//out.println("<h1>You are signed in, " + username + "!");
 		} else {
 			out.println("<h1>You need to sign in. <a href=\"/QuizSite/signin.jsp\" >Sign in here</a></h1>");
 		}
