@@ -105,7 +105,7 @@ function denyFriendRequest(button) {
 }
 
 function processConfirmResponse(button,confirm) {
-	// Find the other button and hide it
+	// Find both buttons
 	btnid = button.id;
 	senderidArr = btnid.split('-');
 	senderid = senderidArr[1];
@@ -116,8 +116,20 @@ function processConfirmResponse(button,confirm) {
 	confirmButton = document.getElementById(confirmBtnId);
 	denyButton = document.getElementById(denyBtnId);
 	
-	// Hide the deny button
-	denyButton.style.display = 'none';
+	if(confirmButton == null && denyButton == null) {
+		// Neither button exists. Check that you gave the buttons the correct ID's
+		alert("Neither a confirm button nor a deny button could be found. Check that you gave the buttons the correct ID's \nconfirmFriendButtonId-X \ndenyFriendButtonId-X");
+		return;
+	}
+	
+	// Check if one of the buttons does not exist
+	// If both buttons exist, hide the deny button
+	if (confirmButton == null) {
+		confirmButton = denyButton;
+	} else if (denyButton != null) {
+		// Hide the deny button
+		denyButton.style.display = 'none';		
+	}
 	
 	statusStr = requestObj.responseText;	
 	KSUCCESS = "0";
