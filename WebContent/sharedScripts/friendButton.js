@@ -3,7 +3,6 @@
  */
 
 
-
 function sendFriendRequest(friendButton)
 {
 	receiveridArray = friendButton.id.split('-');
@@ -73,8 +72,6 @@ function processFriendRequestResponse(friendButton) {
 			friendButton.value = "Server Error";
 			friendButton.disabled = true;
 	}
-	
-	
 }
 
 // If you are calling confirmFriendRequest directly, don't bother supplying the second argument

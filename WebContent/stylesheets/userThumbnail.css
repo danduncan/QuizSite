@@ -117,6 +117,11 @@
 	color: #FFFFFF;
 }
 
+.profilethumbnailbuttons .deleteFriendBtn {
+	background-color: #FBB1B7;
+	color: black;
+}
+
 .profilethumbnailbuttons .alreadyFriendsBtn {
 	color: black;
 	background-color: #EEEEEE;

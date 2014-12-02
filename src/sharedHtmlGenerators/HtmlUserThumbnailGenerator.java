@@ -278,11 +278,20 @@ public class HtmlUserThumbnailGenerator {
 			sb.append("\t\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 			sb.append("\t\t</form>" + ls);
 		} else if (friends == KNOTFRIENDS) {
+			// Add Friend button
 			buttonClass = classAddFriendBtn;
 			buttonText = labelAddFriend;
 			String buttonId = "addFriendButtonId-" + userid;
 			String onClickStr = "sendFriendRequest(this)";
 			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			
+			// Delete Friend button
+			buttonClass = "deleteFriendBtn";
+			buttonText = "Unfriend";
+			buttonId = "deleteFriendButtonId-" + userid;
+			onClickStr = "deleteFriend(this)";
+			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			
 		} else if (friends == KCONFIRM) {
 			// Add a Confirm Request button
 			buttonClass = classConfirmBtn;
