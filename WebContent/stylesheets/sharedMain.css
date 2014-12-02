@@ -162,4 +162,5 @@ body {
 	z-index: 100;
 	box-shadow: 3px 3px 5px #555555;
 	border: none;
+	border-radius: 2px;
 }
