@@ -74,6 +74,83 @@ function processFriendRequestResponse(friendButton) {
 	}
 }
 
+
+
+
+
+
+
+function deleteFriend(button)
+{
+	buttonid = button.id;
+	friendidArr = buttonid.split('-');
+	friendid = friendidArr[1];
+	query = "buttonid=" + buttonid + "&friendid=" + friendid + "&userid=" + useridjs;
+
+	requestObj = new XMLHttpRequest();
+	requestObj.addEventListener("load",function anonfcn() { processDeleteFriendResponse(button); },null);
+	requestObj.open("POST","http://localhost:8080/QuizSite/DeleteFriendServlet",true);
+	requestObj.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
+	requestObj.send(query);
+}
+
+function processDeleteFriendResponse(friendButton) {
+	statusStr = requestObj.responseText;
+	
+	KSUCCESS = "0";
+	KFAILURE = "1";
+	KNOTFRIENDS = "2";
+	KNOTLOGGEDIN = "3";
+	KSELF = "4";
+	
+	// Response status is 0 for success, nonzero for failure
+	switch(statusStr) {
+		case KSUCCESS:
+			friendButton.className = "successfulRequestBtn";
+			friendButton.value = "Friend Deleted";
+			friendButton.disabled = true;
+			break;
+		case KNOTFRIENDS:
+			friendButton.className = "alreadyFriendsBtn";
+			friendButton.value = "Not Friends";
+			friendButton.disabled = true;
+			break;
+		case KNOTLOGGEDIN:
+			friendButton.className = "loginBtn";
+			friendButton.value = "Log In First";
+			friendButton.onclick = "window.location='/QuizSite/signin.jsp';";
+			break;
+		case KSELF:
+			friendButton.className = "selfBtn";
+			friendButton.value = "This Is You";
+			friendButton.disabled = true;
+			break;
+		case KFAILURE:
+			friendButton.className = "errorBtn";
+			friendButton.value = "Database Error";
+			friendButton.disabled = true;
+			break;
+		default:
+			friendButton.className = "errorBtn";
+			friendButton.value = "Server Error";
+			friendButton.disabled = true;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // If you are calling confirmFriendRequest directly, don't bother supplying the second argument
 // The second argument is only needed for denyFriendRequest()
 function confirmFriendRequest(button,deny) {

@@ -287,7 +287,7 @@ public class HtmlUserThumbnailGenerator {
 			
 			// Delete Friend button
 			buttonClass = "deleteFriendBtn";
-			buttonText = "Unfriend";
+			buttonText = "Delete Friend";
 			buttonId = "deleteFriendButtonId-" + userid;
 			onClickStr = "deleteFriend(this)";
 			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
