@@ -57,7 +57,6 @@
 	//User's Info
 	out.println("<h2> My Quiz Info </h2>");
 	//quizzes taken table
-	out.println("<p> Quizzes Taken: "+user.quizzestaken.size()+ "</p>");
 	String[] colNames = new String[]{"Quiz Name","Date Taken","Score","Time"};
 	String[][] takenData = new String[user.quizzestaken.size()][colNames.length];
 	int numRecentTaken = 0;
@@ -76,13 +75,12 @@
 	}
 	if (numRecentTaken > 0){
 		out.println("<p>Recently Taken Quizzes</p>");
-		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(takenData,colNames));
+		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(Arrays.copyOfRange(takenData,0,numRecentTaken),colNames));
 	} else {
 		out.println("<p>No Recently Taken Quizzes");
 	}
 	
 	//quizzes made table
-	out.println("<p> Quizzes Made: " + user.quizzesmade.size() + "</p>");
 	//create new quiz
 	out.println("<form method=\"get\" action=\"CreateQuizServlet\">");
 	out.println("<p><input type=\"submit\" value=\"Create New Quiz\" /></p>");
@@ -112,7 +110,7 @@
 	
 	if (numRecentMade > 0){
 		out.println("<p>Recently Created Quizzes</p>");
-		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(madeData,columnNames));
+		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(Arrays.copyOfRange(madeData,0,numRecentMade),columnNames));
 	} else {
 		out.println("<p>No Recently Created Quizzes</p>");
 	}
