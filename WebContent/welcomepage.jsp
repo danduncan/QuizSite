@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.*, users.*,quizsite.*,Quiz.*"%>
+<%@ page import="java.util.*, users.*,quizsite.*,Quiz.*,java.sql.*"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -161,32 +161,47 @@
 <form method ="post" action = "users.jsp">
 <input type = "submit" name = "Find Friends" value = "Find Friends">
 </form>
-<%	int countFriendReq = 0;
-	ArrayList<Integer> messageNum = new ArrayList<Integer>();
-	ArrayList<Integer> newFriendID = new ArrayList<Integer>();
-	ArrayList<Message> newFriendReq = new ArrayList<Message>();
-	for (int i = 0; i < user.messages.size(); i++){
-	//determine if new message
-	if (user.messages.get(i).opened == false && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 0){
-		newFriendID.add(user.messages.get(i).senderid);
-		messageNum.add(i);
-		countFriendReq++;
-		newFriendReq.add(user.messages.get(i));
+<%	
+	ArrayList<Integer> friendIDs = Friend.getFriendRequestIDs(dc,user.id);
+	out.println("<p> You have " + friendIDs.size() + " Friend Requests</p>");
+	
+	//add dan's friend thumbnails as incoming requests
+	//get users name as query
+	for (int i = 0; i < friendIDs.size(); i++){
+		String newquery = (String) user.userconnection.getAttribute("username", friendIDs.get(i));
+		if (newquery != null && !newquery.isEmpty()) {
+		//out.println("User query = \"" + query + "\";");
+
+			if (dc != null) {
+				ResultSet rs = users.SearchForUsers.basicSearch(dc,newquery);
+				//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
+				out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
+			}
 		}
 	}
-	out.println("<p> You have " + countFriendReq + " new Friend Requests</p>");
-	out.println("<ul type = \"circle\">");
-	for(int i = 0; i < newFriendReq.size(); i++){
-		out.println("<li> From: <a href=\"profile.jsp?userID="+newFriendID.get(i)+"\">"+ user.userconnection.getAttribute("username",newFriendID.get(i))+"</a> On: "+FormatDateTime.getUserDate(newFriendReq.get(i).datesent));
-		out.println("<form method=\"post\" action=\"FriendRequestServlet\">");
-		out.println("<input type=\"submit\" name = \"friendreq\" value = \"accept\"/>   <input type=\"submit\" name = \"friendreq\" value = \"decline\">");
-		out.println("<input type=\"hidden\" name = \"msg_friendIDs\" value = \""+messageNum.get(i)+","+newFriendID.get(i)+"\"");		out.println("</form>");
-		out.println("</li>");	
+		
+//	determine if user has responded
+// 	if (user.messages.get(i).replied == 0 && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 0){
+// 		newFriendID.add(user.messages.get(i).senderid);
+// 		messageNum.add(i);
+// 		countFriendReq++;
+// 		newFriendReq.add(user.messages.get(i));
+// 		}
+// 	}
+// 	out.println("<p> You have " + countFriendReq + " new Friend Requests</p>");
+// 	out.println("<ul type = \"circle\">");
+// 	for(int i = 0; i < newFriendReq.size(); i++){
+// 		out.println("<form method=\"post\" action=\"FriendRequestServlet\">");
+// 		out.println("<li> From: <a href=\"profile.jsp?userID="+newFriendID.get(i)+"\">"+ user.userconnection.getAttribute("username",newFriendID.get(i))+"</a> On: "+FormatDateTime.getUserDate(newFriendReq.get(i).datesent));		
+// 		out.println("<input type=\"submit\" name = \"friendreq\" value = \"accept\"/>   <input type=\"submit\" name = \"friendreq\" value = \"decline\">");
+// 		out.println("<input type=\"hidden\" name = \"msg_friendIDs\" value = \""+messageNum.get(i)+","+newFriendID.get(i)+"\"");		out.println("</form>");
+// 		out.println("</li>");	
+// 		out.println("</form>");
 	
-	}
-	out.println("</ul>"); 
+// 	}
+// 	out.println("</ul>"); 
 	
-	
+
 	out.println("<h3> Friend Activity </h3>");
 	ArrayList<String> activity = Friend.getFriendActivity(user,dc,achievementtypes);
 	if ( activity.size() > 0){

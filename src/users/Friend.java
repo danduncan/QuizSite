@@ -98,5 +98,24 @@ public class Friend {
 		
 		return activity;
 	}
+	public static int getNumRequests(DatabaseConnection dc, Integer userid) throws SQLException{
+		String query =  "select replied from messages where type = 0 AND receiverid = " + userid; 
+		ResultSet rs = dc.executeQuery(query);
+		int numRequests = 0;
+		while (rs.next()){
+			numRequests++;
+		}
+		return numRequests;
+	}
 	
+	public static ArrayList<Integer> getFriendRequestIDs(DatabaseConnection dc, Integer userid) throws SQLException{
+		String query =  "select senderid from messages where type = 0 AND receiverid = " + userid; 
+		ResultSet rs = dc.executeQuery(query);
+		ArrayList<Integer> friendIDs = new ArrayList<Integer>();
+		
+		while (rs.next()){
+			friendIDs.add(rs.getInt("senderid"));
+		}
+		return friendIDs;
+	}
 }
