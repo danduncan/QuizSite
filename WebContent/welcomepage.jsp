@@ -16,6 +16,7 @@
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 <% 
 	User user = (User) session.getAttribute("user");
+	user.updateUserDatabase();
 	ServletContext sc = getServletContext();
 	DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 	//welcome back info
