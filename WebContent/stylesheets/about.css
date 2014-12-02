@@ -50,6 +50,6 @@ ul.checklist > li {
 	padding-top: 9px;
 }
 
-ul.checklist span {
+ul.checklist span, h1 > span {
 	color: red;
 }

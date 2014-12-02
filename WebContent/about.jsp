@@ -22,7 +22,21 @@
 				<li>Matt Wilson</li> 
 				<li>Dan Duncan</li></ul></li>
 			<li>All three of us are EE grad students</li>
-			<li>Qwizard consists of over 100 source code files and 9,700 lines of code</li>
+			<li>Qwizard consists of over 100 source code files and 10,000 lines of code</li>
+			</ul>
+		</div>
+		<div class="bigFrame">
+			<h1><span>Known Bugs</span></h1>
+			<ul>
+			<li>Welcome page gets nullpointerexception on login and fails to load completely</li>
+				<ul><li>Bug appears to be in getFriendActivity()</li></ul>
+			<li>WelcomePage does something weird when the server restarts.
+				<ul><li>The result is a site crash with error code 500 </li>
+				<li>I think what is happening is that "user" is getting deleted from the HttpSession attributes, but "username" and "userid" are not</li>
+				<li>A simple fix would be to create a UserRefresh class that is called at the beginning of every JSP. Its job would be to see if the user's session contains partial attributes and populate the missing ones</li>
+				</ul></li>
+			<li>DatabaseConnection crashes after being open too long. This may not be fixable</li>
+			
 			</ul>
 		</div>
 		<div class="bigFrame">
@@ -48,8 +62,8 @@
 					<li>Users have logins and passwords</li>
 					<li>Passwords are encrypted</li>
 					<li>Users can add friends</li>
-					<li>Users can delete friends<span> (Not yet implemented)</span></li>
-					<li>Users have viewable profiles<span> (Not yet implemented)</span></li>
+					<li>Users can delete friends</li>
+					<li>Users have viewable profiles</li>
 					<li>Users can search for other users</li>
 				</ul></li>
 			<li>All message requirements
@@ -61,7 +75,7 @@
 			</ul>
 			<h2>Required pages:</h2>
 			<ul class="checklist">
-				<li>Home page <span>(not yet implemented)</span>
+				<li>Home page <span>(implemented, but generates lots of nullpointerexceptions)</span>
 					<ul>
 						<li>List of popular quizzes</li>
 						<li>List of recently created quizzes</li>
@@ -92,15 +106,22 @@
 						<li>Link to take the quiz</li>
 						<li>Link to take the quiz in practice mode, if available</li>
 					</ul></li>
+				<li>Quiz itself and all associated questions</li>
 				<li>Quiz results page
 					<ul>
 						<li>Appears when user completes a quiz</li>
 						<li>Tells user their score and time</li>
 					</ul></li>
+				<li>User-related pages
+					<ul>
+						<li>Users have viewable profiles</li>
+						<li>Users have viewable profile thumbnails</li>
+						<li>Message page to view all recent messages/challenges <span>(not yet implemented)</span></li>
+					</ul></li>
 				<li>Error checking
 					<ul>User can never receive a 404 error from clicking a site link
-						<li>Quiz profile page needs to handle a user trying to access a quiz that does not exist (e.g. forward them to the homepage)</li>
-						<li>User profile page needs to handle a user trying to access a user that does not exist (e.g. forward them to the homepage)</li>
+						<li>Quiz profile page needs to handle a user trying to access a quiz that does not exist (e.g. forward them to the homepage)<span> (not yet implemented)</span></li>
+						<li>User profile page needs to handle a user trying to access a user that does not exist (e.g. forward them to the homepage)<span> (not yet implemented)</span></li>
 					</ul></li>
 				<li>Use of sessions allows multiple users to visit site simultaneously</li>
 					
@@ -114,7 +135,7 @@
 				<li>Quiz practice mode <span>(not yet implemented)</span></li>
 				<li>Quizzes track performance of users</li> 
 				<li>Quizzes track high scores</li>
-				<li>Quiz pages display top scores<span> (not yet implemented)</span></li>
+				<li>Quiz pages display top scores</li>
 				<li>Optional question types
 					<ul>
 						<li>Multi-answer questions</li>
@@ -130,12 +151,13 @@
 					</ul></li>
 				<li>Achievements
 					<ul>
-						<li>System tracks five major kind of user achievement:
+						<li>System tracks six major kind of user achievement:
 							<ul>
 								<li>Amateur author - the user created a quiz</li>
 								<li>Prolific author - the user created five quizzes</li>
 								<li>Prodigious author - the user created ten quizzes</li>
 								<li>Quiz Machine - the user took ten quizzes</li>
+								<li>I am the Greatest - user got a top score on a quiz</li>
 								<li>Practice Makes Perfect - the user took a quiz in practice mode <span>(not yet implemented)</span></li>
 							</ul></li>
 					</ul>
@@ -160,6 +182,11 @@
 					</ul></li>
 				<li>Website is attractive and presentable
 					<ul>
+						<li><span>User profiles need to styled</span></li>
+						<li><span>Quiz homepages need to styled</span></li>
+						<li><span>Quizzes need to styled</span></li>
+						<li><span>Quiz results need to styled</span></li>
+						<li><span>Challenge request needs to be implemented and styled</span></li>
 						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
 						<li>GET, POST, and AJAX requests are all used depending on which is the most intuitive for a particular action</li>
 						<li>Standard header and footer present on every page</li>
@@ -191,13 +218,19 @@
 							<ul><li>To send a group message, just type in the usernames of the recipient, each name separated by a space</li></ul>
 						</li>
 					</ul></li>
+				<li>Public view of website
+					<ul><li>User profiles</li>
+						<li>User thumbnails</li>
+						<li>User search</li>
+						<li>Quiz-related pages <span>(not yet implemented)</span></li>
+						</ul></li>
 				<li>Website pages feature robust error handling
 					<ul>
 						<li>Sign in page uses Javascript for error checking</li>
 						<li>Create account page uses Javascript for error checking</li>
 						<li>User inputs throughout website are sanitized to prevent SQL injection</li>
 						<li>Malformed inputs and URL's are handled gracefully
-							<ul><li>e.g. when a signed-in user visits the sign in page, they are forwarded on to the homepage</li></ul>
+							<ul><li>e.g. when a signed-in user visits the sign in page or the create account page, they are forwarded on to the homepage</li></ul>
 						</li>
 						<li>Messaging interface uses Javascript for instantaneous error checking</li></ul>
 				<li>Catchy name for website</li>
