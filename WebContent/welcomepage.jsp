@@ -24,7 +24,20 @@
 %>
 <% 
 	out.println("<h1>Welcome "+user.firstname+"!</h1>");
-	
+		
+	//display user thumbnail
+	String query = (String) user.userconnection.getAttribute("username", user.id);
+	if (query != null && !query.isEmpty()) {
+		//out.println("User query = \"" + query + "\";");
+
+		if (dc != null) {
+			ResultSet rs = users.SearchForUsers.basicSearch(dc,query);
+			//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
+			out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
+		}
+	}
+
+
 	//get popular quizzes
 	int limit = 10;
 	out.println("<h2>Most Popular Quizzes </h2>");
