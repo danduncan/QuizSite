@@ -49,17 +49,17 @@ public class Friend {
 		ArrayList<String> activity = new ArrayList<String>();
 		
 		//get users friendsIDs
-		String query = "SELECT friend1,friend2 FROM "+MyDBInfo.FRIENDSTABLE+"";
+		String query = "SELECT friend2 FROM "+MyDBInfo.FRIENDSTABLE+" where friend1 = "+user.id;
 		ResultSet rs = dc.executeQuery(query);
 		ArrayList<Integer> friendIDs = new ArrayList<Integer>();
 
 		while(rs.next()){
-			Integer ID1 = rs.getInt("friend1");
+			//Integer ID1 = rs.getInt("friend1");
 			Integer ID2 = rs.getInt("friend2");
 			
-			if(!friendIDs.contains(ID1)){
-				friendIDs.add(ID1);
-			}
+			//if(!friendIDs.contains(ID1)){
+				//friendIDs.add(ID1);
+			//}
 			if(!friendIDs.contains(ID2)){
 				friendIDs.add(ID2);
 			}
@@ -74,7 +74,7 @@ public class Friend {
 				if (FormatDateTime.isRecent(friend.quizzesmade.get(j).date)){
 					Integer id = friend.quizzesmade.get(j).quizid;
 					String quizname = Quiz.getName(id,dc);
-					activity.add("<a href=\"profile.jsp?userid="+friend.id+"\">"+ friend.username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>");
+					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>");
 				}
 			}
 			//quiz taken
@@ -82,14 +82,14 @@ public class Friend {
 				if (FormatDateTime.isRecent(friend.quizzestaken.get(j).datetaken)){
 					Integer id = friend.quizzestaken.get(j).quizid;
 					String quizname = Quiz.getName(id,dc);
-					activity.add("<a href=\"profile.jsp?userid="+user.id+"\">"+ friend.username+"</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a> and got a score of "+friend.quizzestaken.get(j).score+"!");
+					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a> and got a score of "+friend.quizzestaken.get(j).score+"!");
 				}
 			}
 			
 			//Achievement
 			for(int j = 0; j < friend.achievements.size(); j++){
 				if (FormatDateTime.isRecent(friend.achievements.get(j).dateachieved)){
-					activity.add("<a href=\"user?userid="+user.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name+"  " + "<img src = \""+at.get(user.achievements.get(i).type).icon+"\" height = \"20\" width = \"20\"");
+					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name+"  " + "<img src = \""+at.get(user.achievements.get(i).type).icon+"\" height = \"20\" width = \"20\"");
 				}
 			}
 			
