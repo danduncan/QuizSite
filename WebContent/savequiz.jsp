@@ -19,7 +19,7 @@
 		if(achieved.size()>0){
 			List<AchievementType> achievementTypes = (List<AchievementType>)con.getAttribute("achievementtypes");
 			String achievementStr = Achievement.getAchievementNames(achieved, achievementTypes);
-			out.println(achievementStr);
+			out.println(achievementStr+"<br>");
 		}
 	%>
 	
