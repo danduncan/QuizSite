@@ -47,7 +47,7 @@ public class HtmlUserThumbnailGenerator {
 	public static final String colDateJoined = "datejoined";
 	
 	// Text to include in labels and buttons
-	public static final String labelAchievements = "Achievements: ";
+	public static final String labelAchievements = "Recent Achievements: ";
 	public static final String labelDate = "Member since: ";
 	public static final String labelCreated = "Quizzes created: ";
 	public static final String labelTaken = "Quizzes taken: ";
@@ -252,7 +252,7 @@ public class HtmlUserThumbnailGenerator {
 		sb.append("\t\t\t<a href=\"" + profileURL + "?" + profileQueryString + "=" + userid + "\">" + fullName + "</a>" + ls);
 		sb.append("\t\t</div>" + ls);
 		sb.append("\t\t<div class=\"" + classProfileStats + "\">" + ls);
-		sb.append("\t\t\t<span>" + labelAchievements + "</span>" + ls);
+		sb.append("\t\t\t<span>" + labelAchievements + getAchievements(userid,dc) + "</span>" + ls);
 		sb.append("\t\t\t<span>" + labelDate + dateJoined + "</span>" + ls);
 		sb.append("\t\t\t<span>" + labelCreated + quizzesCreated + "</span>" + ls);
 		sb.append("\t\t\t<span>" + labelTaken + quizzesTaken + "</span>" + ls);
@@ -382,5 +382,12 @@ public class HtmlUserThumbnailGenerator {
 		//sb.append("<script src=\"/QuizSite/sharedScripts/friendButton.js\"></script>" + ls);
 		//System.out.println(sb.toString());
 		return sb.toString();
+	}
+
+	private static String getAchievements(Integer userid, DatabaseConnection dc) {
+		String query = "SELECT id,name,icon from achievements INNER JOIN achievementTypes ON (type=id) where userid=" + userid + " ORDER BY dateachieved DESC LIMIT 12;";
+		ResultSet rs = null;
+		rs = dc.executeQuery(query);
+		return HtmlAchievementThumbnailGenerator.getHtml(rs);
 	}
 }

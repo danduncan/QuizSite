@@ -23,7 +23,7 @@
 
 .profilepicturecontainer {
 	width: 130px;
-	margin: 0px;
+	margin: 5px 0px;
 	padding: 0px;
 	border: 1px solid black;
 	overflow: hidden;
@@ -36,6 +36,27 @@
 	width: auto;
 	min-width: 60px;
 	border: none;
+}
+
+div.tinyAchievements {
+	width: 100%;
+	display: inline-block;	
+	height: 20px;
+	margin: 0px 0px 4px 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+div.tinyAchievements span {
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+}
+
+div.tinyAchievements .nanoBadge {
+	height: 15px;
+	width: auto;
+	
 }
 
 .profilethumbnailinfo {
