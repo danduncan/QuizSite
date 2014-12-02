@@ -120,7 +120,7 @@
 	
 	//achievements table
 	out.println("<p> Achievements: " + user.achievements.size() + "</p>");	
-	String[] cNames = new String[]{"Name","Description","Date Achieved"};
+	String[] cNames = new String[]{"Name","Description","Date Achieved","Badge Earned"};
 	String[][] achieveData = new String[user.achievements.size()][cNames.length];
 	
 	ArrayList<AchievementType> achievementtypes = (ArrayList<AchievementType>) sc.getAttribute("achievementtypes");
@@ -128,7 +128,9 @@
 	for(int i = 0; i < user.achievements.size(); i++){
 		achieveData[i][0] = achievementtypes.get(user.achievements.get(i).type).name;
 		achieveData[i][1] = achievementtypes.get(user.achievements.get(i).type).description;
-		achieveData[i][2] = FormatDateTime.getUserDateTime(user.achievements.get(i).dateachieved)[0];            
+		achieveData[i][2] = FormatDateTime.getUserDateTime(user.achievements.get(i).dateachieved)[0];
+		achieveData[i][3] = "<img src = \""+achievementtypes.get(user.achievements.get(i).type).icon+"\" height = \"50\" width = \"50\"";
+		//System.out.println(achievementtypes.get(user.achievements.get(i).type).icon);
 	}
 	if (user.achievements.size() > 0){
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achieveData,cNames));
