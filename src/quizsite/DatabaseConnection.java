@@ -18,17 +18,19 @@ public class DatabaseConnection {
 	// ivars 
 	private Connection con; 
 	private Statement stmt;
+	private Connection conSim; // Used for simultaneous queries
 	
 	// SQL Exception error codes
 	private static final Integer SQL_NoDatabaseSelected = 1046;
 	private static final Integer SQL_InvalidTable = 1146;
 	private static final Integer SQL_InvalidColumn = 1054;
 	private static final Integer SQL_GeneralSyntaxError = 1064; // Many other error codes for specific syntax errors
-	private static final Integer SQL_ConnectionFailed = null; // Don't know this number yet
+	private static final Integer SQL_ConnectionFailed = 0; // Don't know this number yet
 	
 	
 	public DatabaseConnection() {
 		this.openConnection();
+		this.openSimConnection();
 	}
 	
 	
@@ -78,6 +80,42 @@ public class DatabaseConnection {
 	}
 	
 	/**
+	 * Simultaenous connections
+	 */
+	public void openSimConnection() {
+		try {
+			// Open connection to database
+			Class.forName("com.mysql.jdbc.Driver");
+			conSim = DriverManager.getConnection( "jdbc:mysql://" + server, account ,password);
+//			Statement tmp = con.createStatement();
+//			tmp.executeQuery("USE " + database);
+						
+		} catch (SQLException e) {
+			printException(e,null);
+			//System.exit(0);
+			return;
+		} catch (ClassNotFoundException e) {
+			System.out.println("DataBaseConnect.openSimConnection(): ClassNotFound Exception encountered");
+			//System.exit(0);
+			return;
+		} catch (Exception e) {
+			System.out.println("DataBaseConnect.openSimConnection(): General Exception encountered");
+			return;
+		}
+	}
+	public void closeSimConnection() {
+		try {
+			conSim.close();
+		} catch (SQLException e) {
+			printException(e,null);
+		}
+	}
+	public void restartSimConnection() {
+		closeSimConnection();
+		openSimConnection();
+	}
+	
+	/**
 	 * Display a SQL error message
 	 */
 	private static void printException(SQLException e, String query) {
@@ -100,8 +138,20 @@ public class DatabaseConnection {
 		try {
 			rs = stmt.executeQuery(query);
 		} catch (SQLException e) {
-			printException(e, query);
-			return rs;
+			// Check if error was due to communication failure
+			if (e.getErrorCode() == SQL_ConnectionFailed) {
+				System.out.println("\tDatabaseConnection: Connection failed. Restarting and trying again...");
+				restartConnection();
+				try {
+					rs = stmt.executeQuery(query);
+				} catch (SQLException e2) {
+					printException(e2, query);
+					return rs;
+				}
+			} else {
+				printException(e, query);
+				return rs;
+			}
 		}
 
 		// Result data received. Now process rs into a table and store in the table ivar
@@ -118,8 +168,20 @@ public class DatabaseConnection {
 		try {
 			stmt.executeUpdate(update);
 		} catch (SQLException e) {
-			printException(e, update);
-			return false;
+			// Check if error was due to communication failure
+			if (e.getErrorCode() == SQL_ConnectionFailed) {
+				System.out.println("\tDatabaseConnection.update(): Connection failed. Restarting and trying again...");
+				restartConnection();
+				try {
+					stmt.executeUpdate(update);
+				} catch (SQLException e2) {
+					printException(e2, update);
+					return false;
+				}
+			} else {
+				printException(e, update);
+				return false;
+			}
 		}
 
 		return true;
@@ -136,7 +198,7 @@ public class DatabaseConnection {
 		try {
 			// Open connection to database
 			//Connection conNew = DriverManager.getConnection( "jdbc:mysql://" + server, account ,password);
-			stmtNew = con.createStatement();
+			stmtNew = conSim.createStatement();
 			stmtNew.executeQuery("USE " + database);						
 		} catch (SQLException e) {
 			System.out.println("DatabaseConnection.executeSimultaneousQuery() SQLException: Too many active connections. Don't forget to call rs.close() as soon as you are done with a simultaneous ResultSet");
@@ -151,8 +213,22 @@ public class DatabaseConnection {
 		try {
 			rs = stmtNew.executeQuery(query);
 		} catch (SQLException e) {
-			printException(e, query);
-			return rs;
+			// Check if error was due to communication failure
+			if (e.getErrorCode() == SQL_ConnectionFailed) {
+				System.out.println("\tDatabaseConnection: Simultaneous Connection failed. Restarting and trying again...");
+				restartSimConnection();
+				try {
+					stmtNew = conSim.createStatement();
+					stmtNew.executeQuery("USE " + database);
+					rs = stmtNew.executeQuery(query);
+				} catch (SQLException e2) {
+					printException(e2, query);
+					return rs;
+				}
+			} else {
+				printException(e, query);
+				return rs;
+			}
 		}
 
 		// Result data received. Now process rs into a table and store in the table ivar
