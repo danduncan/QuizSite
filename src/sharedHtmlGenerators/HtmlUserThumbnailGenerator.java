@@ -385,7 +385,7 @@ public class HtmlUserThumbnailGenerator {
 	}
 
 	private static String getAchievements(Integer userid, DatabaseConnection dc) {
-		String query = "SELECT id,name,icon from achievements INNER JOIN achievementTypes ON (type=id) where userid=" + userid + " ORDER BY dateachieved DESC LIMIT 12;";
+		String query = "SELECT id,name,icon,dateachieved from achievements INNER JOIN achievementTypes ON (type=id) where userid=" + userid + " ORDER BY dateachieved DESC LIMIT 12;";
 		ResultSet rs = null;
 		rs = dc.executeSimultaneousQuery(query);
 		return HtmlAchievementThumbnailGenerator.getHtml(rs);
