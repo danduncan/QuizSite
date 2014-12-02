@@ -266,14 +266,14 @@ public class HtmlUserThumbnailGenerator {
 		if (friends == KFRIENDS) {
 			buttonClass = classAlreadyFriendsBtn;
 			buttonText = labelAlreadyFriends;
-			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
+			//sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 			
 			// Delete Friend button (uncomment the last line if you want to add it)
 			buttonClass = "deleteFriendBtn";
 			buttonText = "Delete Friend";
 			String buttonId = "deleteFriendButtonId-" + userid;
 			String onClickStr = "deleteFriend(this)";
-			//sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 
 		} else if (friends == KSELF) {
 			buttonClass = classSelfBtn;
@@ -315,12 +315,12 @@ public class HtmlUserThumbnailGenerator {
 			sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" />" + ls);
 		}
 		
-		// Delete Friend button (uncomment the last line if you want to add it)
+		// Delete Friend button on every thumbnail (testing only, uncomment the last line if you want to add it)
 		buttonClass = "deleteFriendBtn";
 		buttonText = "Delete Friend";
 		String buttonId = "deleteFriendButtonId-" + userid;
 		String onClickStr = "deleteFriend(this)";
-		sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+		//sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 
 		
 		if (friends != KSELF && friends != KNOTLOGGEDIN) {
