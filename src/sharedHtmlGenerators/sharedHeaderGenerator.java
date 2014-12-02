@@ -24,7 +24,7 @@ public class sharedHeaderGenerator {
 	}
 	
 	public static String getHTML(String rootPath, HttpSession session, DatabaseConnection dc) {
-		if(dc != null) System.out.println("\tSharedHeaderGenerator.getHTML(): Successfully received DatabaseConnection");
+		//if(dc != null) System.out.println("\tSharedHeaderGenerator.getHTML(): Successfully received DatabaseConnection");
 		users.User usr = (users.User) session.getAttribute("user");
 		
 		String username = null;

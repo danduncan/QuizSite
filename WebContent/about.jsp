@@ -11,7 +11,7 @@
 	id="homeStylesheet" />
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<div class="mainBody">
 		<div class="bigFrame">
 			<h1>About Qwizard and the Qwizard Team</h1>
@@ -30,7 +30,7 @@
 			<ul>
 			<li>Welcome page gets nullpointerexception on login and fails to load completely</li>
 				<ul><li>Bug appears to be in getFriendActivity()</li></ul>
-			<li>WelcomePage does something weird when the server restarts.
+			<li class="fixed"><span>(Fixed) </span>WelcomePage does something weird when the server restarts.
 				<ul><li>The result is a site crash with error code 500 </li>
 				<li>I think what is happening is that "user" is getting deleted from the HttpSession attributes, but "username" and "userid" are not</li>
 				<li>A simple fix would be to create a UserRefresh class that is called at the beginning of every JSP. Its job would be to see if the user's session contains partial attributes and populate the missing ones</li>

@@ -53,3 +53,8 @@ ul.checklist > li {
 ul.checklist span, h1 > span {
 	color: red;
 }
+
+li.fixed span {
+	color: green;
+	font-weight: bold
+}
