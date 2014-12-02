@@ -160,7 +160,7 @@
 <input name="type" type="hidden" value= "2" />
 </form> -->
 
-<h2>Inbox</h2>
+<h2><img src="https://cdn4.iconfinder.com/data/icons/REALVISTA/mail_icons/png/400/inbox.png" alt="HTML5 Icon" width="50" height="50"> Inbox </h2> 
 <h3>Friend Requests</h3>
 
 <%	

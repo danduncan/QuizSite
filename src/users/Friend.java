@@ -91,7 +91,7 @@ public class Friend {
 			//Achievement
 			for(int j = 0; j < friend.achievements.size(); j++){
 				if (FormatDateTime.isRecent(friend.achievements.get(j).dateachieved)){
-					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name+"  " + "<img src = \""+at.get(user.achievements.get(i).type).icon+"\" height = \"20\" width = \"20\"");
+					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name+"  " + "<img src = \""+at.get(friend.achievements.get(j).type).icon+"\" height = \"20\" width = \"20\"");
 				}
 			}
 			
