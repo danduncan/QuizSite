@@ -284,13 +284,21 @@ public class HtmlUserThumbnailGenerator {
 			String onClickStr = "sendFriendRequest(this)";
 			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
 		} else if (friends == KCONFIRM) {
+			// Add a Confirm Request button
 			buttonClass = classConfirmBtn;
 			buttonText = labelConfirm;
 			String buttonId = "confirmFriendButtonId-" + userid;
 			String onClickStr = "confirmFriendRequest(this)";
-			// Once ConfirmFriendServlet is running, this line becomes uncommented and the next line gets commented
 			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
-			//sb.append("\t\t<input class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			
+			// Add a deny request button
+			buttonClass = "denyBtn";
+			buttonText = "Deny Request";
+			buttonId = "denyFriendButtonId-" + userid;
+			onClickStr = "denyFriendRequest(this)";
+			sb.append("\t\t<input onclick=\"" + onClickStr + "\" class=\"" + buttonClass + "\" type=\"submit\" value=\"" + buttonText + "\" id=\"" + buttonId + "\" />" + ls);
+			
+			
 		} else if (friends == KPENDING) {
 			buttonClass = classPendingBtn;
 			buttonText = labelPending;

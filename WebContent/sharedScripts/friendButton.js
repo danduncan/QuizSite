@@ -77,23 +77,49 @@ function processFriendRequestResponse(friendButton) {
 	
 }
 
-function confirmFriendRequest(confirmButton)
-{
-	buttonid = confirmButton.id;
+// If you are calling confirmFriendRequest directly, don't bother supplying the second argument
+// The second argument is only needed for denyFriendRequest()
+function confirmFriendRequest(button,deny) {
+	if(deny == null || deny == false) {
+		action = "confirm";
+		confirm = true;
+	} else {
+		action = "deny";
+		confirm = false;
+	}
+	buttonid = button.id;
 	senderidArr = buttonid.split('-');
 	senderid = senderidArr[1];
-	query = "buttonid=" + buttonid + "&senderid=" + senderid + "&userid=" + useridjs;
+	//senderid = "1";
+	query = "buttonid=" + buttonid + "&senderid=" + senderid + "&userid=" + useridjs + "&action=" + action;
 
 	requestObj = new XMLHttpRequest();
-	requestObj.addEventListener("load",function anonfcn() { processConfirmResponse(confirmButton); },null);
+	requestObj.addEventListener("load",function anonfcn() { processConfirmResponse(button,confirm); },null);
 	requestObj.open("POST","http://localhost:8080/QuizSite/ConfirmFriendServlet",true);
 	requestObj.setRequestHeader("Content-type","application/x-www-form-urlencoded");	
 	requestObj.send(query);
 }
 
-function processConfirmResponse(confirmButton) {
-	statusStr = requestObj.responseText;
+function denyFriendRequest(button) {
+	confirmFriendRequest(button,true);
+}
+
+function processConfirmResponse(button,confirm) {
+	// Find the other button and hide it
+	btnid = button.id;
+	senderidArr = btnid.split('-');
+	senderid = senderidArr[1];
 	
+	confirmBtnId = 'confirmFriendButtonId-' + senderid;
+	denyBtnId = 'denyFriendButtonId-' + senderid;
+	
+	confirmButton = document.getElementById(confirmBtnId);
+	denyButton = document.getElementById(denyBtnId);
+	
+	// Hide the deny button
+	denyButton.style.display = 'none';
+	
+	statusStr = requestObj.responseText;	
 	KSUCCESS = "0";
 	KFAILURE = "1";
 	KFRIENDS = "2";
@@ -101,12 +127,18 @@ function processConfirmResponse(confirmButton) {
 	KNOTPENDING = "4";
 	KSELF = "5";
 	
+	//statusStr = KSUCCESS;
+	
 	// Response status is 0 for success, nonzero for failure
 	switch(statusStr) {
 		case KSUCCESS:
 			confirmButton.className = "alreadyFriendsBtn";
-			confirmButton.value = "Friends Confirmed";
 			confirmButton.disabled = true;
+			if (confirm) {
+				confirmButton.value = "Friends Confirmed";
+			} else {
+				confirmButton.value = "Request Denied";
+			}
 			break;
 		case KFRIENDS:
 			confirmButton.className = "alreadyFriendsBtn";
@@ -138,4 +170,5 @@ function processConfirmResponse(confirmButton) {
 			confirmButton.value = "Server Error";
 			confirmButton.disabled = true;
 	}
+	
 }

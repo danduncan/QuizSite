@@ -58,7 +58,17 @@ public class ConfirmFriendServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//System.out.println("ConfirmFriendServlet called");
 		//printInputs(request);
-
+		
+		// Determine desired action
+		String action = request.getParameter("action");
+		if (action == null || action.isEmpty() || ( !action.equals("confirm") && !action.equals("deny") )) {
+			// Action invalid or unspecified. It must be either "confirm" or "deny"
+			System.out.println("ConfirmFriendServlet.doPost(): Confirm failed due to invalid action specification");
+			setResponse(response,KFAILURE);
+			return;
+		}
+		boolean confirm = action.equals("confirm"); // If false, we are denying the friend request
+		
 		// Validate inputs
 		String senderidStr = request.getParameter("senderid");
 		String useridStr = request.getParameter("userid");
@@ -86,7 +96,7 @@ public class ConfirmFriendServlet extends HttpServlet {
 		}
 
 		// Send the request
-		if (confirmFriendRequest(userId,senderId,dc)) {
+		if (confirmFriendRequest(userId,senderId,dc,confirm)) {
 			//System.out.println("\t\tConfirmFriendServlet: Confirmation successful!");
 			setResponse(response,KSUCCESS);
 			return;
@@ -171,30 +181,34 @@ public class ConfirmFriendServlet extends HttpServlet {
 		return KSUCCESS;		
 	}
 
-	// Send the friend request. Returns true on success
-	private boolean confirmFriendRequest(Integer userid, Integer senderid, DatabaseConnection dc) {
+	// Confirm the friend request. Returns true on success
+	private boolean confirmFriendRequest(Integer userid, Integer senderid, DatabaseConnection dc,boolean confirm) {
 		// Populate all fields
 		String timestamp = "\"" + FormatDateTime.getCurrentSystemDateTime() + "\"";
 		String group = "null";
 		
-		updateDatabase(userid,senderid,timestamp,group,dc);
+		updateDatabase(userid,senderid,timestamp,group,dc,confirm);
 		
 		return true;
 	}
 	
-	private void updateDatabase(Integer userid, Integer senderid, String timestamp, String group, DatabaseConnection dc) {
-		// Build queries to create friendship
-		String update1 = "INSERT INTO " + friendsTable + " VALUES (" + userid + "," + senderid + "," + timestamp + "," + group + ");";
-		//System.out.println("ConfirmFriendServlet: Adding friendship with query1 = \"" + update1 + "\"");
-		String update2 = "INSERT INTO " + friendsTable + " VALUES (" + senderid + "," + userid + "," + timestamp + "," + group + ");";
-		//System.out.println("ConfirmFriendServlet: Adding friendship with query2 = \"" + update1 + "\"");
+	private void updateDatabase(Integer userid, Integer senderid, String timestamp, String group, DatabaseConnection dc,boolean confirm) {
+		if (confirm) {
+			// Build queries to create friendship
+			String update1 = "INSERT INTO " + friendsTable + " VALUES (" + userid + "," + senderid + "," + timestamp + "," + group + ");";
+			//System.out.println("ConfirmFriendServlet: Adding friendship with query1 = \"" + update1 + "\"");
+			String update2 = "INSERT INTO " + friendsTable + " VALUES (" + senderid + "," + userid + "," + timestamp + "," + group + ");";
+			//System.out.println("ConfirmFriendServlet: Adding friendship with query2 = \"" + update1 + "\"");
+			
+			// Create the friendship
+			dc.executeUpdate(update1);
+			dc.executeUpdate(update2);
+		}
 		
 		// Build query to delete friend request
 		String update3 = "DELETE FROM " + messagesTable + " WHERE senderid = " + senderid + " AND receiverid = " + userid + " AND type = " + friendRequestType + ";";
 		
 		// Send the request
-		dc.executeUpdate(update1);
-		dc.executeUpdate(update2);
 		dc.executeUpdate(update3);
 	}
 }

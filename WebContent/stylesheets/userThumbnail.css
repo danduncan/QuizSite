@@ -142,6 +142,12 @@
 	background-color: #71AB57;
 }
 
+.profilethumbnailbuttons .denyBtn {
+	background-color: #EEEEEE;
+	color: black;
+	margin-top: -8px;
+}
+
 .profilethumbnailbuttons .loginBtn {
 	color: black;
 	background-color: #DFDC55;
