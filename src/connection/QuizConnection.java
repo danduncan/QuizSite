@@ -42,7 +42,8 @@ public class QuizConnection {
 				String fieldvalue = "";
 				while(rs.next()) {
 					fieldvalue = rs.getString(field);
-			}
+				}
+				rs.close();
 
 			return fieldvalue;
 		}

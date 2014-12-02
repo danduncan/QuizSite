@@ -36,8 +36,30 @@
 			out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
 		}
 	}
+%>
+<table border = "0">
+<tr>
 
+<td><form method ="post" action = "quizSearch.jsp">
+<input type = "submit" name = "Find Quizzes" value = "Find Quizzes"/>
+</form></td>
 
+<td><form method="get" action="CreateQuizServlet">
+<input type="submit" value="Create New Quiz" />
+</form></td>
+
+<td><form method ="post" action = "users.jsp">
+<input type = "submit" name = "Find Friends" value = "Find Friends"/>
+</form></td>
+
+<td><form method ="post" action = "users.jsp">
+<input type = "submit" name = "Find Friends" value = "Send a Message"/>
+</form></td>
+
+</tr>
+</table>
+
+<% 	
 	//get popular quizzes
 	int limit = 10;
 	out.println("<h2>Most Popular Quizzes </h2>");
@@ -45,17 +67,14 @@
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(popularQuizzes));
 	
 	//get recent quizzes
-	out.println("<h2>Recently Created Quizzes </h2>");
+	out.println("<h2>Recently Created Quizzes</h2>");
 	String[][] recentQuizzes = Quiz.getRecentQuizzes(dc,limit);
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(recentQuizzes));
 	%>
 	
-	<form method ="post" action = "quizSearch.jsp">
-	<input type = "submit" name = "Find Quizzes" value = "Find Quizzes">
-	</form>
 	<% 
 	//User's Info
-	out.println("<h2> My Quiz Info </h2>");
+	out.println("<h2> My Quiz Activity </h2>");
 	//quizzes taken table
 	String[] colNames = new String[]{"Quiz Name","Date Taken","Score","Time"};
 	String[][] takenData = new String[user.quizzestaken.size()][colNames.length];
@@ -74,17 +93,13 @@
 		}
 	}
 	if (numRecentTaken > 0){
-		out.println("<p>Recently Taken Quizzes</p>");
+		out.println("<h3>Recently Taken Quizzes</h3>");
 		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(Arrays.copyOfRange(takenData,0,numRecentTaken),colNames));
 	} else {
-		out.println("<p>No Recently Taken Quizzes");
+		out.println("<h3>No Recently Taken Quizzes</h3>");
 	}
 	
 	//quizzes made table
-	//create new quiz
-	out.println("<form method=\"get\" action=\"CreateQuizServlet\">");
-	out.println("<p><input type=\"submit\" value=\"Create New Quiz\" /></p>");
-	out.println("</form>");
 	//out.println("<ul type = \"circle\">");
 	out.println("<form method=\"get\" action=\"QuizHomepageServlet\">");
 	
@@ -109,15 +124,15 @@
 	//out.println("</ul>");
 	
 	if (numRecentMade > 0){
-		out.println("<p>Recently Created Quizzes</p>");
+		out.println("<h3>Recently Created Quizzes</h3>");
 		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(Arrays.copyOfRange(madeData,0,numRecentMade),columnNames));
 	} else {
-		out.println("<p>No Recently Created Quizzes</p>");
+		out.println("<h3>No Recently Created Quizzes</h3>");
 	}
 	
 	
 	//achievements table
-	out.println("<p> Achievements: " + user.achievements.size() + "</p>");	
+	out.println("<h2>Achievements</h2>");	
 	String[] cNames = new String[]{"Name","Description","Date Achieved","Badge Earned"};
 	String[][] achieveData = new String[user.achievements.size()][cNames.length];
 	
@@ -134,9 +149,40 @@
 	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achieveData,cNames));
 	}
 	
+%>
+
+<!-- <p>Create New Message</p>
+<form method="post" action="CreateMessageServlet">
+<p>User name: <input type="text" name="receiverUsername"></p>
+<p>Subject: <input type="text" name="subject"></p>
+<p>Body: <textarea name="body" cols="50" rows="10"></textarea></p>
+<p><input type="submit" value="Send Message" /></p>
+<input name="type" type="hidden" value= "2" />
+</form> -->
+
+<h2>Inbox</h2>
+<h3>Friend Requests</h3>
+
+<%	
+	ArrayList<Integer> friendIDs = Friend.getFriendRequestIDs(dc,user.id);
+	out.println("<p> You have " + friendIDs.size() + " Friend Requests</p>");
 	
-	//messages
-	out.println("<h2> Messages </h2>");
+	//add dan's friend thumbnails as incoming requests
+	//get users name as query
+	for (int i = 0; i < friendIDs.size(); i++){
+		String newquery = (String) user.userconnection.getAttribute("username", friendIDs.get(i));
+		if (newquery != null && !newquery.isEmpty()) {
+		//out.println("User query = \"" + query + "\";");
+
+			if (dc != null) {
+				ResultSet rs = users.SearchForUsers.basicSearch(dc,newquery);
+				//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
+				out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
+			}
+		}
+	}
+	
+	out.println("<h3>Notes</h3>");
 	int count = 0;
 	ArrayList<Integer> newmessageNums = new ArrayList<Integer>();
 	ArrayList<String> newMessages = new ArrayList<String>();
@@ -158,41 +204,11 @@
 	//view all messages button
 	out.println("<p><a href=\"checkmessage.jsp?messageNum=-1\">View All Messages</a></li>");
 %>
+<h3>Challenges</h3>
 
-<h3>Create New Message</h3>
-<form method="post" action="CreateMessageServlet">
-<p>User name: <input type="text" name="receiverUsername"></p>
-<p>Subject: <input type="text" name="subject"></p>
-<p>Body: <textarea name="body" cols="50" rows="10"></textarea></p>
-<p><input type="submit" value="Send Message" /></p>
-<input name="type" type="hidden" value= "2" />
-</form>
-
-</body>
-
-<h2> Friends </h2>
-<form method ="post" action = "users.jsp">
-<input type = "submit" name = "Find Friends" value = "Find Friends">
-</form>
-<%	
-	ArrayList<Integer> friendIDs = Friend.getFriendRequestIDs(dc,user.id);
-	out.println("<p> You have " + friendIDs.size() + " Friend Requests</p>");
-	
-	//add dan's friend thumbnails as incoming requests
-	//get users name as query
-	for (int i = 0; i < friendIDs.size(); i++){
-		String newquery = (String) user.userconnection.getAttribute("username", friendIDs.get(i));
-		if (newquery != null && !newquery.isEmpty()) {
-		//out.println("User query = \"" + query + "\";");
-
-			if (dc != null) {
-				ResultSet rs = users.SearchForUsers.basicSearch(dc,newquery);
-				//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
-				out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
-			}
-		}
-	}
 		
+<% 		
+//old message setup
 //	determine if user has responded
 // 	if (user.messages.get(i).replied == 0 && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 0){
 // 		newFriendID.add(user.messages.get(i).senderid);
@@ -215,7 +231,7 @@
 // 	out.println("</ul>"); 
 	
 
-	out.println("<h3> Friend Activity </h3>");
+	out.println("<h2> Friend Activity </h2>");
 	ArrayList<String> activity = Friend.getFriendActivity(user,dc,achievementtypes);
 	if ( activity.size() > 0){
 		out.println("<ul type = \"circle\">");
@@ -231,5 +247,5 @@
 
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 
-
+</body>
 </html>

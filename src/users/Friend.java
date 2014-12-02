@@ -66,6 +66,8 @@ public class Friend {
 		
 		}
 		
+		rs.close();
+		
 		for (int i = 0; i < friendIDs.size(); i++ ){
 			User friend = new User(friendIDs.get(i),new UserConnection(dc));
 			//search for recent activity
