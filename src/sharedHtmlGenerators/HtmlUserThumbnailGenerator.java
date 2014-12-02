@@ -11,8 +11,8 @@ import quizsite.DatabaseConnection;
 
 public class HtmlUserThumbnailGenerator {
 	// Strings for generating the link to a user's profile
-	public static final String profileURL = "/QuizSite/profile.jsp";
-	public static final String profileQueryString = "id";
+	public static final String profileURL = "/QuizSite/user";
+	public static final String profileQueryString = "userid";
 	public static final String sendMessageUrl = "sendmessage.jsp";
 	public static final String sendMessageFcnHandle = "displayMessage";
 	
