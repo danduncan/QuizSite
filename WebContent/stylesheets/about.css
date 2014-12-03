@@ -1,4 +1,4 @@
-ul.checklist span, h1 > span, li.fixed span, .bugFrame {
+.notDone {
 	/* display: none; */
 }
 
