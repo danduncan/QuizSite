@@ -2,6 +2,7 @@ package users;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.jsp.JspWriter;
@@ -61,10 +62,10 @@ public class Message {
 	}
 	
 	public static void deleteMessage(User user, int id, DatabaseConnection dc){
-		List<Message> messages = user.messages;
+		ArrayList<Message> messages = user.messages;
 		for(int i = 0; i<messages.size(); i++){
 			if(messages.get(i).id == id){
-				messages.remove(i);
+				user.messages.remove(i);
 			}
 		}
 		

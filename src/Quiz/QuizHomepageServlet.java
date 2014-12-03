@@ -67,7 +67,7 @@ public class QuizHomepageServlet extends HttpServlet {
 		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 		if(challenge != null && challengeID != null){
 			Message.deleteMessage(user, Integer.parseInt(challengeID), dc);
-			if (challenge.equals("declined")){
+			if (challenge.equals("decline")){
 				RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
 				dispatch.forward(request, response);
 			}
