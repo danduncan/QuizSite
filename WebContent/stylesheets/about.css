@@ -1,13 +1,6 @@
-ul.checklist span, h1 > span, li.fixed span {
-	display: initial;
+ul.checklist span, h1 > span, li.fixed span, .bugFrame {
 	/* display: none; */
 }
-
-.bugFrame {
-	display: block;
-	/* display: none; */
-}
-
 
 .mainBody {
 	width: 1000px;
