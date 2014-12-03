@@ -30,7 +30,7 @@ public class QuizHomepageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String IDStr = (String)request.getParameter("quizid");
 		Integer ID = null;
-		if (IDStr != null) ID = Integer.parseInt(IDStr);
+		if (IDStr != null && !IDStr.isEmpty()) ID = Integer.parseInt(IDStr);
 		
 		// First, forward to homepage if no quiz or invalid quiz specified
 		if (ID == null || ID < 0) {
@@ -65,7 +65,7 @@ public class QuizHomepageServlet extends HttpServlet {
 	private boolean quizExists(Integer quizid, DatabaseConnection dc) {
 		if (quizid == null || quizid < 0 || dc == null) return false;
 		String query = "SELECT * FROM quizzes WHERE id=" + quizid + " LIMIT 1";
-		ResultSet rs = dc.executeQuery(query);
+		ResultSet rs = dc.executeSimultaneousQuery(query);
 		try {
 			if(rs.first()) return true; // Quiz exists
 		} catch (SQLException ignored) {}
