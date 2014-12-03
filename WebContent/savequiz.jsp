@@ -9,7 +9,7 @@
 <title>Quiz Saved!</title>
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<h1> Quiz Saved! </h1>
 	<%
 		ServletContext con = request.getServletContext();

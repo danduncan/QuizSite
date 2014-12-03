@@ -26,10 +26,11 @@
 			//out.println("<h1>You are signed in, " + username + "!");
 		} else {
 			out.println("<h1>Welcome to Qwizard!</h1>");
-			out.println("<h2>You need to sign in. <a href=\"/QuizSite/signin.jsp\" >Sign in here</a></h2>");
+			out.println("<p>Show off your intellectual prowess by making and taking quizzes with your friends!</p>");
+			out.println("<p>Please <a href=\"/QuizSite/signin.jsp\" >sign in</a> or <a href=\"/QuizSite/createaccount.jsp\" >create an account</a>!</p>");
 		}
 	%>
-		
+
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
