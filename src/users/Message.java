@@ -2,6 +2,7 @@ package users;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.jsp.JspWriter;
 
@@ -57,5 +58,18 @@ public class Message {
 		catch (Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public static void deleteMessage(User user, int id, DatabaseConnection dc){
+		List<Message> messages = user.messages;
+		for(int i = 0; i<messages.size(); i++){
+			if(messages.get(i).id == id){
+				messages.remove(i);
+			}
+		}
+		
+		user.updateUserDatabase();
+		String query = "DELETE FROM messages WHERE id = " + id + ";";
+		dc.executeQuery(query);
 	}
 }
