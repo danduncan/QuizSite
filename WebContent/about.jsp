@@ -45,6 +45,9 @@
 				<li>A simple fix would be to create a UserRefresh class that is called at the beginning of every JSP. Its job would be to see if the user's session contains partial attributes and populate the missing ones</li>
 				</ul></li>
 			<li>DatabaseConnection crashes after being open too long. This may not be fixable</li>
+			<li>Site crashes if you try to access a quiz while not logged in. The should either be a public quiz view, or the servlet should forward the user to the home/signin page
+			<ul><li>To see what I am talking about, log out of your account and then click this <a href="http://localhost:8080/QuizSite/QuizHomepageServlet?quizid=23">link</a></li></ul></li>
+			<li>numTaken does not get incremented when a user takes a quiz</li>
 			
 			</ul>
 		</div>

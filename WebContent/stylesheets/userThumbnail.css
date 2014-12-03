@@ -63,7 +63,7 @@ div.tinyAchievements .nanoBadge {
 }
 
 .profilethumbnailinfo {
-	width: 40%;
+	width: 50%;
 	height: 130px;
 	display: inline-block;
 	vertical-align: top;
@@ -202,3 +202,15 @@ div.tinyAchievements .nanoBadge {
 	background-color: #3B5998;
 	color: #FFFFFF;
 }
+
+.profilethumbnailname span.usernameThumbnail {
+	color: grey;
+	font-size: 70%;
+	font-weight: normal;
+	
+}
+
+a.usernameThumbnail:link { text-decoration: none; }
+a.usernameThumbnail:visited { text-decoration: none; }
+a.usernameThumbnail:hover { text-decoration: none; }
+a.usernameThumbnail:active { text-decoration: none; }

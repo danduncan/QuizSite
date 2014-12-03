@@ -216,7 +216,7 @@ public class HtmlUserThumbnailGenerator {
 		}
 		
 		// Return empty string if any required fields are null
-		if (userid == null || firstName == null || lastName == null || pictureUrl == null || dateJoined == null) return "";
+		if (userid == null || username == null || firstName == null || lastName == null || pictureUrl == null || dateJoined == null) return "";
 		
 		// Return empty string if any required fields are empty
 		if ((firstName.isEmpty() && lastName.isEmpty())) return "";
@@ -249,7 +249,9 @@ public class HtmlUserThumbnailGenerator {
 		// Add the user's profile info
 		sb.append("\t<div class=\"" + classProfileInfo + "\">" + ls);
 		sb.append("\t\t<div class=\"" + classProfileName + "\">" + ls);
-		sb.append("\t\t\t<a href=\"" + profileURL + "?" + profileQueryString + "=" + userid + "\">" + fullName + "</a>" + ls);
+		sb.append("\t\t\t<a href=\"" + profileURL + "?" + profileQueryString + "=" + userid + "\">" + fullName + "</a> ");
+		String fmtUsername = " <span class=\"usernameThumbnail\">@" + username +"</span>";
+		sb.append( "<a href=\"" + profileURL + "?" + profileQueryString + "=" + userid + "\" class=\"usernameThumbnail\">" + fmtUsername + "</a>" + ls);
 		sb.append("\t\t</div>" + ls);
 		sb.append("\t\t<div class=\"" + classProfileStats + "\">" + ls);
 		sb.append("\t\t\t<span>" + labelAchievements + getAchievements(userid,dc) + "</span>" + ls);
