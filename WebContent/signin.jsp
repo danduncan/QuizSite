@@ -28,11 +28,11 @@
 		<div class="logininstructions" >Sign In</div>
 		<form method="post" action="LoginServlet" id="signinform">
 			<span class="loginlabel" >Enter your username: </span>
-				<input type="text" name="username" class="logintextbox" id="usernameBox" >
+				<input type="text" name="username" class="logintextbox" id="usernameBox" onkeypress="if (event.keyCode==13) { event.preventDefault(); validate(); }" >
 				<span class="errorMsg" id="noUsername">You must provide a username</span>
 				<span class="errorMsg" id="usernameInvalidChars">Username may only contain letters, numbers, and periods</span>
 			<span class="loginlabel" >Enter your password: </span>
-				<input type="password" name="password" class="logintextbox" id="pwdBox" >
+				<input type="password" name="password" class="logintextbox" id="pwdBox" onkeypress="if (event.keyCode==13) { event.preventDefault(); validate(); }" >
 				<span class="errorMsg" id="noPwd">You must provide a password</span>
 				<span class="errorMsg" id="pwdInvalidChars">Password may only contain [0-9a-zA-Z !@#$%^&*()_=+:;,.?-]</span>
 		</form>
