@@ -265,9 +265,6 @@
 		<div class="bigFrame notDone">
 			<h1>Extensions Not Implemented</h1>
 			<ul>
-				<li>User achievements displayed via badges <span>(needs to be done)</span></li>
-				<li>Achievement badges displayed on user profiles <span>(needs to be done)</span></li>
-				<li>Achievement badges display on user thumbnails <span>(needs to be done)</span></li>
 				<li>Administrator view <span>(not implemented)</span>
 					<ul>
 						<li>Create announcements for homepage</li>
@@ -283,7 +280,6 @@
 							</ul></li>
 					</ul></li>
 				<li>Homepage displays announcements <span>(not implemented)</span></li>
-				<li>Homepage displays a user's achievements <span>(not implemented)</span></li>
 				<li>Link to edit the quiz if the user is the quiz owner</li>
 				<li>Quiz categories</li>
 				<li>Question categories</li>
@@ -292,9 +288,7 @@
 				<li>Allow users to flag quizzes as inappropriate</li>
 				<li>Public view of website
 					<ul>
-						<li>Public view of user search (implemented)</li>
 						<li>Public view of homepage</li>
-						<li>Public view of user profiles</li>
 						<li>Public view of quiz pages</li>
 					</ul></li>
 				<li>Cookies to provide long-term tracking of users</li>
