@@ -221,27 +221,27 @@
 
 		
 <% 		
-//old message setup
+//challenges setup
 //	determine if user has responded
-// 	if (user.messages.get(i).replied == 0 && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 0){
-// 		newFriendID.add(user.messages.get(i).senderid);
-// 		messageNum.add(i);
-// 		countFriendReq++;
-// 		newFriendReq.add(user.messages.get(i));
-// 		}
-// 	}
-// 	out.println("<p> You have " + countFriendReq + " new Friend Requests</p>");
-// 	out.println("<ul type = \"circle\">");
-// 	for(int i = 0; i < newFriendReq.size(); i++){
-// 		out.println("<form method=\"post\" action=\"FriendRequestServlet\">");
-// 		out.println("<li> From: <a href=\"profile.jsp?userID="+newFriendID.get(i)+"\">"+ user.userconnection.getAttribute("username",newFriendID.get(i))+"</a> On: "+FormatDateTime.getUserDate(newFriendReq.get(i).datesent));		
-// 		out.println("<input type=\"submit\" name = \"friendreq\" value = \"accept\"/>   <input type=\"submit\" name = \"friendreq\" value = \"decline\">");
-// 		out.println("<input type=\"hidden\" name = \"msg_friendIDs\" value = \""+messageNum.get(i)+","+newFriendID.get(i)+"\"");		out.println("</form>");
-// 		out.println("</li>");	
-// 		out.println("</form>");
+	ArrayList<Message> newChallenge = new ArrayList<Message>();
+	for (int i = 0; i < user.messages.size(); i++){
+ 		if (user.messages.get(i).replied == 0 && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 1){
+			newChallenge.add(user.messages.get(i));
+ 		}
+  	}
+ 	out.println("<p> You have " + newChallenge.size() + " new challenges</p>");
+ 	out.println("<ul type = \"circle\">");
+ 	for(int i = 0; i < newChallenge.size(); i++){
+ 		out.println("<form method=\"post\" action=\"QuizHomepageServlet?quizid="+newChallenge.get(i).body+"\">");
+ 		out.println("<li> From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));		
+ 		out.println("<input type=\"submit\" name = \"challenge\" value = \"accept\"/>   <input type=\"submit\" name = \"challenge\" value = \"decline\">");
+ 		out.println("<input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\"");		
+ 		out.println("</form>");
+ 		out.println("</li>");	
+ 		out.println("</form>");
 	
-// 	}
-// 	out.println("</ul>"); 
+ 	}
+ 	out.println("</ul>"); 
 	
 
 	out.println("<h2> Friend Activity </h2>");

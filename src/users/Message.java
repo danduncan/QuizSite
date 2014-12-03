@@ -70,7 +70,7 @@ public class Message {
 		}
 		
 		user.updateUserDatabase();
-		String query = "DELETE FROM messages WHERE id = " + id + ";";
-		dc.executeQuery(query);
+		String query = "DELETE FROM messages WHERE id = " + id;
+		dc.executeUpdate(query);
 	}
 }

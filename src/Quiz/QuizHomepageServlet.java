@@ -66,10 +66,12 @@ public class QuizHomepageServlet extends HttpServlet {
 		ServletContext sc = request.getServletContext();
 		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
 		if(challenge != null && challengeID != null){
+			//System.out.println("we got here");
 			Message.deleteMessage(user, Integer.parseInt(challengeID), dc);
 			if (challenge.equals("decline")){
 				RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
 				dispatch.forward(request, response);
+				return;
 			}
 		}
 		
