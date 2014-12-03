@@ -25,10 +25,10 @@
 			<li>Qwizard consists of over 100 source code files and 10,000 lines of code</li>
 			</ul>
 		</div>
-		<div class="bigFrame">
+		<div class="bigFrame bugFrame">
 			<h1><span>Known Bugs</span></h1>
 			<ul>
-			<li>Welcome page gets nullpointerexception on login and fails to load completely</li>
+			<li class="fixed"><span>(Fixed) </span>Welcome page gets nullpointerexception on login and fails to load completely</li>
 				<ul><li>Bug appears to be in getFriendActivity()</li></ul>
 			<li class="fixed"><span>(Fixed) </span>WelcomePage does something weird when the server restarts.
 				<ul><li>The result is a site crash with error code 500 </li>
@@ -40,7 +40,7 @@
 			</ul>
 		</div>
 		<div class="bigFrame">
-			<h1>Project Requirements</h1>
+			<h1>Required Features</h1>
 			<ul class="checklist">
 			<li>All required quiz properties
 				<ul>
@@ -69,13 +69,13 @@
 			<li>All message requirements
 				<ul>
 					<li>Friend request</li>
-					<li>Challenge <span>(Goes on quiz profile page))</span></li>
+					<li>Challenge <span>(Goes on quiz profile page)</span></li>
 					<li>Note</li>
 				</ul></li>
 			</ul>
 			<h2>Required pages:</h2>
 			<ul class="checklist">
-				<li>Home page <span>(implemented, but generates lots of nullpointerexceptions)</span>
+				<li>Home page
 					<ul>
 						<li>List of popular quizzes</li>
 						<li>List of recently created quizzes</li>
@@ -120,8 +120,8 @@
 					</ul></li>
 				<li>Error checking
 					<ul>User can never receive a 404 error from clicking a site link
-						<li>Quiz profile page needs to handle a user trying to access a quiz that does not exist (e.g. forward them to the homepage)<span> (not yet implemented)</span></li>
-						<li>User profile page needs to handle a user trying to access a user that does not exist (e.g. forward them to the homepage)<span> (not yet implemented)</span></li>
+						<li>Quiz profile page gracefully handles malformed URLs (e.g. forward them to the homepage)</li>
+						<li>User profile page gracefully handles malformed URLs (e.g. forward them to the homepage)</li>
 					</ul></li>
 				<li>Use of sessions allows multiple users to visit site simultaneously</li>
 					
@@ -130,7 +130,8 @@
 		
 		
 		<div class="bigFrame">
-			<h1>Recommended Features and Extensions for Three-Person Team</h1>
+			<h1>Recommended Features and Extensions</h1>
+			<h2>(Based on requirements for a three-person team)</h2>
 			<ul class="checklist">
 				<li>Quiz practice mode <span>(not yet implemented)</span></li>
 				<li>Quizzes track performance of users</li> 
@@ -244,8 +245,8 @@
 				<li>Catchy name for website</li>
 			</ul>
 		</div>
-		<div class="bigFrame">
-			<h1>Recommended features and extensions not implemented</h1>
+		<div class="bigFrame bugFrame">
+			<h1>Extensions Not Implemented</h1>
 			<ul>
 				<li>User achievements displayed via badges <span>(needs to be done)</span></li>
 				<li>Achievement badges displayed on user profiles <span>(needs to be done)</span></li>
