@@ -9,7 +9,7 @@
 <title>User Profile</title>
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"),session) %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	
 	<%
 	int userID = Integer.parseInt(request.getParameter("userid"));

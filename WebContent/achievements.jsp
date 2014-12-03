@@ -13,7 +13,7 @@
 <title>Achievements</title>
 </head>
 <body>
-<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 <% 
  ServletContext sc = getServletContext();
  ArrayList<AchievementType> achievementtypes = (ArrayList<AchievementType>) sc.getAttribute("achievementtypes");
@@ -22,10 +22,11 @@
  String[][] achievements = new String[achievementtypes.size()+1][colNames.length];
  achievements[0] = colNames;
  for (int i = 0; i < achievementtypes.size(); i++){
-	 achievements[i][0] =  achievementtypes.get(i).name;
-	 achievements[i][1] =  achievementtypes.get(i).description;
-	 achievements[i][2] =  "<img src = \""+achievementtypes.get(i).icon+"\" height = \"50\" width = \"50\"";
+	 achievements[i+1][0] =  achievementtypes.get(i).name;
+	 achievements[i+1][1] =  achievementtypes.get(i).description;
+	 achievements[i+1][2] =  "<img src = \""+achievementtypes.get(i).icon+"\" height = \"50\" width = \"50\"";
  }
+ out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achievements));
 %>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>

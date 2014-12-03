@@ -36,6 +36,8 @@ public class UserConnection {
 			while(rs.next()) {
 				quizzestaken.add(new QuizTaken(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("id"),rs.getString("datetaken"),rs.getInt("score"),rs.getInt("time")));
 			}
+			rs.close();
+			
 			//want array list to be sorted by most recent
 			Collections.sort(quizzestaken, new Comparator<QuizTaken>() {
 				@Override public int compare(QuizTaken q1, QuizTaken q2) {
@@ -57,6 +59,7 @@ public class UserConnection {
 			while(rs.next()) {
 				messages.add(new Message(rs.getInt("id"),rs.getInt("type"),rs.getString("datesent"),rs.getString("timesent"), rs.getInt("senderid"), rs.getInt("receiverid"), rs.getBoolean("opened"), rs.getInt("replied"),rs.getString("subject"), rs.getString("body")));
 			}
+			rs.close();
 			
 			return messages;	
 		} else if (field.equals(MyDBInfo.FRIENDSTABLE)){
@@ -70,6 +73,7 @@ public class UserConnection {
 			while(rs.next()) {
 				friends.add(new Friend(rs.getInt("friend1"),rs.getInt("friend2"),rs.getString("datefriended"),rs.getString("groupname")));
 			}
+			rs.close();
 			
 			return friends;	
 		} else if (field.equals(MyDBInfo.ACHIEVEMENTSTABLE)){
@@ -83,6 +87,8 @@ public class UserConnection {
 			while(rs.next()) {
 				achievements.add(new Achievement(rs.getInt("type"),rs.getInt("userid"),rs.getString("dateachieved")));
 			}
+			rs.close();
+			
 			//sort by most recent
 			Collections.sort(achievements, new Comparator<Achievement>() {
 				@Override public int compare(Achievement q1, Achievement q2) {
@@ -104,6 +110,8 @@ public class UserConnection {
 				quizzesmade.add(new QuizMade(rs.getInt("authorid"),rs.getInt("id"),rs.getString("datemade")));
 			}
 			
+			rs.close();
+			
 			Collections.sort(quizzesmade, new Comparator<QuizMade>() {
 				@Override public int compare(QuizMade q1, QuizMade q2) {
 					return Integer.parseInt((q2.date.split(" ")[0])) - Integer.parseInt(q1.date.split(" ")[0]); // Descending
@@ -124,6 +132,7 @@ public class UserConnection {
 			while(rs.next()) {
 				highscores++;
 			}
+			rs.close();
 			
 			return highscores.toString();	
 			
@@ -138,6 +147,7 @@ public class UserConnection {
 			while(rs.next()) {
 				ipaddresses.add(new IPAddress(rs.getInt("userid"),rs.getObject("ip")));
 			}
+			rs.close();
 			
 			return ipaddresses;
 		//return entry object from field (simplest query)
@@ -149,7 +159,8 @@ public class UserConnection {
 			while(rs.next()) {
 				fieldvalue = rs.getString(field);
 			}
-
+			rs.close();
+			
 			return fieldvalue;
 		}
 		

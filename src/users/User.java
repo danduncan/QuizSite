@@ -81,8 +81,27 @@ public class User {
 			String update = "UPDATE users SET (id, username, password, firstname, lastname, email, datejoined, numfriends, numtaken, numtakenpractice, numcreated, highscores, profilepicture) = " +
 					"("+id+",\""+username+"\", \"" + password + "\", \"" + firstname + "\",\"" + lastname + "\", \"" + email
             + "\", \"" + datejoined + "\"," + numfriends + ","+quizzestaken.size()+ ","+ numtakenpractice +","+quizzesmade.size()+","+highscores+",\""+profilepicture+ "\") WHERE ( id = " + id +")";   
-			System.out.println(update);
-			userconnection.updateUserDatabase(update);
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append("UPDATE "+ MyDBInfo.USERTABLE+" SET ");
+			//sb.append("id = "+id);
+			//sb.append(", username = "+username);
+			//sb.append(", firstname = "+firstname);
+			//sb.append(", lastname = "+lastname);
+			//sb.append(", password = "+password);
+			//sb.append(", email = " + email);
+			sb.append(" numfriends = "+numfriends);
+			sb.append(", numtaken = "+quizzestaken.size());
+			sb.append(", numtakenpractice = " + numtakenpractice);
+			sb.append(", numcreated = "+quizzesmade.size());
+			sb.append(", highscores = "+ highscores);
+			//sb.append(", profilepicture = " + profilepicture);
+			
+			sb.append(" WHERE (id = "+id+")");
+			
+			
+			//System.out.println(sb);
+			userconnection.updateUserDatabase(sb.toString());
 		}
 	}
 

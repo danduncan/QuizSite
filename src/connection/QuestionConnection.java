@@ -51,6 +51,7 @@ public class QuestionConnection {
 						//need to format answer
 						questions.add(new QuestionResponse(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONRESPONSE, rs.getString("question"),answer));
 					}
+					rs.close();
 				} else if (type.equals(MyDBInfo.QUESTIONFILLBLANK)){
 					while (rs.next()){
 						//answer can be string array, and the question can be two strings as well
@@ -61,6 +62,7 @@ public class QuestionConnection {
 						String[] question = formattedQ.split(stringdelimiter, -1);
 						questions.add(new FillBlankQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONFILLBLANK, question[0], question[1],answer));
 					}
+					rs.close();
 				} else if (type.equals(MyDBInfo.QUESTIONMULTIPLECHOICE)){
 					while (rs.next()){
 						//need to get answer choices
@@ -68,6 +70,7 @@ public class QuestionConnection {
 						String[] answerChoices = formAnsChoices.split(stringdelimiter);
 						questions.add(new MultipleChoiceQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLECHOICE,rs.getString("question"), rs.getString("answer"),answerChoices, rs.getBoolean("randomizeAnswers")));
 					}
+					rs.close();
 				} else if (type.equals(MyDBInfo.QUESTIONPICTURE)){
 					while (rs.next()){
 						//need to get answers string
@@ -75,6 +78,7 @@ public class QuestionConnection {
 						String[] answers = formattedString.split(stringdelimiter);
 						questions.add(new PictureResponseQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONPICTURE, rs.getString("question"), answers, rs.getString("url")));
 					}
+					rs.close();
 				} else if (type.equals(MyDBInfo.QUESTIONMULTIPLEANSWER)){
 					while (rs.next()){
 						//String [][] answers = null;
@@ -99,6 +103,7 @@ public class QuestionConnection {
 						}
 						questions.add(new MultiAnswerQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLEANSWER, rs.getString("question"), answers, rs.getBoolean("ordered")));
 					} 
+					rs.close();
 				} else if (type.equals(MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER)){
 					while (rs.next()){
 						//need to get answers string
@@ -109,6 +114,7 @@ public class QuestionConnection {
 
 						questions.add(new MultiChoiceMultiAnswerQuestion(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("qnumber"),rs.getInt("pagenumber"),rs.getInt("questiontime"), rs.getInt("numattempted"), rs.getInt("numcorrect"), MyDBInfo.QUESTIONMULTIPLECHOICEMULTIPLEANSWER, rs.getString("question"), answers, choices, rs.getBoolean("randomizeAnswers")));
 					}
+					rs.close();
 				}
 
 

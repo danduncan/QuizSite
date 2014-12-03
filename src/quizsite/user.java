@@ -20,10 +20,10 @@ public class user extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int requestedUser = Integer.parseInt(request.getParameter("userid"));
-		int currentUser = (Integer) request.getSession().getAttribute("userid");
+		Integer requestedUser = Integer.parseInt(request.getParameter("userid"));
+		Integer currentUser = (Integer) request.getSession().getAttribute("userid");
 		
-		if(requestedUser == currentUser){
+		if(requestedUser == null || requestedUser == currentUser){
 			RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
 			dispatch.forward(request, response);
 		}else{
