@@ -25,6 +25,13 @@ public class SaveQuizServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Quiz quiz = (Quiz) request.getSession().getAttribute(ShowQuizServlet.QUIZ);
 		User user = (User) request.getSession().getAttribute("user");
+		
+		if(user == null){
+			RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+			dispatch.forward(request, response);
+			return;
+		}
+		
 		quiz.updateDatabase(true, quiz.id);
 		user.quizzesmade.add(new QuizMade(user.id,quiz.id));
 		user.updateUserDatabase();

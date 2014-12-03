@@ -38,7 +38,14 @@
 	out.println(sharedHtmlGenerators.HtmlQuizThumbnailGenerator.getThumbnail(rs));
 	
 	User user = (User)request.getSession().getAttribute("user");
-	List<Friend> friends = user.friends;
+	if(user == null){
+		RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+		dispatch.forward(request, response);
+		return;
+	}
+	
+	//List<Friend> friends = user.friends;
+	List<Friend> friends = user.getFriends();
 	String friend = request.getParameter("challengeFriend");
 	if(friend != null){
 		int id = sm.popNextMessageID();

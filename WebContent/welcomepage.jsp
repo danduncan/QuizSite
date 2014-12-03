@@ -199,12 +199,13 @@
 	int count = 0;
 	ArrayList<Integer> newmessageNums = new ArrayList<Integer>();
 	ArrayList<String> newMessages = new ArrayList<String>();
-	for (int i = 0; i < user.messages.size(); i++){
+	List<Message> messages = user.getMessages();
+	for (int i = 0; i < messages.size(); i++){
 		//determine if new message
-		if (user.messages.get(i).opened == false && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 2){
+		if (messages.get(i).opened == false && messages.get(i).receiverid == user.id  && messages.get(i).type == 2){
 			newmessageNums.add(i);
 			count++;
-			newMessages.add(user.messages.get(i).toString());
+			newMessages.add(messages.get(i).toString());
 		}
 	}
 	out.println("<p> You have " + count + " new Messages</p>");

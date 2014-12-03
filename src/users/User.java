@@ -30,6 +30,15 @@ public class User {
 	public UserConnection userconnection;
 	public boolean create = false;
 	
+	
+	public List<Friend> getFriends(){
+		return (ArrayList<Friend>) userconnection.getAttribute(MyDBInfo.FRIENDSTABLE, id);
+	}
+	
+	public List<Message> getMessages(){
+		return (ArrayList<Message>) userconnection.getAttribute(MyDBInfo.MESSAGESTABLE, id);
+	}
+	
 	//two constructors - one for when we create a new user, the second is for when a user logs in
 	//create new, empty user
 	public User(UserConnection uc){

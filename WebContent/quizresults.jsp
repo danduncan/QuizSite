@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="Quiz.*, users.*, quizsite.*, java.util.List, java.text.DecimalFormat, java.sql.*, java.io.IOException" %>
+<%@ page import="Quiz.*, users.*, quizsite.*, java.util.List, java.text.DecimalFormat, java.sql.*, java.io.IOException, connection.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,8 +22,12 @@
 		User user = (User) ses.getAttribute("user");
 		ScoreManager scoreManager = (ScoreManager) con.getAttribute("ScoreManager");
 		SiteManager sm = (SiteManager) con.getAttribute("SiteManager");	
+		DatabaseConnection dc = (DatabaseConnection) con.getAttribute("DatabaseConnection");
 		
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
+		quiz.numtaken++;
+		QuizConnection qc = new QuizConnection(dc, null);
+		qc.storeQuiz(quiz, false);
 		user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
 		user.updateUserDatabase();
 		ses.setAttribute("user", user);
@@ -33,7 +37,6 @@
 		String percentScore = df.format(100*((double)numCorrect/(double)numAttempted));
 		
 		List<Achievement> achieved = Achievement.updateQuizTakenAchievements(user, rank);
-		DatabaseConnection dc = (DatabaseConnection) con.getAttribute("DatabaseConnection");
 		Achievement.updateSiteAchievements(user, achieved, dc);
 
 		ResultSet rs = SearchForQuizzes.getQuizByID(dc,quiz.id);

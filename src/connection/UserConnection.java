@@ -34,6 +34,7 @@ public class UserConnection {
 			ArrayList<QuizTaken> quizzestaken = new ArrayList<QuizTaken>();
 			//create list of quizzes taken
 			while(rs.next()) {
+				//Double time = (double) rs.getInt("time");
 				quizzestaken.add(new QuizTaken(rs.getInt("id"),rs.getInt("quizid"),rs.getInt("id"),rs.getString("datetaken"),rs.getInt("score"),rs.getInt("time")));
 			}
 			rs.close();

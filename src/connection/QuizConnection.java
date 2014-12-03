@@ -66,6 +66,8 @@ public class QuizConnection {
 		
 		} else {
 			
+			db.executeUpdate("UPDATE quizzes SET numtaken = numtaken + 1 WHERE id = "+quiz.id+";");
+			
 		}
 	}
 }
