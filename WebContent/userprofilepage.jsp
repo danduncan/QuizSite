@@ -95,7 +95,9 @@
 		achieveData[i][3] = "<img src = \""+achievementtypes.get(user.achievements.get(i).type).icon+"\" height = \"50\" width = \"50\"";
 	}
 	if (user.achievements.size() > 0){
-	out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achieveData,cNames));
+		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achieveData,cNames));
+	} else {
+		out.println("No Achievements have been earned.");
 	}
 	%>
 	

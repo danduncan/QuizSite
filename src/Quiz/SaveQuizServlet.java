@@ -27,6 +27,7 @@ public class SaveQuizServlet extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		quiz.updateDatabase(true, quiz.id);
 		user.quizzesmade.add(new QuizMade(user.id,quiz.id));
+		user.updateUserDatabase();
 		RequestDispatcher dispatch = request.getRequestDispatcher("savequiz.jsp");
 		dispatch.forward(request, response);
 	}

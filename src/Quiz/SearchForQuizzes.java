@@ -1,6 +1,8 @@
 package Quiz;
 import java.sql.ResultSet;
 
+import quizsite.DatabaseConnection;
+
 public class SearchForQuizzes {
 	private static final String colQuizName = "name";
 	private static final String colQuizDescription = "description";
@@ -20,6 +22,12 @@ public class SearchForQuizzes {
 	private static final String baseQuery = "SELECT " + colNames + " FROM " + tableName;
 
 	public SearchForQuizzes() {
+	}
+	
+	
+	public static ResultSet getQuizByID(DatabaseConnection dc, int quizid){
+		String query =  baseQuery + " WHERE quizzes.id = " + quizid + ";";
+		return dc.executeQuery(query);
 	}
 	
 	/**

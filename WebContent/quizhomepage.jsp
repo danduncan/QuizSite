@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="Quiz.*, quizsite.*, users.*, connection.*, java.sql.*, java.util.*, java.io.IOException, java.text.DecimalFormat" %>
+<%@ page import="sharedHtmlGenerators.*, Quiz.*, quizsite.*, users.*, connection.*, java.sql.*, java.util.*, java.io.IOException, java.text.DecimalFormat" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,20 +31,23 @@
 	User quizAuthor = new User(quiz.authorid, new UserConnection(dc));
 	double[] stats = scoreManager.getSummaryStats(quiz.id);
 	 %>
-
-	<h1>Quiz Summary</h1>
-	Name: <%=quiz.name%><br>
-	Description: <%=quiz.description%><br>
-	Creator: <%=quizAuthor.firstname%> <%=quizAuthor.lastname%><br>
-	Created on: <%= FormatDateTime.getUserDateTime(quiz.datemade)[0] %><br>
+	 
+	
+	<%
+	ResultSet rs = SearchForQuizzes.getQuizByID(dc,quiz.id);
+	rs.first();
+	out.println(sharedHtmlGenerators.HtmlQuizThumbnailGenerator.getThumbnail(rs));
+	%>
+	<a href="ShowQuizServlet">Take this quiz!</a><br>
+	
+	<h1>Quiz Statistics</h1>
 	Average Score: <%=printStats(stats[0], quiz.numPointsPossible())%><br>
 	High Score: <%=printStats(stats[1], quiz.numPointsPossible())%><br>
 	Low Score: <%=printStats(stats[2], quiz.numPointsPossible())%><br>
-	<a href="ShowQuizServlet">Take this quiz!</a><br>
 		
 	<h1>Overall High Scores</h1>
 	<%
-		ResultSet rs = scoreManager.getHighScores(quiz.id);
+		rs = scoreManager.getHighScores(quiz.id);
 		ScoreManager.printScoresToJSP(out, rs, quiz.numPointsPossible());
 	%>
 	

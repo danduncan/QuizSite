@@ -26,13 +26,20 @@
 		
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
 		user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
+		user.updateUserDatabase();
 		int rank = scoreManager.addScore(quizScore);
 		DecimalFormat df = new DecimalFormat("#.00");
 		String percentScore = df.format(100*((double)numCorrect/(double)numAttempted));
 		
 		List<Achievement> achieved = Achievement.updateQuizTakenAchievements(user, rank);
-		Achievement.updateSiteAchievements(user, achieved, (DatabaseConnection)con.getAttribute("DatabaseConnection"));
+		DatabaseConnection dc = (DatabaseConnection) con.getAttribute("DatabaseConnection");
+		Achievement.updateSiteAchievements(user, achieved, dc);
+
+		ResultSet rs = SearchForQuizzes.getQuizByID(dc,quiz.id);
+		rs.first();
+		out.println(sharedHtmlGenerators.HtmlQuizThumbnailGenerator.getThumbnail(rs));
 	%>
+	
 	<h1>Quiz Results</h1>
 	Points earned: <%=numCorrect%><br>
 	Points possible: <%=numAttempted%><br>
@@ -49,7 +56,7 @@
 	
 		if(rank != 0){
 			out.println("<h1>You got a high score!!</h1>");
-			ResultSet rs = scoreManager.getHighScores(quiz.id);
+			rs = scoreManager.getHighScores(quiz.id);
 		 	ScoreManager.printScoresToJSP(out, rs, quiz.numPointsPossible());
 		}
 	%>
