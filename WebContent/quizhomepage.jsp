@@ -72,6 +72,11 @@
 		</select>
 		<input type="submit" value="Challenge Friend!">	
 	</form>
+	<%
+		if(friend != null){
+			out.println("Challenge sent!<br>");
+		}
+	%>
 	
 	<h1>Quiz Statistics</h1>
 	Average Score: <%=printStats(stats[0], quiz.numPointsPossible())%><br>

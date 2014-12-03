@@ -233,9 +233,9 @@
  	out.println("<ul type = \"circle\">");
  	for(int i = 0; i < newChallenge.size(); i++){
  		out.println("<form method=\"post\" action=\"QuizHomepageServlet?quizid="+newChallenge.get(i).body+"\">");
- 		out.println("<li> From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));		
+ 		out.println("<input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\"");
+ 		out.println("<li> From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
  		out.println("<input type=\"submit\" name = \"challenge\" value = \"accept\"/>   <input type=\"submit\" name = \"challenge\" value = \"decline\">");
- 		out.println("<input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\"");		
  		out.println("</form>");
  		out.println("</li>");	
  		out.println("</form>");
