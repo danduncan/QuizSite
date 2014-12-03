@@ -78,10 +78,10 @@ public class User {
 			create = false;
 		//update current user in database
 		} else {
-			String update = "UPDATE users SET (id, username, password, firstname, lastname, email, datejoined, numfriends, numtaken, numtakenpractice, numcreated, highscores, profilepicture) = " +
-					"("+id+",\""+username+"\", \"" + password + "\", \"" + firstname + "\",\"" + lastname + "\", \"" + email
-            + "\", \"" + datejoined + "\"," + numfriends + ","+quizzestaken.size()+ ","+ numtakenpractice +","+quizzesmade.size()+","+highscores+",\""+profilepicture+ "\") WHERE ( id = " + id +")";   
-			
+//			String update = "UPDATE users SET (id, username, password, firstname, lastname, email, datejoined, numfriends, numtaken, numtakenpractice, numcreated, highscores, profilepicture) = " +
+//					"("+id+",\""+username+"\", \"" + password + "\", \"" + firstname + "\",\"" + lastname + "\", \"" + email
+//            + "\", \"" + datejoined + "\"," + numfriends + ","+quizzestaken.size()+ ","+ numtakenpractice +","+quizzesmade.size()+","+highscores+",\""+profilepicture+ "\") WHERE ( id = " + id +")";   
+//			
 			StringBuilder sb = new StringBuilder();
 			sb.append("UPDATE "+ MyDBInfo.USERTABLE+" SET ");
 			//sb.append("id = "+id);

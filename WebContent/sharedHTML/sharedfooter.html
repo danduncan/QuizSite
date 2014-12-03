@@ -1,6 +1,15 @@
 <script src="/QuizSite/sharedScripts/friendButton.js"></script>
 <script src="/QuizSite/sharedScripts/caption.js"></script>
-
+<script>
+	function doABarrelRoll() {
+		body = document.getElementsByTagName('body')[0];
+		cname = body.className;
+		body.className = 'doABarrelRoll';
+		setTimeout(function() {
+			body.className = cname;
+		}, 4200);
+	}
+</script>
 <div class="sharedFooterBuffer"> </div>
 <div class="sharedFooter">
 	<div class="footerLinks">

@@ -252,6 +252,12 @@
 						</li>
 						<li>Messaging interface uses Javascript for instantaneous error checking</li></ul>
 				<li>Catchy name for website</li>
+				<li>Website includes an awesome easter egg! A couple hints to help you find it:
+					<ul>
+						<li>It's on the user search page</li>
+						<li>We got the idea from Google</li>
+					</ul>
+				</li>
 			</ul>
 		</div>
 		<div class="bigFrame notDone">
