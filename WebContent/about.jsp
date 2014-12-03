@@ -22,7 +22,7 @@
 				<li><a href="http://localhost:8080/QuizSite/user?userid=2">Matt Wilson</a></li> 
 				<li><a href="http://localhost:8080/QuizSite/user?userid=3">Dan Duncan</a></li></ul></li>
 			<li>All three of us are EE grad students</li>
-			<li>Qwizard consists of over 100 source code files and 10,000 lines of code</li>
+			<li>Qwizard consists of over 100 source code files and 11,000 lines of code</li>
 			</ul>
 		</div>
 		<div class="bigFrame notDone">
@@ -208,7 +208,7 @@
 						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
 						<li>GET, POST, and AJAX requests are all used depending on which is the most intuitive for a particular action</li>
 						<li>Standard header and footer present on every page</li>
-						<li>Header and footer feature useful links, including links customized to the user</li>
+						<li>Header and footer feature useful links, including links customized to the user and working About/Contact links</li>
 						<li>Qwizard logo included in header and as icon in window title</li>
 						<li>Scripts used to uniformly generate well-formatted website components
 							<ul>
