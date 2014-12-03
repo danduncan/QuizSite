@@ -94,7 +94,7 @@ private static final long serialVersionUID = 1L;
 		HttpSession session = request.getSession();
 		// Send the request
 		if (sendFriendRequest(userId,receiverId,session,dc,sc)) {
-			System.out.println("\t\tFriend addition successful!");
+			//System.out.println("\t\tFriend addition successful!");
 			//response.addIntHeader(friendResponseField,KSUCCESS);
 			setResponse(response,KSUCCESS);
 			return;

@@ -18,9 +18,9 @@
 			
 			<ul>
 			<li>3 person team:
-				<ul><li>Gino Rooney</li> 
-				<li>Matt Wilson</li> 
-				<li>Dan Duncan</li></ul></li>
+				<ul><li><a href="http://localhost:8080/QuizSite/user?userid=1">Gino Rooney</a></li> 
+				<li><a href="http://localhost:8080/QuizSite/user?userid=2">Matt Wilson</a></li> 
+				<li><a href="http://localhost:8080/QuizSite/user?userid=3">Dan Duncan</a></li></ul></li>
 			<li>All three of us are EE grad students</li>
 			<li>Qwizard consists of over 100 source code files and 10,000 lines of code</li>
 			</ul>
@@ -39,14 +39,9 @@
 						<li>at users.Friend.getFriendActivity(Friend.java:72)</li>
 					</ul></li>
 				</ul></li>
-			<li class="fixed"><span>(Fixed) </span>WelcomePage does something weird when the server restarts.
-				<ul><li>The result is a site crash with error code 500 </li>
-				<li>I think what is happening is that "user" is getting deleted from the HttpSession attributes, but "username" and "userid" are not</li>
-				<li>A simple fix would be to create a UserRefresh class that is called at the beginning of every JSP. Its job would be to see if the user's session contains partial attributes and populate the missing ones</li>
-				</ul></li>
 			<li>DatabaseConnection crashes after being open too long. This may not be fixable</li>
-			<li>Site crashes if you try to access a quiz while not logged in. The should either be a public quiz view, or the servlet should forward the user to the home/signin page
-			<ul><li>To see what I am talking about, log out of your account and then click this <a href="http://localhost:8080/QuizSite/QuizHomepageServlet?quizid=23">link</a></li></ul></li>
+			<li>Site crashes if you try to access a quiz while not logged in. There should either be a public quiz view, or the servlet should forward the user to the home/signin page
+			<ul><li>To see what happens, log out of your account and then visit a <a href="http://localhost:8080/QuizSite/QuizHomepageServlet?quizid=23">quiz link</a></li></ul></li>
 			<li>numTaken does not get incremented when a user takes a quiz</li>
 			
 			</ul>
@@ -81,7 +76,7 @@
 			<li>All message requirements
 				<ul>
 					<li>Friend request</li>
-					<li>Challenge <span>(Goes on quiz profile page)</span></li>
+					<li>Challenge</li>
 					<li>Note</li>
 				</ul></li>
 			</ul>
@@ -109,7 +104,7 @@
 							</ul></li>
 						<li>Limit number of entries in all lists to number that looks good on website</li>
 					</ul></li>
-				<li>Quiz summary page <span>(almost done)</span>
+				<li>Quiz summary page
 					<ul>
 						<li>Quiz name</li>
 						<li>Quiz creator</li>
@@ -128,7 +123,6 @@
 					<ul>
 						<li>Users have viewable profiles</li>
 						<li>Users have viewable profile thumbnails</li>
-						<li>Message page to view all recent messages/challenges <span>(not yet implemented)</span></li>
 					</ul></li>
 				<li>Error checking
 					<ul>User can never receive a 404 error from clicking a site link
@@ -154,6 +148,11 @@
 						<li>Multi-answer questions</li>
 						<li>Multiple choice with multiple answers</li>
 					</ul></li>
+				<li>Dedicated user sub-pages <span>(not yet implemented)</span>
+						<ul><li>Messages page to receive messages/challenges/friend requests, and to send replies or compose new messages</li>
+						<li>Friends page where a user can view their friends</li>
+						<li>Edit account page to change picture, name, email, or password</li>
+						</ul></li>	
 				<li>Optional user features
 					<ul>
 						<li>Passwords are salted prior to encryption</li>
