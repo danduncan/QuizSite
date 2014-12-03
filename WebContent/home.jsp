@@ -24,17 +24,10 @@
 			dispatch.forward(request, response);
 			//out.println("<h1>You are signed in, " + username + "!");
 		} else {
-			out.println("<h1>You need to sign in. <a href=\"/QuizSite/signin.jsp\" >Sign in here</a></h1>");
+			out.println("<h1>Welcome to Qwizard!</h1>");
+			out.println("<p>Show off your intellectual prowess by making and taking quizzes with your friends!</p>");
+			out.println("<p>Please <a href=\"/QuizSite/signin.jsp\" >sign in</a> or <a href=\"/QuizSite/createaccount.jsp\" >create an account</a>!</p>");
 		}
-	%>
-	
-	<h2>Test of HtmlTableGenerator:</h2>
-	<h3><em>Correct output is the complete content of the "friends" table</em></h3>
-	<% 
-		quizsite.DatabaseConnection dc = (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection");
-		String query = "SELECT * FROM friends;";
-		ResultSet rs = dc.executeQuery(query);
-		out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
 	%>
 	
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
