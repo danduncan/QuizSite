@@ -43,8 +43,22 @@
 			<li>Site crashes if you try to access a quiz while not logged in. There should either be a public quiz view, or the servlet should forward the user to the home/signin page
 			<ul><li>To see what happens, log out of your account and then visit a <a href="http://localhost:8080/QuizSite/QuizHomepageServlet?quizid=23">quiz link</a></li></ul></li>
 			<li>numTaken does not get incremented when a user takes a quiz</li>
+			<li>When a user receives a message, it does not show up until the user logs out and logs back in
+			<ul><li>The Display Messages code needs to check the database each time it executes, rather than checking sesssion.getAttribute("user")</li> 
+			</ul></li>
+			<li><strong>Debug all major functions that we will have to show in our demo</strong>
+				<ul><li>Receive and reply to messages without logging out and logging back in</li>
+					<li>Ensure all variables are in sync with the database at all times (don't read from a session attribute if the attribute references something affected by other users, such as messages received)</li>
+					<li>Make sure Create Question and Create Quiz are referencing the SiteManager and getting accurate ID's</li>
+					<li>"Challenge friend" drop-down menu needs to check the user's friends from the database, not the user object</li>
+					<li>getFriendActivity() needs to check with the database to have the correct friends</li>
+			</ul></li>
+			<li>Empty out these tables in the database: quizzes, questions 
+				<ul><li>Manually update the siteManager table to have correct values for nextquizid, nextquestionid, nextmessageid, nextquizt
+					<li>Then, populate database with a bunch of real quizzes</li>
+					
+				</ul></li>
 			
-			</ul>
 		</div>
 		<div class="bigFrame">
 			<h1>Required Features</h1>
