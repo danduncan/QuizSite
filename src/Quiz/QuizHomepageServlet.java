@@ -21,7 +21,7 @@ import quizsite.DatabaseConnection;
 import quizsite.ScoreManager;
 import users.User;
 
-@WebServlet("/QuizHomepageServlet")
+@WebServlet({"/QuizHomepageServlet", "/quiz"})
 public class QuizHomepageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
