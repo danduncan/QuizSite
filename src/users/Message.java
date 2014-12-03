@@ -64,12 +64,12 @@ public class Message {
 		List<Message> messages = user.messages;
 		for(int i = 0; i<messages.size(); i++){
 			if(messages.get(i).id == id){
-				messages.remove(i);
+				user.messages.remove(i);
 			}
 		}
 		
 		user.updateUserDatabase();
-		String query = "DELETE FROM messages WHERE id = " + id + ";";
-		dc.executeQuery(query);
+		String query = "DELETE FROM messages WHERE id = " + id;
+		dc.executeUpdate(query);
 	}
 }
