@@ -62,10 +62,11 @@ public class QuizHomepageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String challenge = request.getParameter("challenge");
 		String challengeID = request.getParameter("messagenum");
+		User user = (User) request.getSession().getAttribute("user");
 		ServletContext sc = request.getServletContext();
 		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
-		if(challenge != null){
-			Message.deleteMessage(Integer.parseInt(challengeID), dc);
+		if(challenge != null && challengeID != null){
+			Message.deleteMessage(user, Integer.parseInt(challengeID), dc);
 			if (challenge.equals("declined")){
 				RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
 				dispatch.forward(request, response);
