@@ -127,10 +127,10 @@ public class CreateMessageServlet extends HttpServlet {
 		}
 	}
 	
-	private void updateDatabase(users.Message msg, DatabaseConnection dc) {
+	public static void updateDatabase(users.Message msg, DatabaseConnection dc) {
 		// Add message to database
 		StringBuilder sb = new StringBuilder();
-		sb.append("INSERT into " + this.table + " ");
+		sb.append("INSERT into " + table + " ");
 		sb.append("(id, type, datesent, timesent, senderid, receiverid, opened, replied, subject, body) ");
 		sb.append("VALUES "); //(1, 2, 3, "20141225", 100, 5);");
 		sb.append("(" + msg.id + ", " + msg.type + ", ");

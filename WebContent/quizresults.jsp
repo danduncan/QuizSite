@@ -26,6 +26,8 @@
 		Score quizScore = new Score(user.id, quiz.id, numCorrect, (int)secondsElapsed, FormatDateTime.getCurrentSystemDate());
 		user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
 		user.updateUserDatabase();
+		ses.setAttribute("user", user);
+		
 		int rank = scoreManager.addScore(quizScore);
 		DecimalFormat df = new DecimalFormat("#.00");
 		String percentScore = df.format(100*((double)numCorrect/(double)numAttempted));
@@ -56,7 +58,7 @@
 		if(rank != 0){
 			out.println("<h1>You got a high score!!</h1>");
 			rs = scoreManager.getHighScores(quiz.id);
-		 	ScoreManager.printScoresToJSP(out, rs, quiz.numPointsPossible());
+		 	ScoreManager.printScoresToJSP(out, rs, quiz.numPointsPossible(), dc);
 		}
 	%>
 		

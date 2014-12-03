@@ -8,7 +8,10 @@ import java.util.Date;
 
 import javax.servlet.jsp.JspWriter;
 
+import connection.UserConnection;
+
 import quizsite.*;
+import users.User;
 
 public class ScoreManager {
 	// Connection to database
@@ -92,7 +95,7 @@ public class ScoreManager {
 	 * following columns: UserID, Score, Time, DateTaken. Possible points is the possible 
 	 * points of the quiz in question.
 	 */
-	public static void printScoresToJSP(JspWriter out, ResultSet rs, int possiblePoints) throws IOException, SQLException{
+	public static void printScoresToJSP(JspWriter out, ResultSet rs, int possiblePoints, DatabaseConnection dc) throws IOException, SQLException{
 		if(rs == null){
 			out.println("Oops! Something went wrong! <br>");
 			return;
@@ -102,13 +105,13 @@ public class ScoreManager {
 		rs.beforeFirst();
 		if(numScores>0){
 			DecimalFormat df = new DecimalFormat("#.00");
-			String[] columnNames = new String[]{"User ID", "Score", "Time", "Date Taken"};
+			String[] columnNames = new String[]{"Username", "Score", "Time", "Date Taken"};
 			String[][] table = new String[numScores][columnNames.length];
 			int rowInd = 0;
 			while(rs.next()){
 				try{
 					int id = rs.getInt("userid");
-					table[rowInd][0] = "<a href=\"/QuizSite/user?userid="+id+"\">"+ id+"</a>";
+					table[rowInd][0] = ""+id;
 					int score = rs.getInt("score");
 					double percent = 100*((double)score/(double)possiblePoints);
 					table[rowInd][1] = df.format(percent) + "%";
@@ -117,6 +120,13 @@ public class ScoreManager {
 					rowInd++;
 				} catch (SQLException ignored){}
 			}
+			
+			for(int i = 0 ; i<numScores; i++){
+				int id = Integer.parseInt(table[i][0]);
+				User curr = new User(id, new UserConnection(dc));
+				table[i][0] = "<a href=\"/QuizSite/user?userid="+id+"\">"+ curr.username +"</a>";
+			}
+			
 			out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(table, columnNames));
 		}else{
 			out.println("These statistics have not yet been populated! <br>");

@@ -19,6 +19,7 @@ import connection.UserConnection;
 
 import quizsite.DatabaseConnection;
 import quizsite.ScoreManager;
+import users.Message;
 import users.User;
 
 @WebServlet({"/QuizHomepageServlet", "/quiz"})
@@ -59,6 +60,18 @@ public class QuizHomepageServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String challenge = request.getParameter("challenge");
+		String challengeID = request.getParameter("messagenum");
+		ServletContext sc = request.getServletContext();
+		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
+		if(challenge != null){
+			Message.deleteMessage(Integer.parseInt(challengeID), dc);
+			if (challenge.equals("declined")){
+				RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
+				dispatch.forward(request, response);
+			}
+		}
+		
 		doGet(request,response);
 	}
 	

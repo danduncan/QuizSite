@@ -58,4 +58,9 @@ public class Message {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void deleteMessage(int id, DatabaseConnection dc){
+		String query = "DELETE FROM messages WHERE id = " + id + ";";
+		dc.executeQuery(query);
+	}
 }
