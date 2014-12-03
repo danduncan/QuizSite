@@ -1,3 +1,81 @@
-/* This is the stylesheet for elements specific to home.jsp
-
+/* This is the stylesheet for elements specific to home.jsp */
 @CHARSET "UTF-8";
+
+div.homeFrame {
+	border: none;
+	border-radius: 25px;
+	background-color: transparent;
+	font-color: black;
+	width: 720px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 80px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 15px;
+	padding-top: 0px;
+}
+
+div.buttonFrame {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0px;
+	margin-top: 130px;
+	text-align: center;
+}
+
+form { 
+	display: inline-block; 
+	margin: 0px;
+	padding: 0px;	
+}
+
+.homeFrame input {
+	display: inline-block;
+	font-size: 38px;
+	font-weight: bold;
+	margin: 0px;
+	border-radius: 10px;
+	padding: 10px 20px;
+}
+
+.loginbutton {
+	background-color: #DFDC55;
+	color: #333333;
+	outline: none;
+}
+
+.createbutton {
+	background-color: #3B5998;
+	color: #FFFFFF;
+	outline: none;
+}
+
+span.buttonSeparator {
+	display: inline-block;
+	font-size: 24px;
+	font-weight: bold;
+	margin: 0px 40px;
+	padding: 0px;
+}
+
+.hatContainer {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 150px;
+	padding: 0px;
+	text-align: center;
+}
+
+.hatContainer img {
+	height: 180px;
+	width: auto;
+	margin: 0px;
+	padding: 0px;
+}
+
+.hatContainer a:link {text-decoration: none; }
+.hatContainer a:visited {text-decoration: none; }
+.hatContainer a:hover {text-decoration: none; }
+.hatContainer a:active {text-decoration: none; }

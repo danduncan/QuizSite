@@ -11,7 +11,7 @@
 <link href="/QuizSite/stylesheets/home.css" 
 	type="text/css" 
 	rel="stylesheet" 
-	id="homeStylesheet" />
+	id="homepageStylesheet" />
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
@@ -24,12 +24,31 @@
 			RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
 			dispatch.forward(request, response);
 			//out.println("<h1>You are signed in, " + username + "!");
-		} else {
-			out.println("<h1>Welcome to Qwizard!</h1>");
-			out.println("<p>Show off your intellectual prowess by making and taking quizzes with your friends!</p>");
-			out.println("<p>Please <a href=\"/QuizSite/signin.jsp\" >sign in</a> or <a href=\"/QuizSite/createaccount.jsp\" >create an account</a>!</p>");
 		}
 	%>
+
+	<div class="homeFrame">
+		<h1>Welcome to <span>Qwizard!</span></h1>
+		<p>Show off your intellectual prowess by making quizzes and taking on your friends!</p>
+		<div class="buttonFrame">
+			<form action="signin.jsp">
+			<input type="submit" class="loginbutton" value = "Sign In" />
+			</form>
+		
+			<span class="buttonSeparator"></span>
+			
+			<form action="createaccount.jsp">
+			<input type="submit" class="createbutton" value = "Sign Up" />
+			</form>
+		</div>
+		
+		<div class="hatContainer">
+		<a href = "/QuizSite/">
+		<img src="/QuizSite/qwizard_images/wizard_hat_full.png" alt="Qwizard" />
+		</a>
+		</div>
+		
+	</div>
 
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
