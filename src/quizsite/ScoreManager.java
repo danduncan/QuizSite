@@ -107,7 +107,8 @@ public class ScoreManager {
 			int rowInd = 0;
 			while(rs.next()){
 				try{
-					table[rowInd][0] = "" + rs.getInt("userid");
+					int id = rs.getInt("userid");
+					table[rowInd][0] = "<a href=\"/QuizSite/user?userid="+id+"\">"+ id+"</a>";
 					int score = rs.getInt("score");
 					double percent = 100*((double)score/(double)possiblePoints);
 					table[rowInd][1] = df.format(percent) + "%";
