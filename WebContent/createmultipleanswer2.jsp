@@ -9,7 +9,7 @@
 <title>Create a Question</title>
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<h1><%=CreateQuizServlet.MULTI_ANSWER%></h1>
 	<% String orderMatters = request.getParameter(CreateQuizServlet.ORDER_MATTERS); %>
 	Please fill in the question and answer fields below.

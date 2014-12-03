@@ -9,7 +9,7 @@
 <title>Create a Question</title>
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<h1><%=CreateQuizServlet.QUESTION_RESPONSE%></h1>
 	Please fill in the question and answer fields below.
 	If the question has multiple answers then please separate each one by a ";".

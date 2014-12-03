@@ -9,7 +9,7 @@
 <title>Create a Question</title>
 </head>
 <body>
-	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedheader.html") %>
+	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<h1>Create a Question</h1>
 	<form action="CreateQuizServlet" method="post">
 		<br>What type of question would you like to add to your quiz?<br>
