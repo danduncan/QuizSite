@@ -16,9 +16,10 @@
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<%
+		users.User usr = (users.User) session.getAttribute("user");
 		String username = (String) session.getAttribute("username");	
 		Integer userid = (Integer) session.getAttribute("userid");
-		if (username != null && !username.equals("") && userid != null && userid >= 0) {
+		if (usr != null || (username != null && !username.equals("")) || (userid != null && userid >= 0)) {
 			//forward to unsuccessful send
 			RequestDispatcher dispatch = request.getRequestDispatcher("welcomepage.jsp");
 			dispatch.forward(request, response);
@@ -29,7 +30,7 @@
 			out.println("<p>Please <a href=\"/QuizSite/signin.jsp\" >sign in</a> or <a href=\"/QuizSite/createaccount.jsp\" >create an account</a>!</p>");
 		}
 	%>
-	
+
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

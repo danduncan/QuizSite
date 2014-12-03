@@ -25,11 +25,20 @@
 			<li>Qwizard consists of over 100 source code files and 10,000 lines of code</li>
 			</ul>
 		</div>
-		<div class="bigFrame">
+		<div class="bigFrame notDone">
 			<h1><span>Known Bugs</span></h1>
 			<ul>
-			<li>Welcome page gets nullpointerexception on login and fails to load completely</li>
-				<ul><li>Bug appears to be in getFriendActivity()</li></ul>
+			<li>Welcome page gets nullpointerexception
+				<ul>
+					<li>Bug is still present as of Tuesday</li>
+					<li>Stack trace is as follows:
+					<ul>
+						<li>at com.mysql.jdbc.ResultSetImpl.next(ResultSetImpl.java:6334)</li>
+						<li>at connection.UserConnection.getAttribute(UserConnection.java:159)</li>
+						<li>at users.User.init(User.java:56)</li>
+						<li>at users.Friend.getFriendActivity(Friend.java:72)</li>
+					</ul></li>
+				</ul></li>
 			<li class="fixed"><span>(Fixed) </span>WelcomePage does something weird when the server restarts.
 				<ul><li>The result is a site crash with error code 500 </li>
 				<li>I think what is happening is that "user" is getting deleted from the HttpSession attributes, but "username" and "userid" are not</li>
@@ -40,7 +49,7 @@
 			</ul>
 		</div>
 		<div class="bigFrame">
-			<h1>Project Requirements</h1>
+			<h1>Required Features</h1>
 			<ul class="checklist">
 			<li>All required quiz properties
 				<ul>
@@ -69,13 +78,13 @@
 			<li>All message requirements
 				<ul>
 					<li>Friend request</li>
-					<li>Challenge <span>(Goes on quiz profile page))</span></li>
+					<li>Challenge <span>(Goes on quiz profile page)</span></li>
 					<li>Note</li>
 				</ul></li>
 			</ul>
 			<h2>Required pages:</h2>
 			<ul class="checklist">
-				<li>Home page <span>(implemented, but generates lots of nullpointerexceptions)</span>
+				<li>Home page
 					<ul>
 						<li>List of popular quizzes</li>
 						<li>List of recently created quizzes</li>
@@ -120,8 +129,8 @@
 					</ul></li>
 				<li>Error checking
 					<ul>User can never receive a 404 error from clicking a site link
-						<li>Quiz profile page needs to handle a user trying to access a quiz that does not exist (e.g. forward them to the homepage)<span> (not yet implemented)</span></li>
-						<li>User profile page needs to handle a user trying to access a user that does not exist (e.g. forward them to the homepage)<span> (not yet implemented)</span></li>
+						<li>Quiz profile page gracefully handles malformed URLs (e.g. forward them to the homepage)</li>
+						<li>User profile page gracefully handles malformed URLs (e.g. forward them to the homepage)</li>
 					</ul></li>
 				<li>Use of sessions allows multiple users to visit site simultaneously</li>
 					
@@ -130,9 +139,10 @@
 		
 		
 		<div class="bigFrame">
-			<h1>Recommended Features and Extensions for Three-Person Team</h1>
+			<h1>Recommended Features and Extensions</h1>
+			<h2>(Based on requirements for a three-person team)</h2>
 			<ul class="checklist">
-				<li>Quiz practice mode <span>(not yet implemented)</span></li>
+				<li class="notDone">Quiz practice mode <span>(not yet implemented)</span></li>
 				<li>Quizzes track performance of users</li> 
 				<li>Quizzes track high scores</li>
 				<li>Quiz pages display top scores</li>
@@ -164,7 +174,7 @@
 								<li>Prodigious author - the user created ten quizzes</li>
 								<li>Quiz Machine - the user took ten quizzes</li>
 								<li>I am the Greatest - user got a top score on a quiz</li>
-								<li>Practice Makes Perfect - the user took a quiz in practice mode <span>(not yet implemented)</span></li>
+								<li class="notDone">Practice Makes Perfect - the user took a quiz in practice mode <span>(not yet implemented)</span></li>
 							</ul></li>
 					</ul>
 				
@@ -188,11 +198,11 @@
 					</ul></li>
 				<li>Website is attractive and presentable
 					<ul>
-						<li><span>User profiles need to styled</span></li>
-						<li><span>Quiz homepages need to styled</span></li>
-						<li><span>Quizzes need to styled</span></li>
-						<li><span>Quiz results need to styled</span></li>
-						<li><span>Challenge request needs to be implemented and styled</span></li>
+						<li class="notDone"><span>User profiles need to styled</span></li>
+						<li class="notDone"><span>Quiz homepages need to styled</span></li>
+						<li class="notDone"><span>Quizzes need to styled</span></li>
+						<li class="notDone"><span>Quiz results need to styled</span></li>
+						<li class="notDone"><span>Challenge request needs to be implemented and styled</span></li>
 						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
 						<li>GET, POST, and AJAX requests are all used depending on which is the most intuitive for a particular action</li>
 						<li>Standard header and footer present on every page</li>
@@ -230,7 +240,7 @@
 					<ul><li>User profiles</li>
 						<li>User thumbnails</li>
 						<li>User search</li>
-						<li>Quiz-related pages <span>(not yet implemented)</span></li>
+						<li class="notDone">Quiz-related pages <span>(not yet implemented)</span></li>
 						</ul></li>
 				<li>Website pages feature robust error handling
 					<ul>
@@ -244,8 +254,8 @@
 				<li>Catchy name for website</li>
 			</ul>
 		</div>
-		<div class="bigFrame">
-			<h1>Recommended features and extensions not implemented</h1>
+		<div class="bigFrame notDone">
+			<h1>Extensions Not Implemented</h1>
 			<ul>
 				<li>User achievements displayed via badges <span>(needs to be done)</span></li>
 				<li>Achievement badges displayed on user profiles <span>(needs to be done)</span></li>
