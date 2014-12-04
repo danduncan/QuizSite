@@ -173,7 +173,7 @@
 <input name="type" type="hidden" value= "2" />
 </form> -->
 
-<h2><img src="https://cdn4.iconfinder.com/data/icons/REALVISTA/mail_icons/png/400/inbox.png" alt="HTML5 Icon" width="50" height="50"> Inbox </h2> 
+<div class="inboxHeader"><h2><img src="https://cdn4.iconfinder.com/data/icons/REALVISTA/mail_icons/png/400/inbox.png" alt="HTML5 Icon"> Inbox </h2> </div>
 <h3>Friend Requests</h3>
 
 <%	
@@ -211,7 +211,9 @@
 	out.println("<p> You have " + count + " new Messages</p>");
 	out.println("<ul type = \"circle\">");
 	for(int i = 0; i < newMessages.size(); i++){
-		out.println("<li><a href=\"checkmessage.jsp?messageNum="+newmessageNums.get(i)+"\"> From: "+user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid)+newMessages.get(i).toString()+"</a></li>");
+		out.println("<li><a href=\"checkmessage.jsp?messageNum="+newmessageNums.get(i)+"\"> From: "+user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid)+newMessages.get(i).toString()+"</a>");
+		out.println("<input type=\"submit\" class=\"msgBtn\" value=\"Reply\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid) + "')\" />");
+		out.println("</li>");
 	}
 	out.println("</ul>");
 	
@@ -238,7 +240,7 @@
  		out.println("<form method=\"post\" action=\"QuizHomepageServlet?quizid="+newChallenge.get(i).body+"\">");
  		out.println("<input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\"");
  		out.println("From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
- 		out.println("<input type=\"submit\" name = \"challenge\" value = \"accept\"/>   <input type=\"submit\" name = \"challenge\" value = \"decline\">");
+ 		out.println("<input type=\"submit\" name = \"challenge\" value = \"accept\" class=\"challengeBtn acceptChallengeBtn\" />   <input type=\"submit\" name = \"challenge\" class=\"challengeBtn declineChallengeBtn\" value = \"decline\">");
  		out.println("</form>");
  		out.println("</li>");	
 	
