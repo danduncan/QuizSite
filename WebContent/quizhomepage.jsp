@@ -67,7 +67,7 @@
 	
 	<h1>Challenge Friends</h1>
 	<form action="quizhomepage.jsp">
-		<select name="challengeFriend">
+		<select name="challengeFriend" class="typicalQwizardSelect">
 			<%
 			for(int i = 0 ; i<friends.size(); i++){
 				Friend curr = friends.get(i);
@@ -77,7 +77,7 @@
 			
 			%>
 		</select>
-		<input type="submit" value="Challenge Friend!">	
+		<input type="submit" value="Challenge Friend!" class="typicalQwizardBtn" >	
 	</form>
 	<%
 		if(friend != null){
