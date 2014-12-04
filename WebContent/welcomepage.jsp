@@ -42,19 +42,19 @@
 <tr>
 
 <td><form method ="post" action = "quizSearch.jsp">
-<input type = "submit" name = "Find Quizzes" value = "Find Quizzes"/>
+<input type = "submit" name = "Find Quizzes" value = "Find Quizzes" class="welcomepageBtn" />
 </form></td>
 
 <td><form method="get" action="CreateQuizServlet">
-<input type="submit" value="Create New Quiz" />
+<input type="submit" value="Create New Quiz" class="welcomepageBtn" />
 </form></td>
 
 <td><form method ="post" action = "users.jsp">
-<input type = "submit" name = "Find Friends" value = "Find Friends"/>
+<input type = "submit" name = "Find Friends" value = "Find Friends" class="welcomepageBtn" />
 </form></td>
 
 <td><form method ="post" action = "users.jsp">
-<input type = "submit" name = "Find Friends" value = "Send a Message"/>
+<input type = "submit" name = "Find Friends" value = "Send a Message" class="welcomepageBtn" />
 </form></td>
 
 </tr>

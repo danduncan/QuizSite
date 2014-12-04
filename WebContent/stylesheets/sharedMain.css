@@ -189,3 +189,51 @@ body {
 	-webkit-animation-duration: 4s;
 	-webkit-animation-iteration-count: 1;
 }
+
+
+li .msgBtn, tr .msgBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
+	font-size: 14px;
+}
+
+input.challengeBtn {
+	font-size: 14px;
+	position: relative;
+	top: -3px;
+}
+
+input.acceptChallengeBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
+	margin-left: 10px;
+}
+
+input.declineChallengeBtn {
+	background-color: #EEEEEE;
+	color: #000000;
+}
+
+.inboxHeader {
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+
+.inboxHeader h2 {
+	font-size: 40px;
+}
+
+.inboxHeader img {
+	height: 100px;
+	width: auto;
+	display: inline-block;
+	position: relative;
+	top: 30px;
+}
+
+.welcomepageBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
+	font-size: 18px;
+	margin-left: 10px;
+}
