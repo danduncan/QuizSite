@@ -22,7 +22,10 @@
 				<li><a href="http://localhost:8080/QuizSite/user?userid=2">Matt Wilson</a></li> 
 				<li><a href="http://localhost:8080/QuizSite/user?userid=3">Dan Duncan</a></li></ul></li>
 			<li>All three of us are EE grad students</li>
+			</ul><ul>
 			<li>Qwizard consists of over 100 source code files and 11,000 lines of code</li>
+			<li>All features listed on this page are implemented in our website</li>
+			<li>An attractively-formatted version of this documentation is available at the "About" link on our project website</li>
 			</ul>
 		</div>
 		<div class="bigFrame notDone">
@@ -38,12 +41,8 @@
 			<li>Populate database with a bunch of real quizzes, quizzes taken, and achievements
 				<ul><li>We ideally want to have plenty of data for the tables of recent quizzes, quizzes taken, and friend activity</li>
 					<li>Lots of achievements scattered among users to show off achievement badges and floating captions</li>
-				</ul>
-			</li>
-			<li>Since we will use <strong>about.jsp</strong> for our demo, it might be nice to rearrange the list of features and extensions into some kind of coherent order. Right now, they are just stream of consciousness</li>
-					
 				</ul></li>
-			
+			</ul>
 		</div>
 		<div class="bigFrame">
 			<h1>Required Features</h1>
@@ -52,7 +51,7 @@
 				<ul>
 					<li>Question randomization</li>
 					<li>One page and multi-page quizzes</li>
-					<li>Immediate correction</li>
+					<li>Correction of wrong answers</li>
 					<li>Scoring of user responses</li>
 					<li>Tracking of time to completion</li>
 				</ul></li>
@@ -78,6 +77,12 @@
 					<li>Challenge</li>
 					<li>Note</li>
 				</ul></li>
+			<li>Error checking
+					<ul>User can never receive a 404 error from clicking a site link
+						<li>Quiz profile page gracefully handles malformed URLs</li>
+						<li>User profile page gracefully handles malformed URLs</li>
+					</ul></li>
+				<li>Use of sessions allows multiple users to visit site simultaneously</li>
 			</ul>
 			<h2>Required pages:</h2>
 			<ul class="checklist">
@@ -123,12 +128,7 @@
 						<li>Users have viewable profiles</li>
 						<li>Users have viewable profile thumbnails</li>
 					</ul></li>
-				<li>Error checking
-					<ul>User can never receive a 404 error from clicking a site link
-						<li>Quiz profile page gracefully handles malformed URLs (e.g. forward them to the homepage)</li>
-						<li>User profile page gracefully handles malformed URLs (e.g. forward them to the homepage)</li>
-					</ul></li>
-				<li>Use of sessions allows multiple users to visit site simultaneously</li>
+				
 					
 			</ul>
 		</div>
@@ -138,21 +138,24 @@
 			<h1>Recommended Features and Extensions</h1>
 			<h2>(Based on requirements for a three-person team)</h2>
 			<ul class="checklist">
-				<li>Quizzes track performance of users</li> 
-				<li>Quizzes track high scores</li>
-				<li>Quiz pages display top scores</li>
+				<li>Quiz pages track and display performance history for each quiz:
+					<ul>
+						<li>The user's personal performance</li>
+						<li>Other users' recent scores</li>
+						<li>Today's high scores</li>
+						<li>All-time high and low scores</li>
+						<li>Summary statistics on popularity and average performance</li>
+						<li>Comparison of a user's latest score with their past scores</li>
+						<li>Corrections show a user which questions they missed and what the correct answers are</li>
+					</ul></li>
 				<li>Optional question types
 					<ul>
 						<li>Multi-answer questions</li>
 						<li>Multiple choice with multiple answers</li>
 					</ul></li>
-				<li>Optional user features
-					<ul>
-						<li>Passwords are salted prior to encryption</li>
-						<li>Basic and advanced user search are both implemented</li>
-						<li>Friends requests are sent via Ajax</li>
-						<li>Users can confirm pending friend requests via Ajax</li>
-						<li>User profiles track and display past quiz performance</li>
+				<li>Search functionality
+					<ul><li>Basic and advanced user search interfaces are both provided</li>
+						<li>Basic and advanced quiz search interfaces are both provided</li>
 					</ul></li>
 				<li>Achievements
 					<ul>
@@ -162,7 +165,7 @@
 						<li>Achievements display on profile thumbnails
 							<ul><li>Floating captions give the achievement name and timestamp</li>
 							</ul></li>
-						<li>System tracks six major kind of user achievement:
+						<li>System tracks five major kind of user achievement:
 							<ul>
 								<li>Amateur author - the user created a quiz</li>
 								<li>Prolific author - the user created five quizzes</li>
@@ -171,44 +174,54 @@
 								<li>I am the Greatest - user got a top score on a quiz</li>
 							</ul></li>
 					</ul>
+				<li>Optional user features
+					<ul>
+						<li>Passwords are salted prior to encryption</li>
+						<li>User profiles track and display past quiz performance</li>
+						<li>User profiles track and display friends' recent activity</li>
+						<li>Friends requests are sent and confirmed via Ajax</li>
+						<li>AJAX-based messaging system is robust and user-friendly
+						<li>Group messages can also be sent via the AJAX interface
+							<ul><li>To send a group message, just type in the usernames of the recipient, each name separated by a space</li>
+							</ul></li>
+						</ul></li>
 				
-				<li>Quiz pages display the user's past performance on a quiz
+				<li>Public view of website
+					<ul><li>User profiles</li>
+						<li>User thumbnails</li>
+						<li>User search</li>
+						<li>Quiz-related pages</li>
+						</ul></li>
+
+				<li>Website pages feature robust error handling
 					<ul>
-						<li>User can sort this list by date, percent correct, or time taken</li>
-					</ul></li>
-				<li>Quiz pages display other users' scores
-					<ul>
-						<li>Today's top scores</li>
-						<li>All-time top scores</li>
-						<li>Recent scores</li>
-					</ul></li>
-				<li>Quiz pages display summary statistics of popularity and user performance</li>
-				<li>Quiz results page lists user's individual answers along with the correct answers</li>
-				<li>Quiz results page has tables that
-					<ul>
-						<li>Compare the user's latest score with their past score history</li>
-						<li>Compare the user's score with those of other users</li>
-						<li>Compare the user's score with those of their friends</li>
-					</ul></li>
+						<li>Sign in page uses Javascript for error checking</li>
+						<li>Create account page uses Javascript for error checking</li>
+						<li>User inputs through most of the website are sanitized to prevent SQL injection</li>
+						<li>Malformed inputs and URL's are handled gracefully by all pages
+							<ul><li>e.g. when a signed-in user visits the sign in page or the create account page, they are forwarded on to the homepage</li></ul>
+						</li>
+						<li>Messaging interface uses Javascript for instantaneous error checking</li>
+						<li>System listens for timeouts in the MySQL database connection and automatically reopens the connection</li></ul>
+
 				<li>Website is attractive and presentable
 					<ul>
-						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
-						<li>GET, POST, and AJAX requests are all used depending on which is the most intuitive for a particular action</li>
-						<li>Standard header and footer present on every page</li>
+						<li>CSS and Javascript used to create a uniform website experience</li>
+						<li>GET, POST, and AJAX requests are all used depending on which provides the best functionality</li>
+						<li>A standard header and footer are present on every page</li>
 						<li>Header and footer feature useful links, including links customized to the user and working About/Contact links</li>
 						<li>Qwizard logo included in header and as icon in window title</li>
 						<li>Scripts used to uniformly generate well-formatted website components
 							<ul>
 								<li>All website tables</li>
-								<li>User search results</li>
-								<li>Quiz search results</li>
-								<li>Thumbnail view of user profiles</li>
-								<li>Thumbnail view of quiz pages</li>
+								<li>User and quiz search results</li>
+								<li>User profiles and quiz pages</li>
+								<li>Thumbnail views of user profiles and quiz pages</li>
 							</ul></li>
 						<li>Users who do not select a profile picture are automatically given a default image</li>
 						<li>Achievements all have corresponding badges</li>
 						<li>Achievement thumbnails display helpful floating captions when the user hovers over them </li>
-						<li>Thumbnail view of quizzes very gracefully handles long quiz descriptions</li>
+						<li>Thumbnail view of quizzes gracefully handles long quiz descriptions</li>
 						<li>Javascript/AJAX used to smoothly handle many common website functions in the background:
 							<ul>
 								<li>Sending friend requests</li>
@@ -218,28 +231,6 @@
 								<li>Sending messages to other users</li>
 							</ul></li>
 					</ul></li>
-				<li>Messaging system is robust and user-friendly
-					<ul>
-						<li>Messages sent via pop-up window using AJAX, making for smoother user experience</li>
-						<li>Group messages can also be sent via the AJAX interface
-							<ul><li>To send a group message, just type in the usernames of the recipient, each name separated by a space</li></ul>
-						</li>
-					</ul></li>
-				<li>Public view of website
-					<ul><li>User profiles</li>
-						<li>User thumbnails</li>
-						<li>User search</li>
-						<li>Quiz-related pages</li>
-						</ul></li>
-				<li>Website pages feature robust error handling
-					<ul>
-						<li>Sign in page uses Javascript for error checking</li>
-						<li>Create account page uses Javascript for error checking</li>
-						<li>User inputs throughout website are sanitized to prevent SQL injection</li>
-						<li>Malformed inputs and URL's are handled gracefully by all pages
-							<ul><li>e.g. when a signed-in user visits the sign in page or the create account page, they are forwarded on to the homepage</li></ul>
-						</li>
-						<li>Messaging interface uses Javascript for instantaneous error checking</li></ul>
 				<li>Catchy name for website</li>
 				<li>Website includes an awesome easter egg! A couple hints to help you find it:
 					<ul>
