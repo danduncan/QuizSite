@@ -49,7 +49,7 @@ public class Friend {
 		ArrayList<String> activity = new ArrayList<String>();
 		
 		// Specify maximum number of events to return
-		Integer limit = 25; // limit == null || limit < 1 allows infinite events to be returned
+		Integer limit = 100; // limit == null || limit < 1 allows infinite events to be returned
 		
 		// Event types
 		Integer achievement = 1;
@@ -63,25 +63,6 @@ public class Friend {
 		if(user != null) userid = user.id;
 		if(userid == null || userid < 1 || dc == null) return activity;
 		
-		//get users friendsIDs
-		//String query = "SELECT friend2 FROM "+MyDBInfo.FRIENDSTABLE+" where friend1 = "+user.id;
-		//ResultSet rs = dc.executeQuery(query);
-		//ArrayList<Integer> friendIDs = new ArrayList<Integer>();
-
-//		while(rs.next()){
-//			//Integer ID1 = rs.getInt("friend1");
-//			Integer ID2 = rs.getInt("friend2");
-//			
-//			//if(!friendIDs.contains(ID1)){
-//				//friendIDs.add(ID1);
-//			//}
-//			if(friendIDs != null && !friendIDs.contains(ID2)){
-//				friendIDs.add(ID2);
-//			}
-//		
-//		}
-		
-		//rs.close();
 		ResultSet rs = getTheBeast(userid,limit,dc);
 		if (!rs.first()) return activity; // rs is an empty set
 		
@@ -100,6 +81,7 @@ public class Friend {
 			Integer quizid = rs.getInt("quizid");
 			String quizname = rs.getString("quizname");
 			Integer quizscore = rs.getInt("quizscore");
+			String quizscoreStr = rs.getString("quizscore"); // necessary because getInt returns 0 instead of null
 			
 			
 			// Verify this is a valid entry 
@@ -109,10 +91,10 @@ public class Friend {
 			if (achName != null && achType != null && achIcon != null) {
 				// We have an achievement
 				activity.add("<a href=\"user?userid="+friendid+"\">"+ username+"</a> earned a new badge: "+ achName +"  " + "<img src = \""+ achIcon +"\" height = \"20\" width = \"20\"");
-			} else if (quizscore != null && quizid != null && quizname != null) {
+			} else if (quizscoreStr != null && quizid != null && quizname != null) {
 				// Friend took a quiz
 				activity.add("<a href=\"user?userid=" + friendid + "\">"+ username + "</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+quizid+"\">"+ quizname+"</a> and got a score of "+ quizscore +"!");
-			} else if (quizscore == null && quizid != null && quizname != null) {
+			} else if (quizscoreStr == null && quizid != null && quizname != null) {
 				// Friend made a quiz
 				activity.add("<a href=\"user?userid=" + friendid + "\">"+ username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+quizid+"\">"+ quizname+"</a>");
 			}
@@ -121,39 +103,6 @@ public class Friend {
 			if (rs.isLast()) break;
 		}
 		return activity;
-		
-		
-//		for (int i = 0; i < friendIDs.size(); i++ ){
-//			User friend = new User(friendIDs.get(i),new UserConnection(dc));
-//			//search for recent activity
-//			//quiz made
-//			for(int j = 0; j < friend.quizzesmade.size(); j++){
-//				if (FormatDateTime.isRecent(friend.quizzesmade.get(j).date)){
-//					Integer id = friend.quizzesmade.get(j).quizid;
-//					String quizname = Quiz.getName(id,dc);
-//					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>");
-//				}
-//			}
-//			//quiz taken
-//			for(int j = 0; j < friend.quizzestaken.size(); j++){
-//				if (FormatDateTime.isRecent(friend.quizzestaken.get(j).datetaken)){
-//					Integer id = friend.quizzestaken.get(j).quizid;
-//					String quizname = Quiz.getName(id,dc);
-//					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a> and got a score of "+friend.quizzestaken.get(j).score+"!");
-//				}
-//			}
-//			
-//			//Achievement
-//			for(int j = 0; j < friend.achievements.size(); j++){
-//				if (FormatDateTime.isRecent(friend.achievements.get(j).dateachieved)){
-//					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name+"  " + "<img src = \""+at.get(friend.achievements.get(j).type).icon+"\" height = \"20\" width = \"20\"");
-//				}
-//			}
-//			
-//			
-//		}
-//		
-//		return activity;
 	}
 	
 	public static int getNumRequests(DatabaseConnection dc, Integer userid) throws SQLException{
