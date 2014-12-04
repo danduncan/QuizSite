@@ -225,21 +225,22 @@
 //challenges setup
 //	determine if user has responded
 	ArrayList<Message> newChallenge = new ArrayList<Message>();
-	for (int i = 0; i < user.messages.size(); i++){
- 		if (user.messages.get(i).replied == 0 && user.messages.get(i).receiverid == user.id  && user.messages.get(i).type == 1){
-			newChallenge.add(user.messages.get(i));
+	List<Message> messageList = user.getMessages();
+	for (int i = 0; i < messageList.size(); i++){
+ 		if (messageList.get(i).replied == 0 && messageList.get(i).receiverid == user.id  && messageList.get(i).type == 1){
+			newChallenge.add(messageList.get(i));
  		}
   	}
  	out.println("<p> You have " + newChallenge.size() + " new challenges</p>");
  	out.println("<ul type = \"circle\">");
  	for(int i = 0; i < newChallenge.size(); i++){
+ 		out.println("<li>");
  		out.println("<form method=\"post\" action=\"QuizHomepageServlet?quizid="+newChallenge.get(i).body+"\">");
  		out.println("<input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\"");
- 		out.println("<li> From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
+ 		out.println("From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
  		out.println("<input type=\"submit\" name = \"challenge\" value = \"accept\"/>   <input type=\"submit\" name = \"challenge\" value = \"decline\">");
  		out.println("</form>");
  		out.println("</li>");	
- 		out.println("</form>");
 	
  	}
  	out.println("</ul>"); 

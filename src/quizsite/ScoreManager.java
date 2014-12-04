@@ -141,7 +141,7 @@ public class ScoreManager {
 	 */
 	public int addScore(Quiz.Score score) {
 		// Get an ID for the new score
-		int id = this.sm.popNextQuizTakenID();
+		int id = this.sm.getNextQuizTakenID();
 		
 		// Create update statement for databse
 		StringBuilder sb = new StringBuilder();

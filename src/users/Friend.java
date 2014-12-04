@@ -60,7 +60,7 @@ public class Friend {
 			//if(!friendIDs.contains(ID1)){
 				//friendIDs.add(ID1);
 			//}
-			if(!friendIDs.contains(ID2)){
+			if(friendIDs != null && !friendIDs.contains(ID2)){
 				friendIDs.add(ID2);
 			}
 		

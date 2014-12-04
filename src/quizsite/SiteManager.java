@@ -199,11 +199,10 @@ public class SiteManager {
 	}
 	public int getNextMessageID() {
 		return readTableColumn(colNextMessageID);
-	}
+	}*/
 	public int getNextQuizTakenID() {
 		return readTableColumn(colNextQuizTakenID);
 	}
-	*/
 	
 	
 	// Getters for other major ivars. These do not modify any stored values
