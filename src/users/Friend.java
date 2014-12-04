@@ -48,57 +48,112 @@ public class Friend {
 	public static ArrayList<String> getFriendActivity(User user, DatabaseConnection dc, ArrayList<AchievementType> at) throws SQLException{
 		ArrayList<String> activity = new ArrayList<String>();
 		
+		// Specify maximum number of events to return
+		Integer limit = 25; // limit == null || limit < 1 allows infinite events to be returned
+		
+		// Event types
+		Integer achievement = 1;
+		Integer quizCreated = 2;
+		Integer quizMade = 3;
+		
+		
+		// Inputs determining resultset
+	
+		Integer userid = null;
+		if(user != null) userid = user.id;
+		if(userid == null || userid < 1 || dc == null) return activity;
+		
 		//get users friendsIDs
-		String query = "SELECT friend2 FROM "+MyDBInfo.FRIENDSTABLE+" where friend1 = "+user.id;
-		ResultSet rs = dc.executeQuery(query);
-		ArrayList<Integer> friendIDs = new ArrayList<Integer>();
+		//String query = "SELECT friend2 FROM "+MyDBInfo.FRIENDSTABLE+" where friend1 = "+user.id;
+		//ResultSet rs = dc.executeQuery(query);
+		//ArrayList<Integer> friendIDs = new ArrayList<Integer>();
 
-		while(rs.next()){
-			//Integer ID1 = rs.getInt("friend1");
-			Integer ID2 = rs.getInt("friend2");
-			
-			//if(!friendIDs.contains(ID1)){
-				//friendIDs.add(ID1);
-			//}
-			if(friendIDs != null && !friendIDs.contains(ID2)){
-				friendIDs.add(ID2);
-			}
+//		while(rs.next()){
+//			//Integer ID1 = rs.getInt("friend1");
+//			Integer ID2 = rs.getInt("friend2");
+//			
+//			//if(!friendIDs.contains(ID1)){
+//				//friendIDs.add(ID1);
+//			//}
+//			if(friendIDs != null && !friendIDs.contains(ID2)){
+//				friendIDs.add(ID2);
+//			}
+//		
+//		}
 		
+		//rs.close();
+		ResultSet rs = getTheBeast(userid,limit,dc);
+		if (!rs.first()) return activity; // rs is an empty set
+		
+		rs.beforeFirst(); 
+		while(true) {
+			// Move to next row
+			if(rs.next() == false) break;
+			
+			// Get the values from this row
+			Integer friendid = rs.getInt("userid");
+			String username = rs.getString("username");
+			String date = rs.getString("date");
+			Integer achType = rs.getInt("achType");
+			String achName = rs.getString("achName");
+			String achIcon = rs.getString("achIcon");
+			Integer quizid = rs.getInt("quizid");
+			String quizname = rs.getString("quizname");
+			Integer quizscore = rs.getInt("quizscore");
+			
+			
+			// Verify this is a valid entry 
+			if (friendid < 1 || username == null || date == null || username.isEmpty() || date.isEmpty()) continue;
+			
+			// Determine type of event
+			if (achName != null && achType != null && achIcon != null) {
+				// We have an achievement
+				activity.add("<a href=\"user?userid="+friendid+"\">"+ username+"</a> earned a new badge: "+ achName +"  " + "<img src = \""+ achIcon +"\" height = \"20\" width = \"20\"");
+			} else if (quizscore != null && quizid != null && quizname != null) {
+				// Friend took a quiz
+				activity.add("<a href=\"user?userid=" + friendid + "\">"+ username + "</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+quizid+"\">"+ quizname+"</a> and got a score of "+ quizscore +"!");
+			} else if (quizscore == null && quizid != null && quizname != null) {
+				// Friend made a quiz
+				activity.add("<a href=\"user?userid=" + friendid + "\">"+ username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+quizid+"\">"+ quizname+"</a>");
+			}
+			
+			// End when we reach the end of the set
+			if (rs.isLast()) break;
 		}
-		
-		rs.close();
-		
-		for (int i = 0; i < friendIDs.size(); i++ ){
-			User friend = new User(friendIDs.get(i),new UserConnection(dc));
-			//search for recent activity
-			//quiz made
-			for(int j = 0; j < friend.quizzesmade.size(); j++){
-				if (FormatDateTime.isRecent(friend.quizzesmade.get(j).date)){
-					Integer id = friend.quizzesmade.get(j).quizid;
-					String quizname = Quiz.getName(id,dc);
-					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>");
-				}
-			}
-			//quiz taken
-			for(int j = 0; j < friend.quizzestaken.size(); j++){
-				if (FormatDateTime.isRecent(friend.quizzestaken.get(j).datetaken)){
-					Integer id = friend.quizzestaken.get(j).quizid;
-					String quizname = Quiz.getName(id,dc);
-					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a> and got a score of "+friend.quizzestaken.get(j).score+"!");
-				}
-			}
-			
-			//Achievement
-			for(int j = 0; j < friend.achievements.size(); j++){
-				if (FormatDateTime.isRecent(friend.achievements.get(j).dateachieved)){
-					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name+"  " + "<img src = \""+at.get(friend.achievements.get(j).type).icon+"\" height = \"20\" width = \"20\"");
-				}
-			}
-			
-			
-		}
-		
 		return activity;
+		
+		
+//		for (int i = 0; i < friendIDs.size(); i++ ){
+//			User friend = new User(friendIDs.get(i),new UserConnection(dc));
+//			//search for recent activity
+//			//quiz made
+//			for(int j = 0; j < friend.quizzesmade.size(); j++){
+//				if (FormatDateTime.isRecent(friend.quizzesmade.get(j).date)){
+//					Integer id = friend.quizzesmade.get(j).quizid;
+//					String quizname = Quiz.getName(id,dc);
+//					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> created a new quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>");
+//				}
+//			}
+//			//quiz taken
+//			for(int j = 0; j < friend.quizzestaken.size(); j++){
+//				if (FormatDateTime.isRecent(friend.quizzestaken.get(j).datetaken)){
+//					Integer id = friend.quizzestaken.get(j).quizid;
+//					String quizname = Quiz.getName(id,dc);
+//					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> took a quiz called <a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a> and got a score of "+friend.quizzestaken.get(j).score+"!");
+//				}
+//			}
+//			
+//			//Achievement
+//			for(int j = 0; j < friend.achievements.size(); j++){
+//				if (FormatDateTime.isRecent(friend.achievements.get(j).dateachieved)){
+//					activity.add("<a href=\"user?userid="+friend.id+"\">"+ friend.username+"</a> earned a new badge: "+at.get(friend.achievements.get(j).type).name+"  " + "<img src = \""+at.get(friend.achievements.get(j).type).icon+"\" height = \"20\" width = \"20\"");
+//				}
+//			}
+//			
+//			
+//		}
+//		
+//		return activity;
 	}
 	
 	public static int getNumRequests(DatabaseConnection dc, Integer userid) throws SQLException{
