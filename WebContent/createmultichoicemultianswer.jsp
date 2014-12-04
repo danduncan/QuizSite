@@ -10,15 +10,17 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
+	<div class="typicalQwizardMainBody">
 	<h1><%=CreateQuizServlet.MULTI_ANSWER_MULTI_CHOICE%></h1>
 	Please fill in the question, choices, and answer fields below. Please separate choices by a ";".
 	If the question has multiple answers then please separate each one by a ";".
 	<form action="CreateQuizServlet" method="post">
-		Question: <input type="text" name="<%= CreateQuizServlet.QUESTION %>"><br>
-		Choices: <input type="text" name="<%= CreateQuizServlet.MC_CHOICES %>"><br>
-		Answers: <input type="text" name="<%= CreateQuizServlet.ANSWER %>"><br>
-		<input type="submit" value="Complete Question">
+		Question: <input type="text" name="<%= CreateQuizServlet.QUESTION %>" class="typicalQwizardTextBox"><br>
+		Choices: <input type="text" name="<%= CreateQuizServlet.MC_CHOICES %>" class="typicalQwizardTextBox"><br>
+		Answers: <input type="text" name="<%= CreateQuizServlet.ANSWER %>" class="typicalQwizardTextBox"><br>
+		<input type="submit" value="Complete Question" class="typicalQwizardBtn">
 	</form>	
+	</div>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

@@ -10,21 +10,23 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
+	<div class="typicalQwizardMainBody">
 	<h1><%=CreateQuizServlet.MULTI_ANSWER%></h1>
 	<% String orderMatters = request.getParameter(CreateQuizServlet.ORDER_MATTERS); %>
 	Please fill in the question and answer fields below.
  	If multiple answers are acceptable for an answer field then please separate each one by a ";".
 	<form action="CreateQuizServlet" method="post">
-		Question: <input type="text" name="<%=CreateQuizServlet.QUESTION%>"><br>
+		Question: <input type="text" name="<%=CreateQuizServlet.QUESTION%>" class="typicalQwizardTextBox" ><br>
 		<%
 		int numAnswerFields = (Integer)session.getAttribute(CreateQuizServlet.NUM_ANSWERS);
 		for(int i=0; i<numAnswerFields; i++){
-			out.println("Answers: <input type=\"text\" name=\""+CreateQuizServlet.ANSWER+i+"\"><br>");	
+			out.println("Answers: <input type=\"text\" name=\""+CreateQuizServlet.ANSWER+i+"\" class=\"typicalQwizardTextBox\"><br>");	
 		}
 		%>
 		<input type="hidden" name="<%=CreateQuizServlet.ORDER_MATTERS%>" value="<%=orderMatters%>"><br>
-		<input type="submit" value="Complete Question">
+		<input type="submit" value="Complete Question" class="typicalQwizardBtn">
 	</form>
+	</div>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

@@ -10,15 +10,16 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
+	<div class="typicalQwizardMainBody">
 	<h1><%=CreateQuizServlet.MULTI_ANSWER%></h1>
 	<form action="CreateQuizServlet" method="post">
 		Does the order of the answers matter? <br>
-		<select name="<%= CreateQuizServlet.ORDER_MATTERS%>">
+		<select name="<%= CreateQuizServlet.ORDER_MATTERS%>" class="typicalQwizardSelect">
 			<option value="false">No</option>
 			<option value="true">Yes</option>
 		</select><br>
 		How many answers does the question have?
-		<select name="<%= CreateQuizServlet.NUM_ANSWERS %>">
+		<select name="<%= CreateQuizServlet.NUM_ANSWERS %>" class="typicalQwizardSelect">
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -29,8 +30,9 @@
 			<option value="8">8</option>
 		</select><br>
 		<input type="hidden" name="<%= CreateQuizServlet.QUESTION_TYPE %>" value="<%= CreateQuizServlet.MULTI_ANSWER %>">
-		<input type="submit" value="Update Settings">
+		<input type="submit" value="Update Settings" class="typicalQwizardBtn" >
 	</form>
+	</div>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
