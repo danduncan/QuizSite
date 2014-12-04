@@ -183,6 +183,8 @@ public class Quiz {
 			results[count][3] = rs.getString("numtaken");
 			count++;
 		}
+		
+		rs.close();
 	
 		return results;
 	}
@@ -216,6 +218,8 @@ public class Quiz {
 			results[count][3] = FormatDateTime.getUserDate(rs.getString("datemade"));
 			count++;
 		}
+		
+		rs.close();
 	
 		return results;
 	}

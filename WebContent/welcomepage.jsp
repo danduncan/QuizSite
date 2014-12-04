@@ -242,7 +242,7 @@
  		out.println("<tr>");
  		out.println("<form method=\"post\" action=\"QuizHomepageServlet?quizid="+newChallenge.get(i).body+"\">");
  		out.println("<td><input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\">");
- 		out.println("- From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
+ 		out.println("- From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: <a href=\"QuizHomepageServlet?quizid="+newChallenge.get(i).body+"\"> "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"</a>  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
  		out.println("</td><td><input type=\"submit\" name = \"challenge\" value = \"accept\" class=\"challengeBtn acceptChallengeBtn\" />   <input type=\"submit\" name = \"challenge\" class=\"challengeBtn declineChallengeBtn\" value = \"decline\">");
  		out.println("</td></tr></form>");
  		//out.println("</li>");	

@@ -103,7 +103,7 @@ public class Friend {
 			}
 			
 			// End when we reach the end of the set
-			if (rs.isLast()) break;
+			if (rs.isLast()){ rs.close(); break;}
 		}
 		return activity;
 	}
@@ -115,6 +115,7 @@ public class Friend {
 		while (rs.next()){
 			numRequests++;
 		}
+		rs.close();
 		return numRequests;
 	}
 	

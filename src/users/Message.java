@@ -36,7 +36,7 @@ public class Message {
 		body = Body;
 	}
 	public String toString(){
-		return "  Sent: " + FormatDateTime.getUserDate(datesent) + "  Type: " + type + " Subject: " + subject;
+		return "  Sent: " + FormatDateTime.getUserDate(datesent) + " Subject: " + subject;
 	}
 	public void printtoJSP(PrintWriter out) throws IOException{
 		out.println("<p>Date: "+datesent+"</p>");

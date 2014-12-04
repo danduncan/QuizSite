@@ -120,6 +120,7 @@ public class ScoreManager {
 					rowInd++;
 				} catch (SQLException ignored){}
 			}
+			rs.close();
 			
 			for(int i = 0 ; i<numScores; i++){
 				int id = Integer.parseInt(table[i][0]);
