@@ -152,18 +152,32 @@ public class Quiz {
 	public static String[][] getPopularQuizzes(DatabaseConnection dc, Integer limit) throws SQLException{
 		String query =  "SELECT id,name,description,numtaken,numquestions  FROM quizzes ORDER BY numtaken DESC LIMIT " + limit;
 		ResultSet rs = dc.executeQuery(query);
-
-		String[][] results = new String[limit+1][4];
+		
+		
+		String[][] results;
 		String[] names = {"Quiz Name", "Description","# Questions","# Times Taken"};
+			
+		int rownum = 0;
+		while (rs.next()){
+			rownum++;
+		}
+				
+		rs.beforeFirst();
+		
+		if (rownum < limit){
+			results = new String[rownum+1][names.length];
+		} else {
+			results = new String[limit+1][names.length];
+		}
 		results[0] = names;
 		
-		int rownum = 1;
-		while (rs.next()){
-			results[rownum][0] = "<a href=\"QuizHomepageServlet?quizid="+rs.getInt("id")+"\">"+ rs.getString("name")+"</a>";	
-			results[rownum][1] = trimDescription(rs.getString("description"));
-			results[rownum][2] = rs.getString("numquestions");
-			results[rownum][3] = rs.getString("numtaken");
-			rownum++;
+		int count = 1;
+		while(rs.next()){
+			results[count][0] = "<a href=\"QuizHomepageServlet?quizid="+rs.getInt("id")+"\">"+ rs.getString("name")+"</a>";	
+			results[count][1] = trimDescription(rs.getString("description"));
+			results[count][2] = rs.getString("numquestions");
+			results[count][3] = rs.getString("numtaken");
+			count++;
 		}
 	
 		return results;
@@ -173,18 +187,30 @@ public class Quiz {
 		String query =  "SELECT id,name,description,numquestions,datemade  FROM quizzes ORDER BY datemade DESC LIMIT " + limit;
 		ResultSet rs = dc.executeQuery(query);
 
-		String[][] results = new String[limit+1][4];
+		String[][] results;
 		String[] names = {"Quiz Name", "Description","# Questions","Date Made"};
+		
+		int rownum = 0;
+		while (rs.next()){
+			rownum++;
+		}
+		
+		rs.beforeFirst();
+		
+		if (rownum < limit){
+			results = new String[rownum+1][names.length];
+		} else {
+			results = new String[limit+1][names.length];
+		}
 		results[0] = names;
 		
-		int rownum = 1;
-		while (rs.next()){
-			results[rownum][0] = "<a href=\"QuizHomepageServlet?quizid="+rs.getInt("id")+"\">"+ rs.getString("name")+"</a>";	
-			results[rownum][1] = trimDescription(rs.getString("description"));
-
-			results[rownum][2] = rs.getString("numquestions");
-			results[rownum][3] = FormatDateTime.getUserDate(rs.getString("datemade"));
-			rownum++;
+		int count = 1;
+		while(rs.next()){
+			results[count][0] = "<a href=\"QuizHomepageServlet?quizid="+rs.getInt("id")+"\">"+ rs.getString("name")+"</a>";	
+			results[count][1] = trimDescription(rs.getString("description"));
+			results[count][2] = rs.getString("numquestions");
+			results[count][3] = FormatDateTime.getUserDate(rs.getString("datemade"));
+			count++;
 		}
 	
 		return results;
