@@ -10,7 +10,7 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
-	
+	<div class="typicalQwizardMainBody">
 	<%
 	int userID = Integer.parseInt(request.getParameter("userid"));
 	ServletContext sc = request.getServletContext();
@@ -101,6 +101,7 @@
 	}
 	%>
 	
+	</div>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 	
 </body>

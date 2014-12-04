@@ -14,6 +14,7 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
+	<div class="typicalQwizardMainBody">
 <% 
 	User user = (User) session.getAttribute("user");
 	user.updateUserDatabase();
@@ -265,7 +266,7 @@
 	}
 	
 	%>
-
+</div>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 
 </body>

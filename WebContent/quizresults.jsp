@@ -10,6 +10,7 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
+	<div class="typicalQwizardMainBody">
 	<%
 		HttpSession ses = request.getSession();
 		ServletContext con = request.getServletContext();
@@ -78,7 +79,8 @@
 		}
 	%>
 	</ul>
-	<a href="welcomepage.jsp">Go to welcome page!</a>
+	<a href="home.jsp">Go to welcome page!</a>
+	</div>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>

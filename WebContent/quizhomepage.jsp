@@ -11,7 +11,7 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
-	
+	<div class="typicalQwizardMainBody">
 	<%!
 	public String printStats(double num, int possiblePoints){
 		String str = "N/A";
@@ -122,6 +122,6 @@
 	%>
 	
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
-	
+	</div>
 </body>
 </html>
