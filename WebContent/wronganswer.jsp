@@ -10,6 +10,7 @@
 </head>
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
+	<div class="typicalQwizardMainBody">
 	<%
 		ServletContext sc = request.getServletContext();
 		DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
@@ -26,8 +27,9 @@
 		ShowQuizServlet.printAnswers(out, q);
 	%>
 	<form action="ShowQuizServlet" method="post">
-		<input type="submit" value="Continue">
+		<input type="submit" value="Continue" class="typicalQwizardBtn">
 	</form>
+	</div>
 	<%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
