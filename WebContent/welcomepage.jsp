@@ -53,9 +53,9 @@
 <input type = "submit" name = "Find Friends" value = "Find Friends" class="welcomepageBtn" />
 </form></td>
 
-<td><form method ="post" action = "users.jsp">
-<input type = "submit" name = "Find Friends" value = "Send a Message" class="welcomepageBtn" />
-</form></td>
+<td>
+<input type = "submit" name = "Find Friends" value = "Send a Message" class="welcomepageBtn" onclick="displayMessage()" />
+</td>
 
 </tr>
 </table>
