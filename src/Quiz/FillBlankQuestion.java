@@ -23,6 +23,6 @@ public class FillBlankQuestion extends Question{
 	}
 	
 	public void printToJSP(JspWriter out, int i) throws IOException{
-		out.println(qStr1 + " <input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\"> " + qStr2);
+		out.println(qStr1 + " <input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\" class=\"typicalQwizardTextBox\"> " + qStr2);
 	}
 }

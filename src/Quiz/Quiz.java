@@ -122,9 +122,11 @@ public class Quiz {
 		out.println("<ol>");
 		for(int i = 0; i<questions.size(); i++){
 			Question q = questions.get(i);
+			out.println("<div class=\"typicalQwizardQuestionDiv\">");
 			out.println("<li>");
 			q.printToJSP(out, i);
 			out.println("</li>");
+			out.println("</div>");
 		}
 		out.println("</ol>");
 	}
@@ -132,7 +134,9 @@ public class Quiz {
 	public void printQuizPageToJSP(JspWriter out, int i) throws IOException{
 		out.println("<h1>Question "+ (i+1) +"</h1>");
 		Question q = questions.get(i);
+		out.println("<div class=\"typicalQwizardQuestionDiv\">");
 		q.printToJSP(out, i);
+		out.println("</div>");
 		out.println("<br>");
 	}
 	

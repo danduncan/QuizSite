@@ -79,7 +79,7 @@ public class MultiAnswerQuestion extends Question {
 				char c = (char) ('a'+j);
 				out.println(c+".)");
 			}
-			out.println(" <input type=\"text\" name=\""+Question.ANSWER+i+""+j+"\"><br>");
+			out.println(" <input type=\"text\" name=\""+Question.ANSWER+i+""+j+"\" class=\"typicalQwizardTextBox\"><br>");
 		}
 	}
 	

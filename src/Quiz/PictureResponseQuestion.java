@@ -22,7 +22,7 @@ public class PictureResponseQuestion extends Question {
 	public void printToJSP(JspWriter out, int i) throws IOException{
 		out.println(questionStr + "<br>");
 		out.println("<img src="+picURL+" alt="+picURL+"><br>");
-		out.println("<input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\">");
+		out.println("<input type=\"text\" name=\""+Question.ANSWER+i+""+0+"\" class=\"typicalQwizardTextBox\">");
 	}
 	
 

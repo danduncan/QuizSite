@@ -34,6 +34,7 @@
 					<li>"Challenge friend" drop-down menu needs to check the user's friends from the database, not the user object</li>
 					<li>getFriendActivity() needs to check with the database and guard against null pointers</li>
 			</ul></li>
+			<li>I added some CSS to much of the website to make it look a little more attractive. I've tested every page and they look fine, but look carefully during final testing in case I missed anything</li>
 			<li>Populate database with a bunch of real quizzes, quizzes taken, and achievements
 				<ul><li>We ideally want to have plenty of data for the tables of recent quizzes, quizzes taken, and friend activity</li>
 					<li>Lots of achievements scattered among users to show off achievement badges and floating captions</li>

@@ -14,6 +14,8 @@
 </head>
 <body>
 <%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
+<div class="achievementsMainBody">
+<h1>Qwizard Achievements:</h1>
 <% 
  ServletContext sc = getServletContext();
  ArrayList<AchievementType> achievementtypes = (ArrayList<AchievementType>) sc.getAttribute("achievementtypes");
@@ -28,6 +30,7 @@
  }
  out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(achievements));
 %>
+</div>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
