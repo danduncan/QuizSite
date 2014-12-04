@@ -21,10 +21,13 @@
 				<ul><li><a href="http://localhost:8080/QuizSite/user?userid=1">Gino Rooney</a></li> 
 				<li><a href="http://localhost:8080/QuizSite/user?userid=2">Matt Wilson</a></li> 
 				<li><a href="http://localhost:8080/QuizSite/user?userid=3">Dan Duncan</a></li></ul></li>
+				</ul><ul>
 			<li>All three of us are EE grad students</li>
 			</ul><ul>
 			<li>Qwizard consists of over 100 source code files and 11,000 lines of code</li>
-			<li>All features listed on this page are implemented in our website</li>
+			<li>Version control was handled via Github and the Eclipse EGit interface</li>
+				<ul><li>Over 300 commits were made to our Github repository in the making of this project</li></ul>
+			<li>All features listed on this page are fully implemented in our website</li>
 			<li>An attractively-formatted version of this documentation is available at the "About" link on our project website</li>
 			</ul>
 		</div>
@@ -179,10 +182,10 @@
 						<li>Passwords are salted prior to encryption</li>
 						<li>User profiles track and display past quiz performance</li>
 						<li>User profiles track and display friends' recent activity</li>
-						<li>Friends requests are sent and confirmed via Ajax</li>
+						<li>Friend requests are sent and confirmed via Ajax</li>
 						<li>AJAX-based messaging system is robust and user-friendly
 						<li>Group messages can also be sent via the AJAX interface
-							<ul><li>To send a group message, just type in the usernames of the recipient, each name separated by a space</li>
+							<ul><li>To send a group message, just type in the usernames of the recipients, each name separated by a space</li>
 							</ul></li>
 						</ul></li>
 				
@@ -206,12 +209,12 @@
 
 				<li>Website is attractive and presentable
 					<ul>
-						<li>CSS and Javascript used to create a uniform website experience</li>
+						<li>CSS and Javascript used to create a pleasant and uniform user experience</li>
 						<li>GET, POST, and AJAX requests are all used depending on which provides the best functionality</li>
 						<li>A standard header and footer are present on every page</li>
 						<li>Header and footer feature useful links, including links customized to the user and working About/Contact links</li>
 						<li>Qwizard logo included in header and as icon in window title</li>
-						<li>Scripts used to uniformly generate well-formatted website components
+						<li>Scripts are used to uniformly generate well-formatted website components
 							<ul>
 								<li>All website tables</li>
 								<li>User and quiz search results</li>
