@@ -28,37 +28,20 @@
 		<div class="bigFrame notDone">
 			<h1><span>Known Bugs</span></h1>
 			<ul>
-			<li>Welcome page gets nullpointerexception
-				<ul>
-					<li>Bug is still present as of Tuesday</li>
-					<li>Stack trace is as follows:
-					<ul>
-						<li>at com.mysql.jdbc.ResultSetImpl.next(ResultSetImpl.java:6334)</li>
-						<li>at connection.UserConnection.getAttribute(UserConnection.java:159)</li>
-						<li>at users.User.init(User.java:56)</li>
-						<li>at users.Friend.getFriendActivity(Friend.java:72)</li>
-					</ul></li>
-				</ul></li>
-			<li>DatabaseConnection crashes after being open too long. This may not be fixable</li>
-			<li>Site crashes if you try to access a quiz while not logged in. There should either be a public quiz view, or the servlet should forward the user to the home/signin page
-			<ul><li>To see what happens, log out of your account and then visit a <a href="http://localhost:8080/QuizSite/QuizHomepageServlet?quizid=23">quiz link</a></li></ul></li>
-			<li>numTaken does not get incremented when a user takes a quiz</li>
-			<li>When a user receives a message, it does not show up until the user logs out and logs back in
-			<ul><li>The Display Messages code needs to check the database each time it executes, rather than checking sesssion.getAttribute("user")</li> 
-			</ul></li>
-			<li><strong>Debug all major functions that we will have to show in our demo</strong>
-				<ul><li>Receive and reply to messages without logging out and logging back in</li>
-					<li>Ensure all variables are in sync with the database at all times (don't read from a session attribute if the attribute references something affected by other users, such as messages received)</li>
+			<li><strong>Debug all major functions that we will have to show in our demo with two users accessing simultaneously (no logging out!)</strong>
+				<ul><li>Receive and reply to messages</li>
 					<li>Make sure Create Question and Create Quiz are referencing the SiteManager and getting accurate ID's</li>
 					<li>"Challenge friend" drop-down menu needs to check the user's friends from the database, not the user object</li>
-					<li>getFriendActivity() needs to check with the database to have the correct friends</li>
+					<li>getFriendActivity() needs to check with the database and guard against null pointers</li>
 			</ul></li>
-			<li>Empty out these tables in the database: quizzes, questions 
-				<ul><li>Manually update the siteManager table to have correct values for nextquizid, nextquestionid, nextmessageid, nextquizt
-					<li>Then, populate database with a bunch of real quizzes</li>
+			<li>Populate database with a bunch of real quizzes, quizzes taken, and achievements
+				<ul><li>We ideally want to have plenty of data for the tables of recent quizzes, quizzes taken, and friend activity</li>
+					<li>Lots of achievements scattered among users to show off achievement badges and floating captions</li>
+				</ul>
+			</li>
+			<li>Since we will use <strong>about.jsp</strong> for our demo, it might be nice to rearrange the list of features and extensions into some kind of coherent order. Right now, they are just stream of consciousness</li>
 					
 				</ul></li>
-			<li>When a quiz is taken, sm.popNextQuizTakenId() gets called twice</li>
 			
 		</div>
 		<div class="bigFrame">
@@ -154,7 +137,6 @@
 			<h1>Recommended Features and Extensions</h1>
 			<h2>(Based on requirements for a three-person team)</h2>
 			<ul class="checklist">
-				<li class="notDone">Quiz practice mode <span>(not yet implemented)</span></li>
 				<li>Quizzes track performance of users</li> 
 				<li>Quizzes track high scores</li>
 				<li>Quiz pages display top scores</li>
@@ -163,11 +145,6 @@
 						<li>Multi-answer questions</li>
 						<li>Multiple choice with multiple answers</li>
 					</ul></li>
-				<li>Dedicated user sub-pages <span>(not yet implemented)</span>
-						<ul><li>Messages page to receive messages/challenges/friend requests, and to send replies or compose new messages</li>
-						<li>Friends page where a user can view their friends</li>
-						<li>Edit account page to change picture, name, email, or password</li>
-						</ul></li>	
 				<li>Optional user features
 					<ul>
 						<li>Passwords are salted prior to encryption</li>
@@ -191,7 +168,6 @@
 								<li>Prodigious author - the user created ten quizzes</li>
 								<li>Quiz Machine - the user took ten quizzes</li>
 								<li>I am the Greatest - user got a top score on a quiz</li>
-								<li class="notDone">Practice Makes Perfect - the user took a quiz in practice mode <span>(not yet implemented)</span></li>
 							</ul></li>
 					</ul>
 				
@@ -215,11 +191,6 @@
 					</ul></li>
 				<li>Website is attractive and presentable
 					<ul>
-						<li class="notDone"><span>User profiles need to styled</span></li>
-						<li class="notDone"><span>Quiz homepages need to styled</span></li>
-						<li class="notDone"><span>Quizzes need to styled</span></li>
-						<li class="notDone"><span>Quiz results need to styled</span></li>
-						<li class="notDone"><span>Challenge request needs to be implemented and styled</span></li>
 						<li>CSS, JSP's, and Javascript used to create a uniform website experience</li>
 						<li>GET, POST, and AJAX requests are all used depending on which is the most intuitive for a particular action</li>
 						<li>Standard header and footer present on every page</li>
@@ -257,22 +228,22 @@
 					<ul><li>User profiles</li>
 						<li>User thumbnails</li>
 						<li>User search</li>
-						<li class="notDone">Quiz-related pages <span>(not yet implemented)</span></li>
+						<li>Quiz-related pages</li>
 						</ul></li>
 				<li>Website pages feature robust error handling
 					<ul>
 						<li>Sign in page uses Javascript for error checking</li>
 						<li>Create account page uses Javascript for error checking</li>
 						<li>User inputs throughout website are sanitized to prevent SQL injection</li>
-						<li>Malformed inputs and URL's are handled gracefully
+						<li>Malformed inputs and URL's are handled gracefully by all pages
 							<ul><li>e.g. when a signed-in user visits the sign in page or the create account page, they are forwarded on to the homepage</li></ul>
 						</li>
 						<li>Messaging interface uses Javascript for instantaneous error checking</li></ul>
 				<li>Catchy name for website</li>
 				<li>Website includes an awesome easter egg! A couple hints to help you find it:
 					<ul>
-						<li>It's on the user search page</li>
-						<li>We got the idea from Google</li>
+						<li>It's accessible within the user search page</li>
+						<li>Google (and <a href="http://youtu.be/wZ8z9FQEQiQ">Star Fox</a>) did it first</li>
 					</ul>
 				</li>
 			</ul>
@@ -280,7 +251,19 @@
 		<div class="bigFrame notDone">
 			<h1>Extensions Not Implemented</h1>
 			<ul>
-				<li>Administrator view <span>(not implemented)</span>
+				<li class="notDone">Quiz practice mode</li>
+				<li class="notDone">Practice Makes Perfect achievement <span>(badge only)</span></li>
+				<li>Dedicated user sub-pages 
+				<ul><li>Messages page to receive messages/challenges/friend requests, and to send replies or compose new messages</li>
+					<li>Friends page where a user can view their friends</li>
+					<li>Edit account page to change picture, name, email, or password</li>
+				</ul></li>	
+				<li class="notDone"><span>User profiles need to styled</span></li>
+				<li class="notDone"><span>Quiz homepages need to styled</span></li>
+				<li class="notDone"><span>Quizzes need to styled</span></li>
+				<li class="notDone"><span>Quiz results need to styled</span></li>
+				<li class="notDone"><span>Challenge request needs to be implemented and styled</span></li>
+				<li>Administrator view 
 					<ul>
 						<li>Create announcements for homepage</li>
 						<li>Remove user accounts</li>
@@ -294,18 +277,13 @@
 								<li> etc.</li>
 							</ul></li>
 					</ul></li>
-				<li>Homepage displays announcements <span>(not implemented)</span></li>
+				<li>Homepage displays announcements</li>
 				<li>Link to edit the quiz if the user is the quiz owner</li>
 				<li>Quiz categories</li>
 				<li>Question categories</li>
 				<li>User ratings and user reviews for quizzes</li>
 				<li>User comment system for quizzes</li>
 				<li>Allow users to flag quizzes as inappropriate</li>
-				<li>Public view of website
-					<ul>
-						<li>Public view of homepage</li>
-						<li>Public view of quiz pages</li>
-					</ul></li>
 				<li>Cookies to provide long-term tracking of users</li>
 				<li>User privacy settings</li>
 				<li>XML formatting and loading of quizzes</li>
