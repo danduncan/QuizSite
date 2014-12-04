@@ -238,3 +238,21 @@ input.declineChallengeBtn {
 	background-color: #EEEEEE;
 	color: #000000;
 }
+
+.inboxHeader {
+	margin-top: 80px;
+	margin-bottom: 80px;
+}
+
+.inboxHeader h2 {
+	font-size: 40px;
+}
+
+.inboxHeader img {
+	height: 100px;
+	width: auto;
+	display: inline-block;
+	position: relative;
+	top: 30px;
+}
+
