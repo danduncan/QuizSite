@@ -14,6 +14,7 @@
 </head>
 <body>
 <%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session)  %>
+	<div class="typicalQwizardMainBody">
 	<% 
 	ServletContext sc = getServletContext();
 	DatabaseConnection dc = (DatabaseConnection) sc.getAttribute("DatabaseConnection");
@@ -26,6 +27,8 @@
 		out.println("<p>Date: "+FormatDateTime.getUserDate(msg.datesent)+"</p>");
 		out.println("<p>Subject: "+msg.subject+"</p>");
 		out.println("<p>Body: "+msg.body+"</p>");
+		
+		out.println("<input type=\"submit\" value=\"Reply\" class=\"typicalQwizardBtn\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",msg.senderid) + "')\" >");
 		
 		out.println("<p> <a href=\"welcomepage.jsp\"> Return to Previous Page </a> </p>");
 		
@@ -68,6 +71,7 @@
 			out.println("<p>Date: "+msg.datesent+"</p>");
 			out.println("<p>Subject: "+msg.subject+"</p>");
 			out.println("<p>Body: "+msg.body+"</p>");
+			out.println("<input type=\"submit\" value=\"Reply to " + user.userconnection.getAttribute("username",msg.senderid)  + "\" class=\"typicalQwizardBtn\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",msg.senderid) + "')\" >");
 			out.println("<p> ------------------------ <p>");
 			
 		}
@@ -80,6 +84,7 @@
 			out.println("<p>Date: "+msg.datesent+"</p>");
 			out.println("<p>Subject: "+msg.subject+"</p>");
 			out.println("<p>Body: "+msg.body+"</p>");
+			out.println("<input type=\"submit\" value=\"Reply to " + user.userconnection.getAttribute("username",msg.senderid)  + "\" class=\"typicalQwizardBtn\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",msg.senderid) + "')\" >");
 			out.println("<p> ------------------------ <p>");
 			}
 		
@@ -98,6 +103,7 @@
 	}
 		
 %>
+</div>
 <%= sharedHtmlGenerators.sharedHtmlGenerator.getHTML(application.getRealPath("/") + "/sharedHTML/sharedfooter.html") %>
 </body>
 </html>
