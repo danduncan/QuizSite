@@ -235,19 +235,21 @@
  		}
   	}
  	out.println("<p> You have " + newChallenge.size() + " new challenges</p>");
- 	out.println("<ul type = \"circle\">");
+ 	//out.println("<ul type = \"circle\">");
+ 	out.println("<table>");
  	for(int i = 0; i < newChallenge.size(); i++){
- 		out.println("<li>");
+ 		//out.println("<li>");
+ 		out.println("<tr>");
  		out.println("<form method=\"post\" action=\"QuizHomepageServlet?quizid="+newChallenge.get(i).body+"\">");
- 		out.println("<input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\"");
- 		out.println("From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
- 		out.println("<input type=\"submit\" name = \"challenge\" value = \"accept\" class=\"challengeBtn acceptChallengeBtn\" />   <input type=\"submit\" name = \"challenge\" class=\"challengeBtn declineChallengeBtn\" value = \"decline\">");
- 		out.println("</form>");
- 		out.println("</li>");	
+ 		out.println("<td><input type=\"hidden\" name = \"messagenum\" value = \""+newChallenge.get(i).id+"\">");
+ 		out.println("- From: <a href= \"user?userID=" + newChallenge.get(i).senderid+"\">"+ user.userconnection.getAttribute("username",newChallenge.get(i).senderid)+"</a> Quiz: "+Quiz.getName(Integer.parseInt(newChallenge.get(i).body),dc)+"  On: " +FormatDateTime.getUserDate(newChallenge.get(i).datesent));
+ 		out.println("</td><td><input type=\"submit\" name = \"challenge\" value = \"accept\" class=\"challengeBtn acceptChallengeBtn\" />   <input type=\"submit\" name = \"challenge\" class=\"challengeBtn declineChallengeBtn\" value = \"decline\">");
+ 		out.println("</td></tr></form>");
+ 		//out.println("</li>");	
 	
  	}
- 	out.println("</ul>"); 
-	
+ 	//out.println("</ul>"); 
+	out.println("</table>");
 
 	out.println("<h2> Friend Activity </h2>");
 	ArrayList<String> activity = Friend.getFriendActivity(user,dc,achievementtypes);
