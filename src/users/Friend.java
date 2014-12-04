@@ -44,12 +44,15 @@ public class Friend {
 		String insert = "INSERT INTO friends VALUES("+friend1+","+friend2+",\""+datefriended+"\",\""+groupname+"\")";
 		dc.executeUpdate(insert);
 	}
+	
+	
+	
 	//get friend activity for user
 	public static ArrayList<String> getFriendActivity(User user, DatabaseConnection dc, ArrayList<AchievementType> at) throws SQLException{
 		ArrayList<String> activity = new ArrayList<String>();
 		
 		// Specify maximum number of events to return
-		Integer limit = 100; // limit == null || limit < 1 allows infinite events to be returned
+		Integer limit = 50; // limit == null || limit < 1 allows infinite events to be returned
 		
 		// Event types
 		Integer achievement = 1;
