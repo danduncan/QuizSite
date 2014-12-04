@@ -238,7 +238,7 @@
 				<li>Website includes an awesome easter egg! A couple hints to help you find it:
 					<ul>
 						<li>It's accessible within the user search page</li>
-						<li>Google (and <a href="http://youtu.be/wZ8z9FQEQiQ">Star Fox</a>) did it first</li>
+						<li>Google (and <a href="http://youtu.be/wZ8z9FQEQiQ" target="_blank" style="target-new: tab;">Star Fox</a>) did it first</li>
 					</ul>
 				</li>
 			</ul>
