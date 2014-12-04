@@ -214,3 +214,10 @@ a.usernameThumbnail:link { text-decoration: none; }
 a.usernameThumbnail:visited { text-decoration: none; }
 a.usernameThumbnail:hover { text-decoration: none; }
 a.usernameThumbnail:active { text-decoration: none; }
+
+
+li .msgBtn, tr .msgBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
+	font-size: 14px;
+}

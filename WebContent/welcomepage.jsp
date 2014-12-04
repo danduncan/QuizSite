@@ -212,7 +212,7 @@
 	out.println("<ul type = \"circle\">");
 	for(int i = 0; i < newMessages.size(); i++){
 		out.println("<li><a href=\"checkmessage.jsp?messageNum="+newmessageNums.get(i)+"\"> From: "+user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid)+newMessages.get(i).toString()+"</a>");
-		out.println("<input type=\"submit\" value=\"Reply\" onclick=\"displayMessage()\" />");
+		out.println("<input type=\"submit\" class=\"msgBtn\" value=\"Reply\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid) + "')\" />");
 		out.println("</li>");
 	}
 	out.println("</ul>");
