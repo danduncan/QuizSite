@@ -221,3 +221,20 @@ li .msgBtn, tr .msgBtn {
 	color: #FFFFFF;
 	font-size: 14px;
 }
+
+input.challengeBtn {
+	font-size: 14px;
+	position: relative;
+	top: -3px;
+}
+
+input.acceptChallengeBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
+	margin-left: 10px;
+}
+
+input.declineChallengeBtn {
+	background-color: #EEEEEE;
+	color: #000000;
+}
