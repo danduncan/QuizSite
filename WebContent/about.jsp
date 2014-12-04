@@ -24,7 +24,8 @@
 				</ul><ul>
 			<li>All three of us are EE grad students</li>
 			</ul><ul>
-			<li>Qwizard consists of over 100 source code files and 11,000 lines of code</li>
+			<li>Qwizard consists of over 100 source code files and 11,000 lines of code
+				<ul><li>7,000 lines of Java code and 4,400 lines of JSPs, HTML, Javascript, and CSS</li></ul></li>
 			<li>Version control was handled via Github and the Eclipse EGit interface</li>
 				<ul><li>Over 300 commits were made to our Github repository in the making of this project</li></ul>
 			<li>All features listed on this page are fully implemented in our website</li>
