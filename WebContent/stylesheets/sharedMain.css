@@ -237,3 +237,20 @@ input.declineChallengeBtn {
 	font-size: 18px;
 	margin-left: 10px;
 }
+
+input.typicalQwizardBtn {
+	background-color: #3B5998;
+	color: #FFFFFF;
+	font-size: 18px;
+	margin: 10px 10px;
+}
+
+input.typicalQwizardTextBox, select.typicalQwizardSelect {
+	font-size: 18px;
+	margin: 10px 10px;
+}
+
+.typicalQwizardMainBody {
+	margin-left: 20px;
+}
+
