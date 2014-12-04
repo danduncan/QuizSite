@@ -58,6 +58,7 @@
 					<li>Then, populate database with a bunch of real quizzes</li>
 					
 				</ul></li>
+			<li>When a quiz is taken, sm.popNextQuizTakenId() gets called twice</li>
 			
 		</div>
 		<div class="bigFrame">
