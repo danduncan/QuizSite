@@ -97,7 +97,7 @@
 			takenData[i][0] = "<a href=\"QuizHomepageServlet?quizid="+id+"\">"+ quizname+"</a>";
 			takenData[i][1] = FormatDateTime.getUserDateTime(user.quizzestaken.get(recent.get(i)).datetaken)[0];
 			takenData[i][2] = user.quizzestaken.get(recent.get(i)).score.toString();
-			takenData[i][3] = String.valueOf(user.quizzestaken.get(recent.get(i)).time);	
+			takenData[i][3] = String.valueOf((int) user.quizzestaken.get(recent.get(i)).time)+"s";	
 		}
 		if (recent.size() > 0){
 			out.println("<h3>Recently Taken Quizzes</h3>");
