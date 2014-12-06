@@ -44,7 +44,7 @@
 		
 		<div class="hatContainer">
 		<a href = "/QuizSite/">
-		<img src="/QuizSite/qwizard_images/wizard_hat_full.png" alt="Qwizard" />
+		<img src="/QuizSite/qwizard_images/wizard_hat_new_full.png" alt="Qwizard" />
 		</a>
 		</div>
 		
