@@ -80,6 +80,9 @@ public class Quiz {
 		immediatecorrection = ((String) quizconnection.getAttribute("immediatecorrection", id)).equals("1");
 		numtaken = Integer.parseInt((String) quizconnection.getAttribute("numtaken", id));
 		questions = (ArrayList<Question>) quizconnection.getAttribute("questions", id);
+		if(randomorder){
+			Collections.shuffle(questions);
+		}
 		
 	}
 	public void updateDatabase(boolean newQuiz, Integer ID){
