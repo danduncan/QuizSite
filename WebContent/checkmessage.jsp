@@ -68,7 +68,7 @@
 		for(int i = 0; i < newMessages.size(); i++){
 			Message msg = newMessages.get(i);
 			out.println("<p>From: "+user.userconnection.getAttribute("username",msg.senderid)+"</p>");
-			out.println("<p>Date: "+msg.datesent+"</p>");
+			out.println("<p>Date: "+ FormatDateTime.getUserDateTime(msg.datesent)[0]+"</p>");
 			out.println("<p>Subject: "+msg.subject+"</p>");
 			out.println("<p>Body: "+msg.body+"</p>");
 			out.println("<input type=\"submit\" value=\"Reply to " + user.userconnection.getAttribute("username",msg.senderid)  + "\" class=\"typicalQwizardBtn\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",msg.senderid) + "')\" >");
@@ -81,7 +81,7 @@
 		for(int i = 0; i <  receivedMessages.size(); i++){
 			Message msg = receivedMessages.get(i);
 			out.println("<p>From: "+user.userconnection.getAttribute("username",msg.senderid)+"</p>");
-			out.println("<p>Date: "+msg.datesent+"</p>");
+			out.println("<p>Date: "+FormatDateTime.getUserDateTime(msg.datesent)[0]+"</p>");
 			out.println("<p>Subject: "+msg.subject+"</p>");
 			out.println("<p>Body: "+msg.body+"</p>");
 			out.println("<input type=\"submit\" value=\"Reply to " + user.userconnection.getAttribute("username",msg.senderid)  + "\" class=\"typicalQwizardBtn\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",msg.senderid) + "')\" >");
@@ -93,7 +93,7 @@
 		for(int i = 0; i <  sentMessages.size(); i++){
 			Message msg = sentMessages.get(i);
 			out.println("<p>To: "+user.userconnection.getAttribute("username",msg.receiverid)+"</p>");
-			out.println("<p>Date: "+msg.datesent+"</p>");
+			out.println("<p>Date: "+FormatDateTime.getUserDateTime(msg.datesent)[0]+"</p>");
 			out.println("<p>Subject: "+msg.subject+"</p>");
 			out.println("<p>Body: "+msg.body+"</p>");
 			out.println("<p> ------------------------ <p>");
