@@ -46,7 +46,9 @@
 		//out.println("User query = \"" + query + "\";");
 
 		if (dc != null) {
-			ResultSet rs = users.SearchForUsers.basicSearch(dc,query);
+			String userquery = "select * from users where id=" + user.id;
+			ResultSet rs = dc.executeQuery(userquery);
+			//ResultSet rs = users.SearchForUsers.basicSearch(dc,query);
 			//out.println(sharedHtmlGenerators.HtmlTableGenerator.getHtml(rs));
 			out.println(sharedHtmlGenerators.HtmlUserThumbnailGenerator.getHtml(rs,dc,session));
 		}
