@@ -29,7 +29,8 @@
 		quiz.numtaken++;
 		QuizConnection qc = new QuizConnection(dc, null);
 		qc.storeQuiz(quiz, false);
-		user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
+		user.quizzestaken.add(0, new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
+		//user.quizzestaken.add(new QuizTaken(sm.popNextQuizTakenID(), quiz.id, user.id, quizScore.score,secondsElapsed));	
 		user.updateUserDatabase();
 		ses.setAttribute("user", user);
 		
