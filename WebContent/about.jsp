@@ -13,14 +13,14 @@
 <body>
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (quizsite.DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<div class="mainBody">
-		<div class="bigFrame">
+		<div class="bigFrame aboutDiv">
 			<h1>About Qwizard and the Qwizard Team</h1>
 			
 			<ul>
 			<li>3 person team:
-				<ul><li><a href="http://localhost:8080/QuizSite/user?userid=1">Gino Rooney</a></li> 
-				<li><a href="http://localhost:8080/QuizSite/user?userid=2">Matt Wilson</a></li> 
-				<li><a href="http://localhost:8080/QuizSite/user?userid=3">Dan Duncan</a></li></ul></li>
+				<ul><li><a href="http://localhost:8080/QuizSite/user?userid=1">Gino Rooney</a> (grooney)</li> 
+				<li><a href="http://localhost:8080/QuizSite/user?userid=2">Matt Wilson</a> (mbowiewi)</li> 
+				<li><a href="http://localhost:8080/QuizSite/user?userid=3">Dan Duncan</a> (duncand)</li></ul></li>
 				</ul><ul>
 			<li>All three of us are EE grad students</li>
 			</ul><ul>
@@ -30,22 +30,6 @@
 				<ul><li>Over 300 commits were made to our Github repository in the making of this project</li></ul>
 			<li>All features listed on this page are fully implemented in our website</li>
 			<li>An attractively-formatted version of this documentation is available at the "About" link on our project website</li>
-			</ul>
-		</div>
-		<div class="bigFrame notDone">
-			<h1><span>Known Bugs</span></h1>
-			<ul>
-			<li><strong>Debug all major functions that we will have to show in our demo with two users accessing simultaneously (no logging out!)</strong>
-				<ul><li>Receive and reply to messages</li>
-					<li>Make sure Create Question and Create Quiz are referencing the SiteManager and getting accurate ID's</li>
-					<li>"Challenge friend" drop-down menu needs to check the user's friends from the database, not the user object</li>
-					<li>getFriendActivity() needs to check with the database and guard against null pointers</li>
-			</ul></li>
-			<li>I added some CSS to much of the website to make it look a little more attractive. I've tested every page and they look fine, but look carefully during final testing in case I missed anything</li>
-			<li>Populate database with a bunch of real quizzes, quizzes taken, and achievements
-				<ul><li>We ideally want to have plenty of data for the tables of recent quizzes, quizzes taken, and friend activity</li>
-					<li>Lots of achievements scattered among users to show off achievement badges and floating captions</li>
-				</ul></li>
 			</ul>
 		</div>
 		<div class="bigFrame">
@@ -242,47 +226,6 @@
 						<li>Google (and <a href="http://youtu.be/wZ8z9FQEQiQ" target="_blank" style="target-new: tab;">Star Fox</a>) did it first</li>
 					</ul>
 				</li>
-			</ul>
-		</div>
-		<div class="bigFrame notDone">
-			<h1>Extensions Not Implemented</h1>
-			<ul>
-				<li class="notDone">Quiz practice mode</li>
-				<li class="notDone">Practice Makes Perfect achievement <span>(badge only)</span></li>
-				<li>Dedicated user sub-pages 
-				<ul><li>Messages page to receive messages/challenges/friend requests, and to send replies or compose new messages</li>
-					<li>Friends page where a user can view their friends</li>
-					<li>Edit account page to change picture, name, email, or password</li>
-				</ul></li>	
-				<li class="notDone"><span>User profiles need to styled</span></li>
-				<li class="notDone"><span>Quiz homepages need to styled</span></li>
-				<li class="notDone"><span>Quizzes need to styled</span></li>
-				<li class="notDone"><span>Quiz results need to styled</span></li>
-				<li class="notDone"><span>Challenge request needs to be implemented and styled</span></li>
-				<li>Administrator view 
-					<ul>
-						<li>Create announcements for homepage</li>
-						<li>Remove user accounts</li>
-						<li>Remove quizzes</li>
-						<li>Clear a quiz's history</li>
-						<li>Promote users to admin status</li>
-						<li>See global site statistics
-							<ul>
-								<li>Total users</li>
-								<li>Number of quizzes taken</li>
-								<li> etc.</li>
-							</ul></li>
-					</ul></li>
-				<li>Homepage displays announcements</li>
-				<li>Link to edit the quiz if the user is the quiz owner</li>
-				<li>Quiz categories</li>
-				<li>Question categories</li>
-				<li>User ratings and user reviews for quizzes</li>
-				<li>User comment system for quizzes</li>
-				<li>Allow users to flag quizzes as inappropriate</li>
-				<li>Cookies to provide long-term tracking of users</li>
-				<li>User privacy settings</li>
-				<li>XML formatting and loading of quizzes</li>
 			</ul>
 		</div>
 	</div>
