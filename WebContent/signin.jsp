@@ -41,7 +41,7 @@
 			<input type="submit" onclick="validate()" value="Sign In" class="loginbutton" />
 			
 		<div class="createaccountlink" >
-			<a href="createprofile.jsp" >Create Account</a>
+			<a href="createaccount.jsp" >Create Account</a>
 		</div>
 
 	</div>
