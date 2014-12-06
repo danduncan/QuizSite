@@ -13,6 +13,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
+	<%-- Forward to homepage if user is not logged in --%>
+	<% 
+		String username = (String) session.getAttribute("username");	
+		Integer userid = (Integer) session.getAttribute("userid");
+		users.User usr = (users.User) session.getAttribute("user");
+		if ((username == null || username.isEmpty()) && (userid == null || userid >= 0) && (usr == null)) {
+			%>
+			<jsp:forward page="/home.jsp" />
+			<%
+		}
+	%>
+
+
 	<%= sharedHtmlGenerators.sharedHeaderGenerator.getHTML(application.getRealPath("/"), session, (DatabaseConnection) application.getAttribute("DatabaseConnection"))  %>
 	<div class="typicalQwizardMainBody">
 <% 
@@ -213,7 +226,7 @@
 	out.println("<ul type = \"circle\">");
 	for(int i = 0; i < newMessages.size(); i++){
 		out.println("<li><a href=\"checkmessage.jsp?messageNum="+newmessageNums.get(i)+"\"> From: "+user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid)+newMessages.get(i).toString()+"</a>");
-		out.println("<input type=\"submit\" class=\"msgBtn\" value=\"Reply\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid) + "')\" />");
+		out.println(" <input type=\"submit\" class=\"msgBtn\" value=\"Reply\" onclick=\"displayMessage('" + user.userconnection.getAttribute("username",user.messages.get(newmessageNums.get(i)).senderid) + "')\" />");
 		out.println("</li>");
 	}
 	out.println("</ul>");
